@@ -10,9 +10,6 @@ namespace Server
     class Server
     {
 
-        InterfaceController ifController = new InterfaceController();
-        DataBaseController DBController = new DataBaseController();
-
         public static List<string> Clients = new List<string>();//В данном массиве хранятся имена ПК клиентов
         public static List<string> ClientInfo = new List<string>();
 
@@ -39,7 +36,7 @@ namespace Server
             IP = GetLocalIP();
         }
 
-        public string get_IP()
+        public static string get_IP()
         {
             return IP;
         }
@@ -49,7 +46,7 @@ namespace Server
 
         }
 
-        public string SocketHandler(/*string Function,*/ StringBuilder Message)
+        public static string SocketHandler(/*string Function,*/ StringBuilder Message)
         {
 
             string message = Message.ToString();
@@ -79,27 +76,27 @@ namespace Server
                     }
                 case "Subjects":
                     {
-                        mes = DBController.SelectQuery("Subject", "Subject");
+                        mes = DataBaseController.SelectQuery("Subject", "Subject");
                         break;
                     }
                 case "Themes":
                     {
                         string Subject = Line[3];
-                        string Id_s = DBController.SelectQuery("Id_s", "Subject", "Subject='" + Subject + "'");
+                        string Id_s = DataBaseController.SelectQuery("Id_s", "Subject", "Subject='" + Subject + "'");
 
-                        mes = DBController.SelectQuery("Theme", "Theme", "Id_s = " + Id_s);
+                        mes = DataBaseController.SelectQuery("Theme", "Theme", "Id_s = " + Id_s);
                         break;
                     }
                 case "Questions":
                     {
                         string Subject = Line[1];
                         string Theme = Line[2];
-                        string Id_s = DBController.SelectQuery("Id_s", "Subject", "Subject='" + Subject + "'");
-                        string Id_t = DBController.SelectQuery("Id_t", "Theme", "Theme='" + Theme + "'");
+                        string Id_s = DataBaseController.SelectQuery("Id_s", "Subject", "Subject='" + Subject + "'");
+                        string Id_t = DataBaseController.SelectQuery("Id_t", "Theme", "Theme='" + Theme + "'");
                         /**
                          *IDвопроса:Вопрос: ПервыйВариантОтвета: ВторойВариантОтвета: ТретийВариантОтвета: ЧетвёртыйВариантОтвета: НомерВерногоОтвета
                         **/
-                        mes = DBController.SelectQuery("Id + ':' + Question + ':' + FirstOption + ':' + SecondOption + ':' + ThirdOption + ':' + FourthOption + ':' + CONVERT(nvarchar, RightOption)", "Question", "Id_s=" + Id_s + " AND Id_t=" + Id_t);
+                        mes = DataBaseController.SelectQuery("Id + ':' + Question + ':' + FirstOption + ':' + SecondOption + ':' + ThirdOption + ':' + FourthOption + ':' + CONVERT(nvarchar, RightOption)", "Question", "Id_s=" + Id_s + " AND Id_t=" + Id_t);
                         break;
                     }
                 case "Answer":
@@ -127,21 +124,21 @@ namespace Server
             }*/
         }
 
-        public string AddClient(string PCname)
+        public static string AddClient(string PCname)
         {
             Clients.Add(PCname);
 
             return PCname + ":Connected";
         }
 
-        public string RemoveClient(string PCname)
+        public static string RemoveClient(string PCname)
         {
             Clients.Remove(PCname);
 
             return PCname + ":Disconnected";
         }
 
-        public string UpdateClient(string PCname, string QuestionNumber, string TotalQuestions, string Answer)
+        public static string UpdateClient(string PCname, string QuestionNumber, string TotalQuestions, string Answer)
         {
             ClientInfo.Add(PCname + ":" + QuestionNumber + ":" + TotalQuestions + ":" + Answer);
 

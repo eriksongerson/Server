@@ -14,18 +14,7 @@ namespace Server
 
         //https://msdn.microsoft.com/ru-ru/library/7a2f3ay4(v=vs.80).aspx
 
-        InterfaceController ifController = new InterfaceController();
-        SocketController socketControl = new SocketController();
-
-        public static Thread MultiThread = null;
-        public Thread InterfaceChangerThread = null;
-        public Thread WorkThread = null;
-
-        Label NoOneConnected = null;
-
-        //public Thread ListenThread = null;
-        //public Thread STQThread = null;
-        //public Thread AnswerThread = null;
+        Label NoOneConnected = new Label();
 
         public Main()
         {
@@ -64,15 +53,22 @@ namespace Server
         {
             Server.set_isEnabled(true);
 
-            //MultiThread = new Thread(new ThreadStart(socketControl.MultiSocket));
-            //InterfaceChangerThread = new Thread(new ThreadStart(IfUpdater));
+            Thread WorkingThread = null;
+            object thred = WorkingThread; 
+            WorkingThread = new Thread(delegate ()
+            {
+                while(Server.get_isEnabled() == true)
+                {
+                    Thread.Sleep(30);
+                    SocketController.MultiSocket();
+                }
+                Thread T = (Thread)thred;
+                T.Abort();
+                //WorkingThread.Abort();                
+            });
+            WorkingThread.Start();
 
-            WorkThread = new Thread(new ThreadStart(StartAllThreads));
-            WorkThread.Start();
-
-            while (!WorkThread.IsAlive) ;
-
-            Thread.Sleep(1);
+            while (!WorkingThread.IsAlive) ;
 
             запуститьСерверToolStripMenuItem.Enabled = false;
             button1.Text = "Остановить сервер";
@@ -104,13 +100,20 @@ namespace Server
             {
                 StopServer();
             }
-            Environment.Exit(1);
+            Application.Exit();
         }
 
         private void Main_Load(object sender, EventArgs e)
         {
             NoOneConnected = label5;
             radioButton1.Text = Server.GetLocalIP();
+
+            Thread InterfaceChanger = new Thread(delegate ()
+            {
+                IfUpdaterStart();
+            });
+            InterfaceChanger.Start();
+
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
@@ -129,36 +132,26 @@ namespace Server
             }
         }
 
-        private void StartAllThreads()
-        {
-            MultiThread = new Thread(new ThreadStart(socketControl.MultiSocket));
-
-            MultiThread.Start();
-            while (!MultiThread.IsAlive) ;
-
-            InterfaceChangerThread = new Thread(new ThreadStart(IfUpdater));
-
-            InterfaceChangerThread.Start();
-            while (!InterfaceChangerThread.IsAlive) ;
-
-            while (Server.get_isEnabled()) ;
-
-        }
-
-        private void IfUpdater()
+        private void IfUpdaterStart()
         {
             this.Invoke(new MethodInvoker(delegate { timer1.Start(); }));
         }
 
+        //private void IfUpdaterStop()
+        //{
+        //    this.Invoke(new MethodInvoker(delegate { timer1.Stop(); }));
+        //}
+
         private void timer1_Tick(object sender, EventArgs e)
         {
-            while (Server.get_isEnabled() == true)
+            if (Server.get_isEnabled() == true)
             {
                 List<string> Clients = Server.Clients;
                 List<string> ClientInfo = Server.ClientInfo;
                 if (Clients.Count != 0)
                 {
                     this.Invoke(new MethodInvoker(delegate { label5.Visible = false; }));
+                    if (flowLayoutPanel1.Contains(NoOneConnected)) { flowLayoutPanel1.Controls.Remove(NoOneConnected); }
                     this.Invoke(new MethodInvoker(delegate { label2.Text = Clients.Count + " подключено."; }));
                     this.Invoke(new MethodInvoker(delegate { flowLayoutPanel1.Controls.Clear(); }));
                     foreach (string i in Clients)

@@ -8,16 +8,16 @@ namespace Server
     class DataBaseController
     {
         //"Data Source='BDServer.sdf'"
-        
+        static SqlCeConnection sql = new SqlCeConnection("Data Source='BDServer.sdf'");
 
         public DataBaseController()
         {
 
         }
 
-        public string SelectQuery(string Attribute, string Table, string Where = null)
+        public static string SelectQuery(string Attribute, string Table, string Where = null)
         {
-            SqlCeConnection sql = new SqlCeConnection("Data Source='BDServer.sdf'");
+            
             string Result = null;
 
             if(Where != null) { Where = " WHERE " + Where; }
@@ -51,14 +51,9 @@ namespace Server
             
         }
 
-        public void SelectQueryAdapter()
+        public static void InsertQuery(string Table, string Attributes, string Condition)
         {
-
-        }
-
-        public void InsertQuery(string Table, string Attributes, string Condition)
-        {
-            SqlCeConnection sql = new SqlCeConnection("Data Source='BDServer.sdf'");
+            
             SqlCeCommand com = new SqlCeCommand("", sql) {
                 CommandText = "INSERT INTO " + Table + " (" + Attributes + ")" + " VALUES (" + Condition + ");"
             };
@@ -70,9 +65,9 @@ namespace Server
             sql.Close();
         }
 
-        public void DeleteQuery(string Attributes, string Table, string Where = null)
+        public static void DeleteQuery(string Attributes, string Table, string Where = null)
         {
-            SqlCeConnection sql = new SqlCeConnection("Data Source='BDServer.sdf'");
+            
             if (Where != null) { Where = " WHERE " + Where; }
 
             SqlCeCommand com = new SqlCeCommand("", sql)
@@ -87,9 +82,9 @@ namespace Server
             sql.Close();
         }
 
-        public void UpdateQuery(string Table, string Attributes, string Where = null)
+        public static void UpdateQuery(string Table, string Attributes, string Where = null)
         {
-            SqlCeConnection sql = new SqlCeConnection("Data Source='BDServer.sdf'");
+            
             if (Where != null) { Where = " WHERE " + Where; }
 
             SqlCeCommand com = new SqlCeCommand("", sql)
@@ -104,9 +99,9 @@ namespace Server
             sql.Close();
         }
 
-        public string IdDistributor(string Table, string Attribute)
+        public static string IdDistributor(string Table, string Attribute)
         {
-            SqlCeConnection sql = new SqlCeConnection("Data Source='BDServer.sdf'");
+            
             string Result = null;
 
             SqlCeCommand com = new SqlCeCommand("", sql)

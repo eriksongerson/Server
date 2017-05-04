@@ -24,8 +24,6 @@ namespace Server
          * Data Source='BDServer.sdf'
         **/
 
-        DataBaseController DBController = new DataBaseController();
-
         const bool t = true;
         const bool f = false;
 
@@ -40,7 +38,7 @@ namespace Server
         
         private void UpdateSubjects(bool isAdd, bool isEdit, bool isDelete)
         {
-            string[] StringArray = DBController.SelectQuery("Subject", "Subject").Split(';');
+            string[] StringArray = DataBaseController.SelectQuery("Subject", "Subject").Split(';');
 
             if(isAdd == t)
             {
@@ -85,11 +83,11 @@ namespace Server
 
         private void UpdateThemes(string Subject, ComboBox comboBox)
         {
-            string Id_s = DBController.SelectQuery("Id_s", "Subject", "Subject='" + Subject + "'");
+            string Id_s = DataBaseController.SelectQuery("Id_s", "Subject", "Subject='" + Subject + "'");
 
             try
             {
-                string[] StringArray = DBController.SelectQuery("Theme", "Theme", "Id_s =" + Id_s).Split(';');
+                string[] StringArray = DataBaseController.SelectQuery("Theme", "Theme", "Id_s =" + Id_s).Split(';');
 
                 comboBox.Text = "";
                 comboBox.Items.Clear();
@@ -110,11 +108,11 @@ namespace Server
         private void UpdateQuestions(string Theme, ComboBox comboBox)
         {
 
-            string Id_t = DBController.SelectQuery("Id_t", "Theme", "Theme='" + Theme + "'");
+            string Id_t = DataBaseController.SelectQuery("Id_t", "Theme", "Theme='" + Theme + "'");
 
             try
             {
-                string[] StringArray = DBController.SelectQuery("Question", "Question", "Id_t=" + Id_t).Split(';');
+                string[] StringArray = DataBaseController.SelectQuery("Question", "Question", "Id_t=" + Id_t).Split(';');
 
                 comboBox.Text = "";
                 comboBox.Items.Clear();
@@ -179,7 +177,7 @@ namespace Server
         {
             try
             {
-                string ID = DBController.SelectQuery("Id_s", "Subject", "Subject='" + comboBox2.Text + "'");
+                string ID = DataBaseController.SelectQuery("Id_s", "Subject", "Subject='" + comboBox2.Text + "'");
 
                 UpdateThemes(comboBox2.Text, comboBox3);
             }
@@ -208,9 +206,9 @@ namespace Server
         {
             if (textBox1.Text != "")
             {
-                string ID = DBController.IdDistributor("Subject", "Id_s");
+                string ID = DataBaseController.IdDistributor("Subject", "Id_s");
 
-                DBController.InsertQuery("Subject", "Id_s, Subject", ID + ", '" + textBox1.Text + "'");
+                DataBaseController.InsertQuery("Subject", "Id_s, Subject", ID + ", '" + textBox1.Text + "'");
 
                 UpdateSubjects(t, f, f);
 
@@ -227,11 +225,11 @@ namespace Server
         {
             if (textBox2.Text != "")
             {
-                string Id_s = DBController.SelectQuery("Id_s", "Subject", "Subject='" + comboBox1.Text + "'");
+                string Id_s = DataBaseController.SelectQuery("Id_s", "Subject", "Subject='" + comboBox1.Text + "'");
 
-                string ID = DBController.IdDistributor("Theme", "Id_t");
+                string ID = DataBaseController.IdDistributor("Theme", "Id_t");
 
-                DBController.InsertQuery("Theme", "Id_s, Id_t, Theme", Id_s + ", " + ID + ", '" + textBox2.Text + "'");
+                DataBaseController.InsertQuery("Theme", "Id_s, Id_t, Theme", Id_s + ", " + ID + ", '" + textBox2.Text + "'");
 
                 textBox2.Enabled = f;
                 button2.Enabled = f;
@@ -276,11 +274,11 @@ namespace Server
                 if (checkBox3.Checked == t) { RightOption = "3"; }
                 if (checkBox4.Checked == t) { RightOption = "4"; }
 
-                string Id_s = DBController.SelectQuery("Id_s", "Subject", "Subject='" + comboBox2.Text + "'");
+                string Id_s = DataBaseController.SelectQuery("Id_s", "Subject", "Subject='" + comboBox2.Text + "'");
 
-                string Id_t = DBController.SelectQuery("Id_t", "Theme", "Theme='" + comboBox3.Text + "'");
+                string Id_t = DataBaseController.SelectQuery("Id_t", "Theme", "Theme='" + comboBox3.Text + "'");
 
-                DBController.InsertQuery("Question", "Id_s, Id_t, Question, FirstOption, SecondOption, ThirdOption, FourthOption, RightOption", Id_s + ", " + Id_t + ", '" + Question + "', '" + FirstOption + "', '" + SecondOption + "', '" + ThirdOption + "', '" + FourthOption + "', " + RightOption);
+                DataBaseController.InsertQuery("Question", "Id_s, Id_t, Question, FirstOption, SecondOption, ThirdOption, FourthOption, RightOption", Id_s + ", " + Id_t + ", '" + Question + "', '" + FirstOption + "', '" + SecondOption + "', '" + ThirdOption + "', '" + FourthOption + "', " + RightOption);
 
                 comboBox3.Enabled = t;
                 textBox3.Enabled = f;
@@ -317,10 +315,10 @@ namespace Server
 
         private void button5_Click(object sender, EventArgs e)
         {
-            string Id_s = DBController.SelectQuery("Id_s", "Subject", "Subject = '" + comboBox10.Text + "'");
-            DBController.DeleteQuery("", "Subject", "Subject='" + comboBox10.Text + "'");
-            DBController.DeleteQuery("", "Theme", "Id_s=" + Id_s);
-            DBController.DeleteQuery("", "Question", "Id_s=" + Id_s);
+            string Id_s = DataBaseController.SelectQuery("Id_s", "Subject", "Subject = '" + comboBox10.Text + "'");
+            DataBaseController.DeleteQuery("", "Subject", "Subject='" + comboBox10.Text + "'");
+            DataBaseController.DeleteQuery("", "Theme", "Id_s=" + Id_s);
+            DataBaseController.DeleteQuery("", "Question", "Id_s=" + Id_s);
             comboBox10.Text = "";
             UpdateSubjects(f, f, t);
         }
@@ -332,9 +330,9 @@ namespace Server
 
         private void button6_Click(object sender, EventArgs e)
         {
-            string Id_t = DBController.SelectQuery("Id_t", "Theme", "Theme='" + comboBox12.Text + "'");
-            DBController.DeleteQuery("", "Theme", "Id_t=" + Id_t);
-            DBController.DeleteQuery("", "Question", "Id_t=" + Id_t);
+            string Id_t = DataBaseController.SelectQuery("Id_t", "Theme", "Theme='" + comboBox12.Text + "'");
+            DataBaseController.DeleteQuery("", "Theme", "Id_t=" + Id_t);
+            DataBaseController.DeleteQuery("", "Question", "Id_t=" + Id_t);
             UpdateThemes(comboBox11.Text, comboBox12);
             comboBox12.Text = "";
         }
@@ -351,8 +349,8 @@ namespace Server
 
         private void button7_Click(object sender, EventArgs e)
         {
-            string ID = DBController.SelectQuery("Id", "Question", "Question='" + comboBox15.Text + "'");
-            DBController.DeleteQuery("", "Question", "Id=" + ID);
+            string ID = DataBaseController.SelectQuery("Id", "Question", "Question='" + comboBox15.Text + "'");
+            DataBaseController.DeleteQuery("", "Question", "Id=" + ID);
             UpdateQuestions(comboBox14.Text, comboBox15);
         }
 
@@ -370,8 +368,8 @@ namespace Server
 
         private void button8_Click(object sender, EventArgs e)
         {
-            string Id_s = DBController.SelectQuery("Id_s", "Subject", "Subject='" + Line + "'");
-            DBController.UpdateQuery("Subject", "Subject = '" + textBoxS.Text + "'", "Id_s = "+Id_s);
+            string Id_s = DataBaseController.SelectQuery("Id_s", "Subject", "Subject='" + Line + "'");
+            DataBaseController.UpdateQuery("Subject", "Subject = '" + textBoxS.Text + "'", "Id_s = "+Id_s);
             textBoxS.Text = "";
             comboBox4.Visible = t;
             comboBox4.Text = "";
@@ -413,8 +411,8 @@ namespace Server
 
         private void button10_Click(object sender, EventArgs e)
         {
-            string Id_t = DBController.SelectQuery("Id_t", "Theme", "Theme='" + Line + "'");
-            DBController.UpdateQuery("Theme", "Theme = '" + textBoxT.Text + "'", "Id_t = " + Id_t);
+            string Id_t = DataBaseController.SelectQuery("Id_t", "Theme", "Theme='" + Line + "'");
+            DataBaseController.UpdateQuery("Theme", "Theme = '" + textBoxT.Text + "'", "Id_t = " + Id_t);
             textBoxT.Text = "";
             comboBox6.Visible = t;
             comboBox6.Text = "";
@@ -483,9 +481,9 @@ namespace Server
             button12.Enabled = t;
             button4.Enabled = t;
 
-            Id_q = DBController.SelectQuery("Id", "Question", "Question='" + Line + "'");
+            Id_q = DataBaseController.SelectQuery("Id", "Question", "Question='" + Line + "'");
 
-            string[] StringArray = DBController.SelectQuery("Question + ':' + FirstOption + ':' + SecondOption + ':' + ThirdOption + ':' + FourthOption + ':' + CONVERT(nvarchar, RightOption)", "Question", "Question='" + Line + "'").Split(';');
+            string[] StringArray = DataBaseController.SelectQuery("Question + ':' + FirstOption + ':' + SecondOption + ':' + ThirdOption + ':' + FourthOption + ':' + CONVERT(nvarchar, RightOption)", "Question", "Question='" + Line + "'").Split(';');
 
             string[] StringLines = StringArray[0].Split(':');
 
@@ -538,7 +536,7 @@ namespace Server
             if (checkBox7.Checked == t) { RO = "3"; }
             if (checkBox8.Checked == t) { RO = "4"; }
 
-            DBController.UpdateQuery("Question", "Question='" + textBoxQ.Text + "', FirstOption='" + textBox8.Text + "', SecondOption='" + textBox9.Text + "', ThirdOption='" + textBox10.Text + "', FourthOption='" + textBox11.Text + "', RightOption=" + RO + "", "Id=" + Id_q);
+            DataBaseController.UpdateQuery("Question", "Question='" + textBoxQ.Text + "', FirstOption='" + textBox8.Text + "', SecondOption='" + textBox9.Text + "', ThirdOption='" + textBox10.Text + "', FourthOption='" + textBox11.Text + "', RightOption=" + RO + "", "Id=" + Id_q);
 
             textBoxQ.Text = "";
             textBox8.Text = "";
@@ -632,39 +630,5 @@ namespace Server
             e.Handled = true;
         }
 
-        //private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
-        //{
-        //    if(textBox1.Text == "") { button1.Enabled = f; }
-        //}
-
-        //private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
-        //{
-        //    if (textBox2.Text == "") { button2.Enabled = f; }
-        //}
-
-        //private void textBox3_KeyPress(object sender, KeyPressEventArgs e)
-        //{
-        //    if (textBox3.Text == "") { button3.Enabled = f; }
-        //}
-
-        //private void textBox4_KeyPress(object sender, KeyPressEventArgs e)
-        //{
-        //    if (textBox4.Text == "") { button3.Enabled = f; }
-        //}
-
-        //private void textBox5_KeyPress(object sender, KeyPressEventArgs e)
-        //{
-        //    if (textBox5.Text == "") { button3.Enabled = f; }
-        //}
-
-        //private void textBox6_KeyPress(object sender, KeyPressEventArgs e)
-        //{
-        //    if (textBox6.Text == "") { button3.Enabled = f; }
-        //}
-
-        //private void textBox7_KeyPress(object sender, KeyPressEventArgs e)
-        //{
-        //    if (textBox7.Text == "") { button3.Enabled = f; }
-        //}
     }
 }
