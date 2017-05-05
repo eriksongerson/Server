@@ -89,8 +89,8 @@ namespace Server
                     }
                 case "Questions":
                     {
-                        string Subject = Line[1];
-                        string Theme = Line[2];
+                        string Subject = Line[3];
+                        string Theme = Line[4];
                         string Id_s = DataBaseController.SelectQuery("Id_s", "Subject", "Subject='" + Subject + "'");
                         string Id_t = DataBaseController.SelectQuery("Id_t", "Theme", "Theme='" + Theme + "'");
                         /**

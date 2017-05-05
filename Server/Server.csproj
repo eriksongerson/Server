@@ -37,9 +37,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\EditedServer\System.Data.SqlServerCe.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data.SqlServerCe.Entity">
-      <HintPath>..\..\..\..\..\Source\EditedServer\System.Data.SqlServerCe.Entity.dll</HintPath>
-    </Reference>
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -101,27 +98,27 @@
     <Content Include="BDServer.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="sqlceca40.dll">
+    <EmbeddedResource Include="sqlceca40.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="sqlcecompact40.dll">
+    </EmbeddedResource>
+    <EmbeddedResource Include="sqlcecompact40.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="sqlceer40EN.dll">
+    </EmbeddedResource>
+    <EmbeddedResource Include="sqlceer40EN.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="sqlceme40.dll">
+    </EmbeddedResource>
+    <EmbeddedResource Include="sqlceme40.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="sqlceoledb40.dll">
+    </EmbeddedResource>
+    <EmbeddedResource Include="sqlceoledb40.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="sqlceqp40.dll">
+    </EmbeddedResource>
+    <EmbeddedResource Include="sqlceqp40.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="sqlcese40.dll">
+    </EmbeddedResource>
+    <EmbeddedResource Include="sqlcese40.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
