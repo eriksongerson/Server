@@ -123,7 +123,7 @@ namespace Server
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (Server.get_isEnabled() == true)
+            if (Server.get_isEnabled())
             {
                 List<string> Clients = Server.Clients;
                 List<string> ClientInfo = Server.ClientInfo;
@@ -161,6 +161,11 @@ namespace Server
                     this.Invoke(new MethodInvoker(delegate { flowLayoutPanel1.Controls.Clear(); }));
                     this.Invoke(new MethodInvoker(delegate { flowLayoutPanel1.Controls.Add(NoOneConnected); }));
                 }
+            }
+            else
+            {
+                this.Invoke(new MethodInvoker(delegate { flowLayoutPanel1.Controls.Clear(); }));
+                this.Invoke(new MethodInvoker(delegate { flowLayoutPanel1.Controls.Add(NoOneConnected); }));
             }
         }
 
