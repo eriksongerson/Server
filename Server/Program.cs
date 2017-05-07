@@ -14,7 +14,16 @@ namespace Server
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Main());
+            Application.Run(new MainF());
+
+            Server.set_isEnabled(false);
+
+            MainF.WorkingThread.Abort();
+
+            while (MainF.WorkingThread.IsAlive) ;
+
+            Environment.Exit(1);
+
         }
     }
 }

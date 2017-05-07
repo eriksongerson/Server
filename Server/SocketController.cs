@@ -18,20 +18,21 @@ namespace Server
 
         public static void MultiSocket()
         {
-            while (Server.get_isEnabled() == true)
+            m:
+            while (Server.get_isEnabled())
             {
-                m:
+                error:
                 string IP = Server.get_IP();
                 IPEndPoint ipListenPoint = new IPEndPoint(IPAddress.Parse(IP), port);
                 Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
+                Socket Handler = null;
                 try
                 {
                     socket.Bind(ipListenPoint);
                     socket.Listen(100);
                     while (true)
                     {
-                        Socket Handler = socket.Accept();
+                        Handler = socket.Accept();
                         StringBuilder Message = new StringBuilder();
                         int bytes = 0;
                         byte[] data = new byte[256];
@@ -51,11 +52,15 @@ namespace Server
                         Handler.Close();
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    goto m;
+                    Handler.Shutdown(SocketShutdown.Both);
+                    Handler.Close();
+                    goto error;
                 }
             }
+            while (!Server.get_isEnabled()) ;
+            goto m;
         }
 
     }

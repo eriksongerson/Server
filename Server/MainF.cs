@@ -9,14 +9,15 @@ using System.Windows.Forms;
 
 namespace Server
 {
-    public partial class Main : Form
+    public partial class MainF : Form
     {
 
         //https://msdn.microsoft.com/ru-ru/library/7a2f3ay4(v=vs.80).aspx
 
         Label NoOneConnected = new Label();
+        public static Thread WorkingThread = null;
 
-        public Main()
+        public MainF()
         {
             InitializeComponent();
         }
@@ -52,23 +53,6 @@ namespace Server
         private void StartServer()
         {
             Server.set_isEnabled(true);
-
-            Thread WorkingThread = null;
-            object thred = WorkingThread; 
-            WorkingThread = new Thread(delegate ()
-            {
-                while(Server.get_isEnabled() == true)
-                {
-                    Thread.Sleep(30);
-                    SocketController.MultiSocket();
-                }
-                Thread T = (Thread)thred;
-                T.Abort();
-                //WorkingThread.Abort();                
-            });
-            WorkingThread.Start();
-
-            while (!WorkingThread.IsAlive) ;
 
             запуститьСерверToolStripMenuItem.Enabled = false;
             button1.Text = "Остановить сервер";
@@ -108,11 +92,16 @@ namespace Server
             NoOneConnected = label5;
             radioButton1.Text = Server.GetLocalIP();
 
-            Thread InterfaceChanger = new Thread(delegate ()
+            timer1.Start();
+
+            WorkingThread = new Thread(delegate ()
             {
-                IfUpdaterStart();
+                Thread.Sleep(30);
+                SocketController.MultiSocket();
             });
-            InterfaceChanger.Start();
+            WorkingThread.Start();
+
+            while (!WorkingThread.IsAlive) ;
 
         }
 
@@ -131,16 +120,6 @@ namespace Server
                 Server.set_isDebug(false);
             }
         }
-
-        private void IfUpdaterStart()
-        {
-            this.Invoke(new MethodInvoker(delegate { timer1.Start(); }));
-        }
-
-        //private void IfUpdaterStop()
-        //{
-        //    this.Invoke(new MethodInvoker(delegate { timer1.Stop(); }));
-        //}
 
         private void timer1_Tick(object sender, EventArgs e)
         {

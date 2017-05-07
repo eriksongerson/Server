@@ -1,6 +1,6 @@
 ﻿namespace Server
 {
-    partial class Main
+    partial class MainF
     {
         /// <summary>
         /// Required designer variable.
