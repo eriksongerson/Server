@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Data;
 using System.Data.SqlServerCe;
 
 namespace Server
@@ -124,8 +123,28 @@ namespace Server
             return Convert.ToString(Convert.ToInt32(Result) + 1);
         }
 
-    }
+        public static DataTable SelectAdapter()
+        {
+            
+            DataTable DTable = new DataTable();
+            DTable.Clear();
+            DTable.Columns.Clear();
 
+            SqlCeCommand com = new SqlCeCommand("SELECT Surname As Фамилия, Name As Имя, Subject As Предмет, Theme As Тема, Mark As Оценка FROM Journal;", sql);
+
+            SqlCeDataAdapter DAdapter = new SqlCeDataAdapter(com);
+
+            sql.Open();
+
+            com.ExecuteNonQuery();
+            DAdapter.Fill(DTable);
+
+            sql.Close();
+
+            return DTable;
+        }
+
+    }
 
     [Serializable]
     public class SelectQueryException: Exception

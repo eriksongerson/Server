@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Server
 {
     public partial class Journal : Form
     {
-
-        DataBaseController DBController = new DataBaseController();
 
         public Journal()
         {
@@ -20,7 +14,8 @@ namespace Server
 
         private void Journal_Load(object sender, EventArgs e)
         {
-            
+            dataGridView1.DataSource = DataBaseController.SelectAdapter();
+            dataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font(FontFamily.GenericSansSerif, 14, FontStyle.Regular);
         }
     }
 }

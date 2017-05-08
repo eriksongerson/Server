@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
-using System.Threading;
 using System.Net;
 using System.Net.Sockets;
 
@@ -21,11 +19,12 @@ namespace Server
             m:
             while (Server.get_isEnabled())
             {
-                error:
+                
                 string IP = Server.get_IP();
                 IPEndPoint ipListenPoint = new IPEndPoint(IPAddress.Parse(IP), port);
                 Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 Socket Handler = null;
+                error:
                 try
                 {
                     socket.Bind(ipListenPoint);
@@ -52,7 +51,7 @@ namespace Server
                         Handler.Close();
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     Handler.Shutdown(SocketShutdown.Both);
                     Handler.Close();

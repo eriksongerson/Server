@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 using System.Net;
 using System.Net.Sockets;
@@ -96,7 +95,7 @@ namespace Server
                         /**
                          *IDвопроса:Вопрос: ПервыйВариантОтвета: ВторойВариантОтвета: ТретийВариантОтвета: ЧетвёртыйВариантОтвета: НомерВерногоОтвета
                         **/
-                        mes = DataBaseController.SelectQuery("Id + ':' + Question + ':' + FirstOption + ':' + SecondOption + ':' + ThirdOption + ':' + FourthOption + ':' + CONVERT(nvarchar, RightOption)", "Question", "Id_s=" + Id_s + " AND Id_t=" + Id_t);
+                        mes = DataBaseController.SelectQuery("Convert(nvarchar(20), Id) + '@' + Question + '@' + FirstOption + '@' + SecondOption + '@' + ThirdOption + '@' + FourthOption + '@' + Convert(nvarchar(1),RightOption)", "Question", "Id_s=" + Id_s + " AND Id_t=" + Id_t);
                         break;
                     }
                 case "Answer":
@@ -114,14 +113,6 @@ namespace Server
             mes = Query + ";" + mes;
 
             return mes;
-
-            /*switch (Function)
-            {
-                case "Listen": return ListenSocketHandler(Message);
-                case "STQ": return QuestionSocketHandler(Message); 
-                case "Answer": return AnswerSocketHandler(Message);
-                default: return "";
-            }*/
         }
 
         public static string AddClient(string PCname)

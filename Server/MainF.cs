@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -65,6 +62,8 @@ namespace Server
 
         private void StopServer()
         {
+            Server.Clients.Clear();
+            Server.ClientInfo.Clear();
             Server.set_isEnabled(false);
             
             запуститьСерверToolStripMenuItem.Enabled = true;
@@ -74,8 +73,6 @@ namespace Server
             label2.Text = "";
             radioButton2.Enabled = true;
             radioButton1.Enabled = true;
-            Server.Clients.Clear();
-            Server.ClientInfo.Clear();
         }
 
         private void Main_Leave(object sender, EventArgs e)
@@ -169,5 +166,10 @@ namespace Server
             }
         }
 
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Journal J = new Journal();
+            J.Show();
+        }
     }
 }
