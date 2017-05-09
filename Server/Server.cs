@@ -73,6 +73,22 @@ namespace Server
                         mes = PCname + ":Disconnected";
                         break;
                     }
+                case "Completed":
+                    {
+
+                        string Surname = Line[3];
+                        string Name = Line[4];
+                        string Subject = Line[5];
+                        string Theme = Line[6];
+                        string Mark = Line[7];
+
+                        DataBaseController.InsertQuery("Journal", "Surname, Name, Subject, Theme, Mark", "'" + Surname + "', '" + Name + "', '" + Subject + "', '" + Theme + "', " + Mark);
+
+                        Clients.Remove(PCname);
+
+                        mes = PCname + ":Completed";
+                        break;
+                    }
                 case "Subjects":
                     {
                         mes = DataBaseController.SelectQuery("Subject", "Subject");
@@ -100,15 +116,16 @@ namespace Server
                     }
                 case "Answer":
                     {
-                        string QuestionNumber = Line[6];
-                        string TotalQuestions = Line[7];
-                        string Answer = Line[8];
+                        string QuestionNumber = Line[3];
+                        string TotalQuestions = Line[4];
+                        string Answer = Line[5];
 
                         ClientInfo.Add(PCname + ":" + QuestionNumber + ":" + TotalQuestions + ":" + Answer);
 
                         mes = PCname + ":Updated";
                         break;
                     }
+               
             }
             mes = Query + ";" + mes;
 

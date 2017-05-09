@@ -24,6 +24,7 @@ namespace Server
                 IPEndPoint ipListenPoint = new IPEndPoint(IPAddress.Parse(IP), port);
                 Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 Socket Handler = null;
+                StringBuilder Message = new StringBuilder();
                 error:
                 try
                 {
@@ -32,7 +33,7 @@ namespace Server
                     while (true)
                     {
                         Handler = socket.Accept();
-                        StringBuilder Message = new StringBuilder();
+                        
                         int bytes = 0;
                         byte[] data = new byte[256];
                         do
@@ -50,6 +51,17 @@ namespace Server
                         Handler.Shutdown(SocketShutdown.Both);
                         Handler.Close();
                     }
+                }
+                catch (SocketException)
+                {
+                    if (Message != null)
+                    {
+                        string[] Line = Message.ToString().Split(':');
+                        Server.RemoveClient(Line[1]);
+                    }
+                    Handler.Shutdown(SocketShutdown.Both);
+                    Handler.Close();
+                    goto error;
                 }
                 catch (Exception ex)
                 {

@@ -7,7 +7,7 @@ namespace Server
     class DataBaseController
     {
         //"Data Source='BDServer.sdf'"
-        static SqlCeConnection sql = new SqlCeConnection("Data Source='BDServer.sdf'");
+        public static SqlCeConnection sql = new SqlCeConnection("Data Source='BDServer.sdf'");
 
         public DataBaseController()
         {
@@ -125,12 +125,11 @@ namespace Server
 
         public static DataTable SelectAdapter()
         {
-            
             DataTable DTable = new DataTable();
-            DTable.Clear();
-            DTable.Columns.Clear();
 
-            SqlCeCommand com = new SqlCeCommand("SELECT Surname As Фамилия, Name As Имя, Subject As Предмет, Theme As Тема, Mark As Оценка FROM Journal;", sql);
+            SqlCeCommand com = new SqlCeCommand("", sql);
+
+            com.CommandText = "SELECT Id, Surname As Фамилия, Name As Имя, Subject As Предмет, Theme As Тема, Mark As Оценка FROM Journal;";
 
             SqlCeDataAdapter DAdapter = new SqlCeDataAdapter(com);
 
