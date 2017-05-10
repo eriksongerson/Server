@@ -24,7 +24,7 @@ namespace Server
                 IPEndPoint ipListenPoint = new IPEndPoint(IPAddress.Parse(IP), port);
                 Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 Socket Handler = null;
-                StringBuilder Message = new StringBuilder();
+                string Work = null;
                 error:
                 try
                 {
@@ -33,7 +33,8 @@ namespace Server
                     while (true)
                     {
                         Handler = socket.Accept();
-                        
+
+                        StringBuilder Message = new StringBuilder();
                         int bytes = 0;
                         byte[] data = new byte[256];
                         do
@@ -43,6 +44,7 @@ namespace Server
                         }
                         while (Handler.Available > 0);
 
+                        Work = Message.ToString();
                         string message = Server.SocketHandler(Message);
 
                         data = Encoding.Unicode.GetBytes(message);
@@ -50,25 +52,28 @@ namespace Server
 
                         Handler.Shutdown(SocketShutdown.Both);
                         Handler.Close();
+
+                        Work = null;
                     }
                 }
                 catch (SocketException)
                 {
-                    if (Message != null)
+                    if (Work != null)
                     {
-                        string[] Line = Message.ToString().Split(':');
+                        string[] Line = Work.ToString().Split(':');
                         Server.RemoveClient(Line[1]);
                     }
-                    Handler.Shutdown(SocketShutdown.Both);
+                    //Handler.Shutdown(SocketShutdown.Both);
                     Handler.Close();
                     goto error;
                 }
                 catch (Exception ex)
                 {
-                    Handler.Shutdown(SocketShutdown.Both);
+                    //Handler.Shutdown(SocketShutdown.Both);
                     Handler.Close();
                     goto error;
                 }
+                
             }
             while (!Server.get_isEnabled()) ;
             goto m;
