@@ -12,7 +12,7 @@ namespace Server
         //https://msdn.microsoft.com/ru-ru/library/7a2f3ay4(v=vs.80).aspx
 
         Label NoOneConnected = new Label();
-        public static Thread WorkingThread = null;
+        //public static Thread WorkingThread = null;
 
         public MainF()
         {
@@ -91,14 +91,14 @@ namespace Server
 
             timer1.Start();
 
-            WorkingThread = new Thread(delegate ()
-            {
-                Thread.Sleep(30);
-                SocketController.MultiSocket();
-            });
-            WorkingThread.Start();
+            //WorkingThread = new Thread(delegate ()
+            //{
+            //    Thread.Sleep(30);
+            //    SocketController.MultiSocket();
+            //});
+            //WorkingThread.Start();
 
-            while (!WorkingThread.IsAlive) ;
+            //while (!WorkingThread.IsAlive) ;
 
         }
 

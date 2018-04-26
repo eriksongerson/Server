@@ -18,9 +18,9 @@ namespace Server
 
             Server.set_isEnabled(false);
 
-            MainF.WorkingThread.Abort();
+            //MainF.WorkingThread.Abort();
 
-            while (MainF.WorkingThread.IsAlive) ;
+            //while (MainF.WorkingThread.IsAlive) ;
 
             Environment.Exit(1);
 

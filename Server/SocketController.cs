@@ -53,7 +53,7 @@ namespace Server
                         Handler.Shutdown(SocketShutdown.Both);
                         Handler.Close();
 
-                        Work = null;
+                        //Work = null;
                     }
                 }
                 catch (SocketException)

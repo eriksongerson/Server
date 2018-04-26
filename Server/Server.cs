@@ -3,6 +3,8 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 
+using Server.Helpers;
+
 namespace Server
 {
 
@@ -82,7 +84,7 @@ namespace Server
                         string Theme = Line[6];
                         string Mark = Line[7];
 
-                        DataBaseController.InsertQuery("Journal", "Surname, Name, Subject, Theme, Mark", "'" + Surname + "', '" + Name + "', '" + Subject + "', '" + Theme + "', " + Mark);
+                        DatabaseHelper.InsertQuery("Journal", "Surname, Name, Subject, Theme, Mark", "'" + Surname + "', '" + Name + "', '" + Subject + "', '" + Theme + "', " + Mark);
 
                         Clients.Remove(PCname);
 
@@ -91,27 +93,27 @@ namespace Server
                     }
                 case "Subjects":
                     {
-                        mes = DataBaseController.SelectQuery("Subject", "Subject");
+                        //mes = DatabaseHelper.SelectQuery("Subject", "Subject");
                         break;
                     }
                 case "Themes":
                     {
                         string Subject = Line[3];
-                        string Id_s = DataBaseController.SelectQuery("Id_s", "Subject", "Subject='" + Subject + "'");
-
-                        mes = DataBaseController.SelectQuery("Theme", "Theme", "Id_s = " + Id_s);
+                        //string Id_s = DatabaseHelper.SelectQuery("Id_s", "Subject", "Subject='" + Subject + "'");
+                        //
+                        //mes = DatabaseHelper.SelectQuery("Theme", "Theme", "Id_s = " + Id_s);
                         break;
                     }
                 case "Questions":
                     {
                         string Subject = Line[3];
                         string Theme = Line[4];
-                        string Id_s = DataBaseController.SelectQuery("Id_s", "Subject", "Subject='" + Subject + "'");
-                        string Id_t = DataBaseController.SelectQuery("Id_t", "Theme", "Theme='" + Theme + "'");
+                        //string Id_s = DatabaseHelper.SelectQuery("Id_s", "Subject", "Subject='" + Subject + "'");
+                        //string Id_t = DatabaseHelper.SelectQuery("Id_t", "Theme", "Theme='" + Theme + "'");
                         /**
                          *IDвопроса:Вопрос: ПервыйВариантОтвета: ВторойВариантОтвета: ТретийВариантОтвета: ЧетвёртыйВариантОтвета: НомерВерногоОтвета
                         **/
-                        mes = DataBaseController.SelectQuery("Convert(nvarchar(20), Id) + '@' + Question + '@' + FirstOption + '@' + SecondOption + '@' + ThirdOption + '@' + FourthOption + '@' + Convert(nvarchar(1),RightOption)", "Question", "Id_s=" + Id_s + " AND Id_t=" + Id_t);
+                        //mes = DatabaseHelper.SelectQuery("Convert(nvarchar(20), Id) + '@' + Question + '@' + FirstOption + '@' + SecondOption + '@' + ThirdOption + '@' + FourthOption + '@' + Convert(nvarchar(1),RightOption)", "Question", "Id_s=" + Id_s + " AND Id_t=" + Id_t);
                         break;
                     }
                 case "Answer":
