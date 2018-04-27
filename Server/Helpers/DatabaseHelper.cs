@@ -7,20 +7,24 @@ namespace Server.Helpers
 {
     public static class DatabaseHelper
     {
-        public static SQLiteConnection SQLiteConnection = new SQLiteConnection("Data Source='DataBase.db'");
+        public static SQLiteConnection Connection = new SQLiteConnection("Data Source='DataBase.db'");
 
         private static int convertionInt(string line)
         {
             return Convert.ToInt32(line);
         }
 
+        #region Select
+
+        #region SelectSubject
+
         public static List<Subject> GetSubjects()
         {
             List<Subject> subjects = new List<Subject>();
             
-            SQLiteCommand SQLiteCommand = new SQLiteCommand("SELECT id, subject FROM subjects", SQLiteConnection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand("SELECT id, subject FROM subjects", Connection);
 
-            SQLiteConnection.Open();
+            Connection.Open();
 
             using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
             {
@@ -33,7 +37,7 @@ namespace Server.Helpers
                 }
             }
 
-            SQLiteConnection.Close();
+            Connection.Close();
 
             return subjects;
         }
@@ -42,9 +46,9 @@ namespace Server.Helpers
         {
             Subject subject = new Subject();
 
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, subject FROM subjects WHERE id={id}", SQLiteConnection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, subject FROM subjects WHERE id={id}", Connection);
 
-            SQLiteConnection.Open();
+            Connection.Open();
 
             using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
             {
@@ -55,7 +59,7 @@ namespace Server.Helpers
                 }
             }
 
-            SQLiteConnection.Close();
+            Connection.Close();
 
             return subject;
         }
@@ -64,9 +68,9 @@ namespace Server.Helpers
         {
             Subject subject = new Subject();
 
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, subject FROM subjects WHERE subject='{name}'", SQLiteConnection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, subject FROM subjects WHERE subject='{name}'", Connection);
 
-            SQLiteConnection.Open();
+            Connection.Open();
 
             using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
             {
@@ -77,18 +81,22 @@ namespace Server.Helpers
                 }
             }
 
-            SQLiteConnection.Close();
+            Connection.Close();
 
             return subject;
         }
+
+        #endregion
+
+        #region SelectTheme
 
         public static List<Theme> GetThemes(int id_subject)
         {
             List<Theme> themes = new List<Theme>();
 
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, id_subject, theme FROM themes WHERE id_subject={id_subject}", SQLiteConnection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, id_subject, theme FROM themes WHERE id_subject={id_subject}", Connection);
 
-            SQLiteConnection.Open();
+            Connection.Open();
 
             using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
             {
@@ -102,7 +110,7 @@ namespace Server.Helpers
                 }
             }
 
-            SQLiteConnection.Close();
+            Connection.Close();
 
             return themes;
         }
@@ -111,9 +119,9 @@ namespace Server.Helpers
         {
             Theme theme = new Theme();
 
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, id_subject, theme FROM themes WHERE id={id}", SQLiteConnection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, id_subject, theme FROM themes WHERE id={id}", Connection);
 
-            SQLiteConnection.Open();
+            Connection.Open();
 
             using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
             {
@@ -125,7 +133,7 @@ namespace Server.Helpers
                 }
             }
 
-            SQLiteConnection.Close();
+            Connection.Close();
 
             return theme;
         }
@@ -134,9 +142,9 @@ namespace Server.Helpers
         {
             Theme theme = new Theme();
 
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, id_subject, theme FROM themes WHERE theme='{name}'", SQLiteConnection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, id_subject, theme FROM themes WHERE theme='{name}'", Connection);
 
-            SQLiteConnection.Open();
+            Connection.Open();
 
             using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
             {
@@ -148,19 +156,23 @@ namespace Server.Helpers
                 }
             }
 
-            SQLiteConnection.Close();
+            Connection.Close();
 
             return theme;
         }
+
+        #endregion
+
+        #region SelectQuestion
 
         public static List<Question> GetQuestionsByTestAndSubjectId(int SubjectId, int ThemeId)
         {
             List<Question> questions = new List<Question>();
 
             // TODO: Переделать запрос
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT * FROM questions WHERE id_subject={SubjectId} AND id_theme={ThemeId}", SQLiteConnection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT * FROM questions WHERE id_subject={SubjectId} AND id_theme={ThemeId}", Connection);
 
-            SQLiteConnection.Open();
+            Connection.Open();
 
             using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
             {
@@ -180,7 +192,7 @@ namespace Server.Helpers
                 }
             }
 
-            SQLiteConnection.Close();
+            Connection.Close();
 
             return questions;
         }
@@ -190,9 +202,9 @@ namespace Server.Helpers
             List<Question> questions = new List<Question>();
 
             // TODO: Переделать запрос
-            SQLiteCommand SQLiteCommand = new SQLiteCommand("SELECT * FROM questions", SQLiteConnection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand("SELECT * FROM questions", Connection);
 
-            SQLiteConnection.Open();
+            Connection.Open();
 
             using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
             {
@@ -212,7 +224,7 @@ namespace Server.Helpers
                 }
             }
 
-            SQLiteConnection.Close();
+            Connection.Close();
 
             return questions;
         }
@@ -222,9 +234,9 @@ namespace Server.Helpers
             Question question = new Question();
 
             // TODO: Переделать запрос
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT * FROM questions WHERE id={id}", SQLiteConnection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT * FROM questions WHERE id={id}", Connection);
 
-            SQLiteConnection.Open();
+            Connection.Open();
 
             using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
             {
@@ -242,7 +254,7 @@ namespace Server.Helpers
                 }
             }
 
-            SQLiteConnection.Close();
+            Connection.Close();
 
             return question;
         }
@@ -252,9 +264,9 @@ namespace Server.Helpers
             Question question = new Question();
 
             // TODO: Переделать запрос
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT * FROM questions WHERE question='{name}'", SQLiteConnection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT * FROM questions WHERE question='{name}'", Connection);
 
-            SQLiteConnection.Open();
+            Connection.Open();
 
             using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
             {
@@ -272,110 +284,224 @@ namespace Server.Helpers
                 }
             }
 
-            SQLiteConnection.Close();
+            Connection.Close();
 
             return question;
         }
 
-        //public static string SelectQuery(string Attribute, string Table, string Where = null)
-        //{
-        //    string Result = null;
+        #endregion
 
-        //    if(Where != null) { Where = " WHERE " + Where; }
+        public static string SelectQuery(string Attribute, string Table, string Where = null)
+        {
+            string Result = null;
 
-        //    SQLiteCommand com = new SQLiteCommand("", SQLiteConnection)
-        //    {
-        //        CommandText = "SELECT " + Attribute + " FROM " + Table + Where + ""
-        //    };
+            if (Where != null) { Where = " WHERE " + Where; }
 
-        //    SQLiteConnection.Open();
+            SQLiteCommand com = new SQLiteCommand()
+            {
+                CommandText = "SELECT " + Attribute + " FROM " + Table + Where + "",
+                Connection = Connection,
+            };
 
-        //    using (SQLiteDataReader DReader = com.ExecuteReader())
-        //    {
-        //        while (DReader.Read())
-        //        {
-        //            Result += DReader[0].ToString() + ";";
-        //        }
-        //    }
+            Connection.Open();
 
-        //    SQLiteConnection.Close();
+            using (SQLiteDataReader DReader = com.ExecuteReader())
+            {
+                while (DReader.Read())
+                {
+                    Result += DReader[0].ToString() + ";";
+                }
+            }
 
-        //    if(Result != null)
-        //    {
-        //        Result = Result.Substring(0, Result.Length - 1);
-        //        return Result;
-        //    }
-        //    else
-        //    {
-        //        throw new SelectQueryException("Result is null");
-        //    }
+            Connection.Close();
+
+            if (Result != null)
+            {
+                Result = Result.Substring(0, Result.Length - 1);
+                return Result;
+            }
+            else
+            {
+                throw new SelectQueryException("Result is null");
+            }
+
+        }
+
+
+        #endregion
+
+        #region Insert
+
+        public static void InsertSubject(Subject subject)
+        {
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO subjects (subject) VALUES ('{subject.Name}')", Connection);
+
+            Connection.Open();
+            SQLiteCommand.ExecuteNonQuery();
+            Connection.Close();
+        }
+
+        public static void InsertTheme(Theme theme)
+        {
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO themes (id_subject, theme) VALUES ({theme.SubjectId}, '{theme.Name}')", Connection);
             
-        //}
+            Connection.Open();
+            SQLiteCommand.ExecuteNonQuery();
+            Connection.Close();
+        }
+
+        public static void InsertQuestion(Question question)
+        {
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO questions (id_subject, id_theme, question, firstOption, secondOption, thirdOption, fourthOption, rightOption) VALUES ({question.Id_subject}, {question.Id_theme}, '{question.Name}', '{question.FirstOption}', '{question.SecondOption}', '{question.ThirdOption}', '{question.FourthOption}', {question.RightOption})", Connection);
+
+            Connection.Open();
+            SQLiteCommand.ExecuteNonQuery();
+            Connection.Close();
+        }
 
         public static void InsertQuery(string Table, string Attributes, string Condition)
         {
-            
-            SQLiteCommand com = new SQLiteCommand("", SQLiteConnection) {
+
+            SQLiteCommand com = new SQLiteCommand("", Connection)
+            {
                 CommandText = "INSERT INTO " + Table + " (" + Attributes + ")" + " VALUES (" + Condition + ");"
             };
 
-            SQLiteConnection.Open();
+            Connection.Open();
 
             com.ExecuteNonQuery();
 
-            SQLiteConnection.Close();
+            Connection.Close();
+        }
+
+        #endregion
+
+        #region Delete
+        //TODO: Есть вариант по-другому удалять предметы, добавив поле isActive(bool)
+
+        public static void DeleteSubjectById(int id)
+        {
+            SQLiteCommand SQLiteCommand = new SQLiteCommand()
+            {
+                CommandText = $"DELETE FROM subjects WHERE id = {id};" +
+                $"DELETE FROM themes WHERE id_subject = {id};" +
+                $"DELETE FROM questions WHERE id_subject = {id};",
+                Connection = Connection,
+            };
+
+            Connection.Open();
+            SQLiteCommand.ExecuteNonQuery();
+            Connection.Close();
+        }
+
+        public static void DeleteThemeById(int id)
+        {
+            SQLiteCommand SQLiteCommand = new SQLiteCommand()
+            {
+                CommandText = $"DELETE FROM themes WHERE id={id};" +
+                $"DELETE FROM questions WHERE id_theme = {id};",
+                Connection = Connection,
+            };
+
+            Connection.Open();
+            SQLiteCommand.ExecuteNonQuery();
+            Connection.Close();
+        }
+
+        public static void DeleteQuestionById(int id)
+        {
+            SQLiteCommand SQLiteCommand = new SQLiteCommand()
+            {
+                CommandText = $"DELETE FROM questions WHERE id={id}",
+                Connection = Connection,
+            };                
+
+            Connection.Open();
+            SQLiteCommand.ExecuteNonQuery();
+            Connection.Close();
         }
 
         public static void DeleteQuery(string Attributes, string Table, string Where = null)
         {
-            
+
             if (Where != null) { Where = " WHERE " + Where; }
 
-            SQLiteCommand com = new SQLiteCommand("", SQLiteConnection)
+            SQLiteCommand com = new SQLiteCommand("", Connection)
             {
                 CommandText = "DELETE " + Attributes + " FROM " + Table + Where
             };
 
-            SQLiteConnection.Open();
+            Connection.Open();
 
             com.ExecuteNonQuery();
 
-            SQLiteConnection.Close();
+            Connection.Close();
+        }
+
+        #endregion
+
+        #region Update
+
+        public static void UpdateSubject(Subject subject)
+        {
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"UPDATE subjects SET subject = '{subject.Name}' WHERE id = {subject.Id}", Connection);
+
+            Connection.Open();
+            SQLiteCommand.ExecuteNonQuery();
+            Connection.Close();
+        }
+
+        public static void UpdateTheme(Theme theme)
+        {
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"UPDATE themes SET id_subject = {theme.SubjectId}, theme = '{theme.Name}' WHERE id = {theme.Id}", Connection);
+
+            Connection.Open();
+            SQLiteCommand.ExecuteNonQuery();
+            Connection.Close();
+        }
+
+        public static void UpdateQuestion(Question question)
+        {
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"UPDATE questions SET id_subject = {question.Id_subject} , id_theme = {question.Id_theme} , question = ' {question.Name} ', firstOption = ' {question.FirstOption} ', secondOption = ' {question.SecondOption} ', thirdOption = ' {question.ThirdOption} ', fourthOption = ' {question.FourthOption} ', rightOption = {question.RightOption} WHERE id = {question.Id}", Connection);
+
+            Connection.Open();
+            SQLiteCommand.ExecuteNonQuery();
+            Connection.Close();
         }
 
         public static void UpdateQuery(string Table, string Attributes, string Where = null)
         {
-            
+
             if (Where != null) { Where = " WHERE " + Where; }
 
-            SQLiteCommand com = new SQLiteCommand("", SQLiteConnection)
+            SQLiteCommand com = new SQLiteCommand("", Connection)
             {
                 CommandText = "UPDATE " + Table + " SET " + Attributes + Where
             };
 
-            SQLiteConnection.Open();
-
+            Connection.Open();
             com.ExecuteNonQuery();
-
-            SQLiteConnection.Close();
+            Connection.Close();
         }
+
+        #endregion
 
         public static DataTable SelectAdapter()
         {
             DataTable DTable = new DataTable();
 
-            SQLiteCommand com = new SQLiteCommand("", SQLiteConnection);
+            SQLiteCommand com = new SQLiteCommand("", Connection);
 
             com.CommandText = "SELECT Id, Surname As Фамилия, Name As Имя, Subject As Предмет, Theme As Тема, Mark As Оценка FROM Journal;";
 
             SQLiteDataAdapter DAdapter = new SQLiteDataAdapter(com);
 
-            SQLiteConnection.Open();
+            Connection.Open();
 
             com.ExecuteNonQuery();
             DAdapter.Fill(DTable);
 
-            SQLiteConnection.Close();
+            Connection.Close();
 
             return DTable;
         }

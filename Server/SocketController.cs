@@ -67,7 +67,7 @@ namespace Server
                     Handler.Close();
                     goto error;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     //Handler.Shutdown(SocketShutdown.Both);
                     Handler.Close();
