@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 
 using Server.Helpers;
+using Server.Models;
 
 namespace Server
 {
@@ -11,7 +12,7 @@ namespace Server
     class Server
     {
 
-        public static List<string> Clients = new List<string>();//В данном массиве хранятся имена ПК клиентов
+        public static List<Client> Clients = new List<Client>();//В данном массиве хранятся имена ПК клиентов
         public static List<string> ClientInfo = new List<string>();
 
         private static bool isDebug;
@@ -134,18 +135,18 @@ namespace Server
             return mes;
         }
 
-        public static string AddClient(string PCname)
+        public static string AddClient(Client client)
         {
-            Clients.Add(PCname);
+            Clients.Add(client);
 
-            return PCname + ":Connected";
+            return "success";
         }
 
-        public static string RemoveClient(string PCname)
+        public static string RemoveClient(Client client)
         {
-            Clients.Remove(PCname);
+            Clients.Remove(client);
 
-            return PCname + ":Disconnected";
+            return "";
         }
 
         public static string UpdateClient(string PCname, string QuestionNumber, string TotalQuestions, string Answer)

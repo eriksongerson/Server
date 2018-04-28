@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace Server
 {
-    public partial class MainF : Form
+    public partial class MainForm : Form
     {
 
         //https://msdn.microsoft.com/ru-ru/library/7a2f3ay4(v=vs.80).aspx
@@ -14,7 +14,7 @@ namespace Server
         Label NoOneConnected = new Label();
         //public static Thread WorkingThread = null;
 
-        public MainF()
+        public MainForm()
         {
             InitializeComponent();
         }
