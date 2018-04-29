@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Newtonsoft.Json;
+using Server.Helpers;
+
 namespace Server.Models
 {
     public enum Method
@@ -21,17 +24,50 @@ namespace Server.Models
         public Client client;
         public string body;
 
-        public void handle()
+        public string Handle()
         {
             switch (request)
             {
-                case "connection":
+                case "connect":
                     {
-                        Server.AddClient(this.client);
-                        break;
+                        //Server.AddClient(this.client);
+                        return "";
                     }
-                case "": {
-                        break;
+                case "disconnect": 
+                    {
+                        return "";
+                    }
+                case "getSubjects": 
+                    {
+                        List<Subject> subjects = DatabaseHelper.GetSubjects();
+
+                        Response response = new Response()
+                        {
+                            response = request,
+                            body = JsonConvert.SerializeObject(subjects),
+                        };
+
+                        return JsonConvert.SerializeObject(response, Formatting.Indented);
+                    }
+                case "getThemes": 
+                    {
+                        return "";
+                    }
+                case "getQuestions":
+                    {
+                        return "";
+                    }
+                case "answer":
+                    {
+                        return "";
+                    }
+                case "done":
+                    {
+                        return "";
+                    }
+                default:
+                    {
+                        return null;
                     }
             }
         }

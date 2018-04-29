@@ -232,7 +232,6 @@
             this.radioButton1.TabIndex = 9;
             this.radioButton1.Text = "radioButton1";
             this.radioButton1.UseVisualStyleBackColor = true;
-            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
             // radioButton2
             // 
@@ -245,12 +244,11 @@
             this.radioButton2.TabStop = true;
             this.radioButton2.Text = "127.0.0.1";
             this.radioButton2.UseVisualStyleBackColor = true;
-            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
             // 
             // timer1
             // 
             this.timer1.Interval = 1000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            //this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // MainF
             // 

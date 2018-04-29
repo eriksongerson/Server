@@ -13,7 +13,6 @@ namespace Server
     {
 
         public static List<Client> Clients = new List<Client>();//В данном массиве хранятся имена ПК клиентов
-        public static List<string> ClientInfo = new List<string>();
 
         private static bool isDebug;
         private static bool isEnabled;
@@ -41,119 +40,6 @@ namespace Server
         public static string get_IP()
         {
             return IP;
-        }
-
-        public Server()
-        {
-
-        }
-
-        public static string SocketHandler(/*string Function,*/ StringBuilder Message)
-        {
-
-            string message = Message.ToString();
-            string[] Line = message.Split(':');
-
-            string PCname = Line[1];
-            string Query = Line[2];
-
-            string mes = "";
-
-            //Нужно установить обработку сообщений
-            switch (Query)
-            {
-                case "Connect":
-                    {
-                        Clients.Add(PCname);
-
-                        mes = PCname + ":Connected";
-                        break;
-                    }
-                case "Disconnect":
-                    {
-                        Clients.Remove(PCname);
-
-                        mes = PCname + ":Disconnected";
-                        break;
-                    }
-                case "Completed":
-                    {
-
-                        string Surname = Line[3];
-                        string Name = Line[4];
-                        string Subject = Line[5];
-                        string Theme = Line[6];
-                        string Mark = Line[7];
-
-                        DatabaseHelper.InsertQuery("journals", "surname, name, id_subject, id_theme, mark", "'" + Surname + "', '" + Name + "', '" + Subject + "', '" + Theme + "', " + Mark);
-
-                        Clients.Remove(PCname);
-
-                        mes = PCname + ":Completed";
-                        break;
-                    }
-                case "Subjects":
-                    {
-                        mes = DatabaseHelper.SelectQuery("subject", "subjects");
-                        break;
-                    }
-                case "Themes":
-                    {
-                        string Subject = Line[3];
-                        string Id_s = DatabaseHelper.SelectQuery("id", "subjects", "subject='" + Subject + "'");
-                        //
-                        mes = DatabaseHelper.SelectQuery("theme", "themes", "id_subject = " + Id_s);
-                        break;
-                    }
-                case "Questions":
-                    {
-                        string Subject = Line[3];
-                        string Theme = Line[4];
-                        string Id_s = DatabaseHelper.SelectQuery("id", "subjects", "subject='" + Subject + "'");
-                        string Id_t = DatabaseHelper.SelectQuery("id", "themes", "theme='" + Theme + "'");
-                        /**
-                         *IDвопроса:Вопрос: ПервыйВариантОтвета: ВторойВариантОтвета: ТретийВариантОтвета: ЧетвёртыйВариантОтвета: НомерВерногоОтвета
-                        **/
-                        mes = DatabaseHelper.SelectQuery("Convert(nvarchar(20), id) + '@' + question + '@' + firstOption + '@' + secondOption + '@' + thirdOption + '@' + fourthOption + '@' + Convert(nvarchar(1),rightOption)", "question", "id_subject=" + Id_s + " AND id_theme=" + Id_t);
-                        break;
-                    }
-                case "Answer":
-                    {
-                        string QuestionNumber = Line[3];
-                        string TotalQuestions = Line[4];
-                        string Answer = Line[5];
-
-                        ClientInfo.Add(PCname + ":" + QuestionNumber + ":" + TotalQuestions + ":" + Answer);
-
-                        mes = PCname + ":Updated";
-                        break;
-                    }
-               
-            }
-            mes = Query + ";" + mes;
-
-            return mes;
-        }
-
-        public static string AddClient(Client client)
-        {
-            Clients.Add(client);
-
-            return "success";
-        }
-
-        public static string RemoveClient(Client client)
-        {
-            Clients.Remove(client);
-
-            return "";
-        }
-
-        public static string UpdateClient(string PCname, string QuestionNumber, string TotalQuestions, string Answer)
-        {
-            ClientInfo.Add(PCname + ":" + QuestionNumber + ":" + TotalQuestions + ":" + Answer);
-
-            return PCname + ":Updated";
         }
 
         public static string GetLocalIP()

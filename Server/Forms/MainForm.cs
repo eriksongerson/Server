@@ -4,6 +4,8 @@ using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 
+using Server.Helpers;
+
 namespace Server
 {
     public partial class MainForm : Form
@@ -49,47 +51,46 @@ namespace Server
 
         private void StartServer()
         {
-            Server.set_isEnabled(true);
+            //Server.set_isEnabled(true);
 
-            запуститьСерверToolStripMenuItem.Enabled = false;
-            button1.Text = "Остановить сервер";
-            остановитьСерверToolStripMenuItem.Enabled = true;
-            label1.Text = "Сервер запущен.";
-            label2.Text = "0 подключено.";
-            radioButton2.Enabled = false;
-            radioButton1.Enabled = false;
+            //запуститьСерверToolStripMenuItem.Enabled = false;
+            //button1.Text = "Остановить сервер";
+            //остановитьСерверToolStripMenuItem.Enabled = true;
+            //label1.Text = "Сервер запущен.";
+            //label2.Text = "0 подключено.";
+            //radioButton2.Enabled = false;
+            //radioButton1.Enabled = false;
         }
 
         private void StopServer()
         {
-            Server.Clients.Clear();
-            Server.ClientInfo.Clear();
-            Server.set_isEnabled(false);
+            //Server.Clients.Clear();
+            //Server.ClientInfo.Clear();
+            //Server.set_isEnabled(false);
             
-            запуститьСерверToolStripMenuItem.Enabled = true;
-            button1.Text = "Запустить сервер";
-            остановитьСерверToolStripMenuItem.Enabled = false;
-            label1.Text = "Сервер отключен.";
-            label2.Text = "";
-            radioButton2.Enabled = true;
-            radioButton1.Enabled = true;
+            //запуститьСерверToolStripMenuItem.Enabled = true;
+            //button1.Text = "Запустить сервер";
+            //остановитьСерверToolStripMenuItem.Enabled = false;
+            //label1.Text = "Сервер отключен.";
+            //label2.Text = "";
+            //radioButton2.Enabled = true;
+            //radioButton1.Enabled = true;
         }
 
         private void Main_Leave(object sender, EventArgs e)
         {
-            if (Server.get_isEnabled() == true)
-            {
-                StopServer();
-            }
+            SocketHelper.StopListener();
             Application.Exit();
         }
 
         private void Main_Load(object sender, EventArgs e)
         {
-            NoOneConnected = label5;
-            radioButton1.Text = Server.GetLocalIP();
+            SocketHelper.StartListener();
 
-            timer1.Start();
+            //NoOneConnected = label5;
+            //radioButton1.Text = Server.GetLocalIP();
+
+            //timer1.Start();
 
             //WorkingThread = new Thread(delegate ()
             //{
@@ -102,69 +103,69 @@ namespace Server
 
         }
 
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
-        {
-            if (radioButton2.Checked == true)
-            {
-                Server.set_isDebug(true);
-            }
-        }
+        //private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    if (radioButton2.Checked == true)
+        //    {
+        //        Server.set_isDebug(true);
+        //    }
+        //}
 
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-            if (radioButton1.Checked == true)
-            {
-                Server.set_isDebug(false);
-            }
-        }
+        //private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    if (radioButton1.Checked == true)
+        //    {
+        //        Server.set_isDebug(false);
+        //    }
+        //}
 
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            if (Server.get_isEnabled())
-            {
-                List<string> Clients = Server.Clients;
-                List<string> ClientInfo = Server.ClientInfo;
-                if (Clients.Count != 0)
-                {
-                    this.Invoke(new MethodInvoker(delegate { label5.Visible = false; }));
-                    if (flowLayoutPanel1.Contains(NoOneConnected)) { flowLayoutPanel1.Controls.Remove(NoOneConnected); }
-                    this.Invoke(new MethodInvoker(delegate { label2.Text = Clients.Count + " подключено."; }));
-                    this.Invoke(new MethodInvoker(delegate { flowLayoutPanel1.Controls.Clear(); }));
-                    foreach (string i in Clients)
-                    {
+        //private void timer1_Tick(object sender, EventArgs e)
+        //{
+        //    if (Server.get_isEnabled())
+        //    {
+        //        List<string> Clients = Server.Clients;
+        //        List<string> ClientInfo = Server.ClientInfo;
+        //        if (Clients.Count != 0)
+        //        {
+        //            this.Invoke(new MethodInvoker(delegate { label5.Visible = false; }));
+        //            if (flowLayoutPanel1.Contains(NoOneConnected)) { flowLayoutPanel1.Controls.Remove(NoOneConnected); }
+        //            this.Invoke(new MethodInvoker(delegate { label2.Text = Clients.Count + " подключено."; }));
+        //            this.Invoke(new MethodInvoker(delegate { flowLayoutPanel1.Controls.Clear(); }));
+        //            foreach (string i in Clients)
+        //            {
 
-                        Label L = new Label();
-                        L.Name = i;
-                        L.Font = new Font("Microsoft Sans Serif", 10);
-                        L.Size = new Size(379, 36);
-                        L.Text = "";
-                        foreach (string j in ClientInfo)
-                        {
-                            string[] Line = j.Split(':');
-                            if (Line[0] == i)
-                            {
-                                L.Text = Line[0] + ": " + Line[1] + "/" + Line[2] + " решено.";
-                            }
-                        }
-                        if (L.Text == "")
-                        {
-                            L.Text = i;
-                        }
-                        this.Invoke(new MethodInvoker(delegate { flowLayoutPanel1.Controls.Add(L); }));
-                    }
-                }
-                else
-                {
-                    this.Invoke(new MethodInvoker(delegate { flowLayoutPanel1.Controls.Clear(); }));
-                    this.Invoke(new MethodInvoker(delegate { flowLayoutPanel1.Controls.Add(NoOneConnected); }));
-                }
-            }
-            else
-            {
-                this.Invoke(new MethodInvoker(delegate { flowLayoutPanel1.Controls.Clear(); }));
-                this.Invoke(new MethodInvoker(delegate { flowLayoutPanel1.Controls.Add(NoOneConnected); }));
-            }
-        }
+        //                Label L = new Label();
+        //                L.Name = i;
+        //                L.Font = new Font("Microsoft Sans Serif", 10);
+        //                L.Size = new Size(379, 36);
+        //                L.Text = "";
+        //                foreach (string j in ClientInfo)
+        //                {
+        //                    string[] Line = j.Split(':');
+        //                    if (Line[0] == i)
+        //                    {
+        //                        L.Text = Line[0] + ": " + Line[1] + "/" + Line[2] + " решено.";
+        //                    }
+        //                }
+        //                if (L.Text == "")
+        //                {
+        //                    L.Text = i;
+        //                }
+        //                this.Invoke(new MethodInvoker(delegate { flowLayoutPanel1.Controls.Add(L); }));
+        //            }
+        //        }
+        //        else
+        //        {
+        //            this.Invoke(new MethodInvoker(delegate { flowLayoutPanel1.Controls.Clear(); }));
+        //            this.Invoke(new MethodInvoker(delegate { flowLayoutPanel1.Controls.Add(NoOneConnected); }));
+        //        }
+        //    }
+        //    else
+        //    {
+        //        this.Invoke(new MethodInvoker(delegate { flowLayoutPanel1.Controls.Clear(); }));
+        //        this.Invoke(new MethodInvoker(delegate { flowLayoutPanel1.Controls.Add(NoOneConnected); }));
+        //    }
+        //}
 
         private void button3_Click(object sender, EventArgs e)
         {

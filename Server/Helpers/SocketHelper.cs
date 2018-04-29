@@ -12,16 +12,16 @@ using System.Threading;
 
 namespace Server.Helpers
 {
-    class SocketHelper
+    public static class SocketHelper
     {
         const int port = 32768;
-        static TcpListener tcpListener = new TcpListener(IPAddress.Parse("127.0.0.1"), port);
+        private static TcpListener tcpListener = new TcpListener(IPAddress.Parse("127.0.0.1"), port);
 
         public static void StartListener()
         {
-            tcpListener?.Start();
+            tcpListener.Start();
             try{
-                new Thread(new ThreadStart(() =>
+                new Thread(() =>
                 {
                     while (true)
                     {
@@ -32,7 +32,7 @@ namespace Server.Helpers
                             requestHandler.Process();
                         })).Start();
                     }
-                })).Start();
+                }).Start();
             }
             catch(Exception ex)
             {
@@ -46,7 +46,7 @@ namespace Server.Helpers
 
         public static void StopListener()
         {
-            tcpListener?.Stop();
+            tcpListener.Stop();
         }
     }
 }
