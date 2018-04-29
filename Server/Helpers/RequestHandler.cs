@@ -55,10 +55,10 @@ namespace Server.Helpers
                     networkStream.Write(buffer, 0, buffer.Length);
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
             finally
             {
                 networkStream.Close();

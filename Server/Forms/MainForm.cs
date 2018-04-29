@@ -13,7 +13,7 @@ namespace Server
 
         //https://msdn.microsoft.com/ru-ru/library/7a2f3ay4(v=vs.80).aspx
 
-        Label NoOneConnected = new Label();
+        //Label NoOneConnected = new Label();
         //public static Thread WorkingThread = null;
 
         public MainForm()
@@ -33,14 +33,14 @@ namespace Server
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (Server.get_isEnabled() == false)
-            {
-                StartServer();
-            }
-            else if (Server.get_isEnabled() == true)
-            {
-                StopServer();
-            }
+            //if (Server.get_isEnabled() == false)
+            //{
+            //    StartServer();
+            //}
+            //else if (Server.get_isEnabled() == true)
+            //{
+            //    StopServer();
+            //}
         }
 
         private void button2_Click(object sender, EventArgs e)

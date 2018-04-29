@@ -19,29 +19,19 @@ namespace Server.Helpers
 
         public static void StartListener()
         {
-            tcpListener.Start();
-            try{
-                new Thread(() =>
+            new Thread(() =>
+            {
+                SocketHelper.tcpListener.Start();
+                while (true)
                 {
-                    while (true)
+                    TcpClient tcpClient = SocketHelper.tcpListener.AcceptTcpClient();
+                    new Thread(new ThreadStart(() => 
                     {
-                        TcpClient tcpClient = tcpListener.AcceptTcpClient();
-                        new Thread(new ThreadStart(() => 
-                        {
-                            RequestHandler requestHandler = new RequestHandler(tcpClient);
-                            requestHandler.Process();
-                        })).Start();
-                    }
-                }).Start();
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                StopListener();
-            }
+                        RequestHandler requestHandler = new RequestHandler(tcpClient);
+                        requestHandler.Process();
+                    })).Start();
+                }
+            }).Start();
         }
 
         public static void StopListener()

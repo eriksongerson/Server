@@ -24,6 +24,12 @@ namespace Server.Models
         public Client client;
         public string body;
 
+        class discipline
+        {
+            public Subject subject;
+            public Theme theme;
+        }
+
         public string Handle()
         {
             switch (request)
@@ -51,11 +57,29 @@ namespace Server.Models
                     }
                 case "getThemes": 
                     {
-                        return "";
+                        Subject subject = JsonConvert.DeserializeObject<Subject>(body);
+                        List<Theme> themes = DatabaseHelper.GetThemes(subject.Id);
+
+                        Response response = new Response()
+                        {
+                            response = request,
+                            body = JsonConvert.SerializeObject(themes),
+                        };
+
+                        return JsonConvert.SerializeObject(response, Formatting.Indented);
                     }
                 case "getQuestions":
                     {
-                        return "";
+                        discipline discipline = JsonConvert.DeserializeObject<discipline>(body);
+                        List<Question> questions = DatabaseHelper.GetQuestionsByTestAndSubjectId(discipline.subject.Id, discipline.theme.Id);
+
+                        Response response = new Response()
+                        {
+                            response = request,
+                            body = JsonConvert.SerializeObject(questions),
+                        };
+
+                        return JsonConvert.SerializeObject(response, Formatting.Indented);
                     }
                 case "answer":
                     {
