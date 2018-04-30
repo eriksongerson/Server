@@ -87,8 +87,7 @@ namespace Server
         {
             SocketHelper.StartListener();
 
-            //NoOneConnected = label5;
-            //radioButton1.Text = Server.GetLocalIP();
+            label4.Text = SocketHelper.GetLocalIPAddress();
 
             //timer1.Start();
 

@@ -19,12 +19,12 @@ namespace Server.Helpers
 
         public static void StartListener()
         {
+            tcpListener.Start();
             new Thread(() =>
             {
-                SocketHelper.tcpListener.Start();
                 while (true)
                 {
-                    TcpClient tcpClient = SocketHelper.tcpListener.AcceptTcpClient();
+                    TcpClient tcpClient = tcpListener.AcceptTcpClient();
                     new Thread(new ThreadStart(() => 
                     {
                         RequestHandler requestHandler = new RequestHandler(tcpClient);
@@ -38,5 +38,19 @@ namespace Server.Helpers
         {
             tcpListener.Stop();
         }
+
+        public static string GetLocalIPAddress()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    return ip.ToString();
+                }
+            }
+            return null;
+        }
+
     }
 }

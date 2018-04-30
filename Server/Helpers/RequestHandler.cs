@@ -35,30 +35,28 @@ namespace Server.Helpers
             {
                 networkStream = TcpClient.GetStream();
                 byte[] buffer = new byte[256];
-                while (true)
+               
+                StringBuilder stringBuilder = new StringBuilder();
+                int bytes = 0;
+                do
                 {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    int bytes = 0;
-                    do
-                    {
-                        bytes = networkStream.Read(buffer, 0, buffer.Length);
-                        stringBuilder.Append(Encoding.Unicode.GetString(buffer, 0, bytes));
-                    }
-                    while (networkStream.DataAvailable);
-
-                    string message = stringBuilder.ToString();
-
-                    Request request = JsonConvert.DeserializeObject<Request> (message);
-                    
-                    message = request.Handle();
-                    buffer = Encoding.Unicode.GetBytes(message);
-                    networkStream.Write(buffer, 0, buffer.Length);
+                    bytes = networkStream.Read(buffer, 0, buffer.Length);
+                    stringBuilder.Append(Encoding.Unicode.GetString(buffer, 0, bytes));
                 }
+                while (networkStream.DataAvailable);
+
+                string message = stringBuilder.ToString();
+
+                Request request = JsonConvert.DeserializeObject<Request> (message);
+                    
+                message = request.Handle();
+                buffer = Encoding.Unicode.GetBytes(message);
+                networkStream.Write(buffer, 0, buffer.Length);
             }
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //}
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             finally
             {
                 networkStream.Close();

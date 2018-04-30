@@ -28,12 +28,12 @@ namespace Server
 
         private void button2_Click(object sender, EventArgs e)
         {
-            int ID = Convert.ToInt32(dataGridView1.SelectedCells[0].Value.ToString());
+            //int ID = Convert.ToInt32(dataGridView1.SelectedCells[0].Value.ToString());
 
-            DatabaseHelper.DeleteQuery("", "journals", "id=" + ID);
+            //DatabaseHelper.DeleteQuery("", "journals", "id=" + ID);
 
-            dataGridView1.DataSource = DatabaseHelper.SelectAdapter();
-            dataGridView1.Columns[0].Visible = false;
+            //dataGridView1.DataSource = DatabaseHelper.SelectAdapter();
+            //dataGridView1.Columns[0].Visible = false;
         }
     }
 }

@@ -16,6 +16,19 @@ namespace Server.Models
         PUT,
     }
 
+    class discipline
+    {
+        public Subject subject;
+        public Theme theme;
+    }
+
+    class disciplineWithMark
+    {
+        public Subject subject;
+        public Theme theme;
+        public int mark;
+    }
+
     public class Request
     {
 
@@ -23,12 +36,6 @@ namespace Server.Models
         public string request;
         public Client client;
         public string body;
-
-        class discipline
-        {
-            public Subject subject;
-            public Theme theme;
-        }
 
         public string Handle()
         {
@@ -83,11 +90,38 @@ namespace Server.Models
                     }
                 case "answer":
                     {
-                        return "";
+                        Answer answer = JsonConvert.DeserializeObject<Answer>(body);
+                        answer.Handle(client);
+
+                        Response response = new Response()
+                        {
+                            response = request,
+                            body = JsonConvert.SerializeObject("OK"),
+                        };
+
+                        return JsonConvert.SerializeObject(response, Formatting.Indented);
                     }
                 case "done":
                     {
-                        return "";
+                        disciplineWithMark disciplineWithMark = JsonConvert.DeserializeObject<disciplineWithMark>(body);
+                        
+                        Journal journal = new Journal()
+                        {
+                            client = client,
+                            subject = disciplineWithMark.subject,
+                            theme = disciplineWithMark.theme,
+                            mark = disciplineWithMark.mark,
+                        };
+
+                        DatabaseHelper.InsertJournal(journal);
+
+                        Response response = new Response()
+                        {
+                            response = request,
+                            body = JsonConvert.SerializeObject("OK"),
+                        };
+
+                        return JsonConvert.SerializeObject(response, Formatting.Indented);
                     }
                 default:
                     {

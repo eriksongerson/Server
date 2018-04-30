@@ -293,43 +293,6 @@ namespace Server.Helpers
 
         #endregion
 
-        public static string SelectQuery(string Attribute, string Table, string Where = null)
-        {
-            string Result = null;
-
-            if (Where != null) { Where = " WHERE " + Where; }
-
-            SQLiteCommand com = new SQLiteCommand()
-            {
-                CommandText = "SELECT " + Attribute + " FROM " + Table + Where + "",
-                Connection = Connection,
-            };
-
-            Connection.Open();
-
-            using (SQLiteDataReader DReader = com.ExecuteReader())
-            {
-                while (DReader.Read())
-                {
-                    Result += DReader[0].ToString() + ";";
-                }
-            }
-
-            Connection.Close();
-
-            if (Result != null)
-            {
-                Result = Result.Substring(0, Result.Length - 1);
-                return Result;
-            }
-            else
-            {
-                throw new SelectQueryException("Result is null");
-            }
-
-        }
-
-
         #endregion
 
         #region Insert
@@ -361,18 +324,12 @@ namespace Server.Helpers
             Connection.Close();
         }
 
-        public static void InsertQuery(string Table, string Attributes, string Condition)
+        public static void InsertJournal(Models.Journal journal)
         {
-
-            SQLiteCommand com = new SQLiteCommand("", Connection)
-            {
-                CommandText = "INSERT INTO " + Table + " (" + Attributes + ")" + " VALUES (" + Condition + ");"
-            };
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO journals (surname, name, id_subject, id_theme, mark) VALUES ('{journal.client.surname}', '{journal.client.name}', {journal.subject.Id}, {journal.theme.Id}, {journal.mark})", Connection);
 
             Connection.Open();
-
-            com.ExecuteNonQuery();
-
+            SQLiteCommand.ExecuteNonQuery();
             Connection.Close();
         }
 
@@ -423,23 +380,6 @@ namespace Server.Helpers
             Connection.Close();
         }
 
-        public static void DeleteQuery(string Attributes, string Table, string Where = null)
-        {
-
-            if (Where != null) { Where = " WHERE " + Where; }
-
-            SQLiteCommand com = new SQLiteCommand("", Connection)
-            {
-                CommandText = "DELETE " + Attributes + " FROM " + Table + Where
-            };
-
-            Connection.Open();
-
-            com.ExecuteNonQuery();
-
-            Connection.Close();
-        }
-
         #endregion
 
         #region Update
@@ -464,25 +404,10 @@ namespace Server.Helpers
 
         public static void UpdateQuestion(Question question)
         {
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"UPDATE questions SET id_subject = {question.Id_subject} , id_theme = {question.Id_theme} , question = ' {question.Name} ', firstOption = ' {question.FirstOption} ', secondOption = ' {question.SecondOption} ', thirdOption = ' {question.ThirdOption} ', fourthOption = ' {question.FourthOption} ', rightOption = {question.RightOption} WHERE id = {question.Id}", Connection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"UPDATE questions SET id_subject = {question.Id_subject} , id_theme = {question.Id_theme} , question = '{question.Name}', firstOption = '{question.FirstOption}', secondOption = '{question.SecondOption}', thirdOption = '{question.ThirdOption}', fourthOption = '{question.FourthOption}', rightOption = {question.RightOption} WHERE id = {question.Id}", Connection);
 
             Connection.Open();
             SQLiteCommand.ExecuteNonQuery();
-            Connection.Close();
-        }
-
-        public static void UpdateQuery(string Table, string Attributes, string Where = null)
-        {
-
-            if (Where != null) { Where = " WHERE " + Where; }
-
-            SQLiteCommand com = new SQLiteCommand("", Connection)
-            {
-                CommandText = "UPDATE " + Table + " SET " + Attributes + Where
-            };
-
-            Connection.Open();
-            com.ExecuteNonQuery();
             Connection.Close();
         }
 
