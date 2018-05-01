@@ -17,10 +17,30 @@ namespace Server.Helpers
         const int port = 32768;
         private static TcpListener tcpListener = new TcpListener(IPAddress.Parse("127.0.0.1"), port);
 
-        public static void StartListener()
+        private static bool status = false;
+        public static bool Status
         {
-            tcpListener.Start();
-            new Thread(() =>
+            set
+            {
+                status = value;
+                if (status)
+                {
+                    StartListener();
+                }
+                else
+                {
+                    StopListener();
+                }
+            }
+            get { return status; }
+        }
+
+        public static void ChangeStatus()
+        {
+            
+        }
+
+        private static Thread processingOfListening = new Thread(() =>
             {
                 while (true)
                 {
@@ -31,11 +51,25 @@ namespace Server.Helpers
                         requestHandler.Process();
                     })).Start();
                 }
-            }).Start();
+            });
+
+
+        public static void StartListener()
+        {
+            tcpListener.Start();
+            if(processingOfListening.ThreadState != ThreadState.Suspended)
+            {
+                processingOfListening.Start();
+            }
+            else
+            {
+                processingOfListening.Resume();
+            }
         }
 
         public static void StopListener()
         {
+            processingOfListening.Suspend();
             tcpListener.Stop();
         }
 

@@ -29,6 +29,12 @@ namespace Server.Models
         public int mark;
     }
 
+    class someObject
+    {
+        public int id;
+        public string name;
+    }
+
     public class Request
     {
 
@@ -57,7 +63,7 @@ namespace Server.Models
                         Response response = new Response()
                         {
                             response = request,
-                            body = JsonConvert.SerializeObject(subjects),
+                            body = JsonConvert.SerializeObject(subjects, Formatting.Indented),
                         };
 
                         return JsonConvert.SerializeObject(response, Formatting.Indented);
@@ -70,7 +76,7 @@ namespace Server.Models
                         Response response = new Response()
                         {
                             response = request,
-                            body = JsonConvert.SerializeObject(themes),
+                            body = JsonConvert.SerializeObject(themes, Formatting.Indented),
                         };
 
                         return JsonConvert.SerializeObject(response, Formatting.Indented);
@@ -83,7 +89,7 @@ namespace Server.Models
                         Response response = new Response()
                         {
                             response = request,
-                            body = JsonConvert.SerializeObject(questions),
+                            body = JsonConvert.SerializeObject(questions, Formatting.Indented),
                         };
 
                         return JsonConvert.SerializeObject(response, Formatting.Indented);
@@ -96,7 +102,7 @@ namespace Server.Models
                         Response response = new Response()
                         {
                             response = request,
-                            body = JsonConvert.SerializeObject("OK"),
+                            body = JsonConvert.SerializeObject("OK", Formatting.Indented),
                         };
 
                         return JsonConvert.SerializeObject(response, Formatting.Indented);
@@ -118,7 +124,7 @@ namespace Server.Models
                         Response response = new Response()
                         {
                             response = request,
-                            body = JsonConvert.SerializeObject("OK"),
+                            body = JsonConvert.SerializeObject("OK", Formatting.Indented),
                         };
 
                         return JsonConvert.SerializeObject(response, Formatting.Indented);

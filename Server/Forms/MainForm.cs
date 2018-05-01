@@ -33,14 +33,7 @@ namespace Server
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //if (Server.get_isEnabled() == false)
-            //{
-            //    StartServer();
-            //}
-            //else if (Server.get_isEnabled() == true)
-            //{
-            //    StopServer();
-            //}
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -51,30 +44,12 @@ namespace Server
 
         private void StartServer()
         {
-            //Server.set_isEnabled(true);
-
-            //запуститьСерверToolStripMenuItem.Enabled = false;
-            //button1.Text = "Остановить сервер";
-            //остановитьСерверToolStripMenuItem.Enabled = true;
-            //label1.Text = "Сервер запущен.";
-            //label2.Text = "0 подключено.";
-            //radioButton2.Enabled = false;
-            //radioButton1.Enabled = false;
+            
         }
 
         private void StopServer()
         {
-            //Server.Clients.Clear();
-            //Server.ClientInfo.Clear();
-            //Server.set_isEnabled(false);
             
-            //запуститьСерверToolStripMenuItem.Enabled = true;
-            //button1.Text = "Запустить сервер";
-            //остановитьСерверToolStripMenuItem.Enabled = false;
-            //label1.Text = "Сервер отключен.";
-            //label2.Text = "";
-            //radioButton2.Enabled = true;
-            //radioButton1.Enabled = true;
         }
 
         private void Main_Leave(object sender, EventArgs e)
@@ -88,35 +63,7 @@ namespace Server
             SocketHelper.StartListener();
 
             label4.Text = SocketHelper.GetLocalIPAddress();
-
-            //timer1.Start();
-
-            //WorkingThread = new Thread(delegate ()
-            //{
-            //    Thread.Sleep(30);
-            //    SocketController.MultiSocket();
-            //});
-            //WorkingThread.Start();
-
-            //while (!WorkingThread.IsAlive) ;
-
         }
-
-        //private void radioButton2_CheckedChanged(object sender, EventArgs e)
-        //{
-        //    if (radioButton2.Checked == true)
-        //    {
-        //        Server.set_isDebug(true);
-        //    }
-        //}
-
-        //private void radioButton1_CheckedChanged(object sender, EventArgs e)
-        //{
-        //    if (radioButton1.Checked == true)
-        //    {
-        //        Server.set_isDebug(false);
-        //    }
-        //}
 
         //private void timer1_Tick(object sender, EventArgs e)
         //{

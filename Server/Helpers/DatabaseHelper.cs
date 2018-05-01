@@ -419,7 +419,7 @@ namespace Server.Helpers
 
             SQLiteCommand com = new SQLiteCommand("", Connection);
 
-            com.CommandText = "SELECT Id, Surname As Фамилия, Name As Имя, Subject As Предмет, Theme As Тема, Mark As Оценка FROM Journal;";
+            com.CommandText = "SELECT id, surname As Фамилия, name As Имя, id_subject As Предмет, id_theme As Тема, mark As Оценка FROM journals;";
 
             SQLiteDataAdapter DAdapter = new SQLiteDataAdapter(com);
 
