@@ -1,4 +1,4 @@
-﻿namespace Server
+﻿namespace Server.Forms
 {
     partial class MainForm
     {
@@ -38,8 +38,6 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.label5 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -47,8 +45,20 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.totalQuestionLabel = new System.Windows.Forms.Label();
+            this.rightQuestionLabel = new System.Windows.Forms.Label();
+            this.currentQuestionLabel = new System.Windows.Forms.Label();
+            this.thirdAnswerView = new System.Windows.Forms.Label();
+            this.secondAnswerView = new System.Windows.Forms.Label();
+            this.firstAnswerView = new System.Windows.Forms.Label();
+            this.themeLabel = new System.Windows.Forms.Label();
+            this.nameLabel = new System.Windows.Forms.Label();
+            this.surnameLable = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -59,7 +69,7 @@
             this.оПрограммеToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(663, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(891, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -125,32 +135,6 @@
             this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
             this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(105, 20);
             this.оПрограммеToolStripMenuItem.Text = "О программе";
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.flowLayoutPanel1.AutoScroll = true;
-            this.flowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.flowLayoutPanel1.Controls.Add(this.label5);
-            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(215, 27);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(436, 412);
-            this.flowLayoutPanel1.TabIndex = 1;
-            this.flowLayoutPanel1.WrapContents = false;
-            // 
-            // label5
-            // 
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(0, 0);
-            this.label5.Margin = new System.Windows.Forms.Padding(0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(386, 30);
-            this.label5.TabIndex = 1;
-            this.label5.Text = "Никто не подключен";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // button1
             // 
@@ -223,12 +207,141 @@
             this.label4.TabIndex = 8;
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.flowLayoutPanel1.AutoScroll = true;
+            this.flowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.flowLayoutPanel1.Controls.Add(this.panel1);
+            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(222, 27);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(657, 412);
+            this.flowLayoutPanel1.TabIndex = 1;
+            this.flowLayoutPanel1.WrapContents = false;
+            // 
+            // panel1
+            // 
+            this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel1.Controls.Add(this.totalQuestionLabel);
+            this.panel1.Controls.Add(this.rightQuestionLabel);
+            this.panel1.Controls.Add(this.currentQuestionLabel);
+            this.panel1.Controls.Add(this.thirdAnswerView);
+            this.panel1.Controls.Add(this.secondAnswerView);
+            this.panel1.Controls.Add(this.firstAnswerView);
+            this.panel1.Controls.Add(this.themeLabel);
+            this.panel1.Controls.Add(this.nameLabel);
+            this.panel1.Controls.Add(this.surnameLable);
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(657, 49);
+            this.panel1.TabIndex = 4;
+            // 
+            // totalQuestionLabel
+            // 
+            this.totalQuestionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.totalQuestionLabel.Location = new System.Drawing.Point(607, 4);
+            this.totalQuestionLabel.Name = "totalQuestionLabel";
+            this.totalQuestionLabel.Size = new System.Drawing.Size(40, 40);
+            this.totalQuestionLabel.TabIndex = 7;
+            this.totalQuestionLabel.Text = "100";
+            this.totalQuestionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // rightQuestionLabel
+            // 
+            this.rightQuestionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.rightQuestionLabel.Location = new System.Drawing.Point(561, 4);
+            this.rightQuestionLabel.Name = "rightQuestionLabel";
+            this.rightQuestionLabel.Size = new System.Drawing.Size(40, 40);
+            this.rightQuestionLabel.TabIndex = 6;
+            this.rightQuestionLabel.Text = "11";
+            this.rightQuestionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // currentQuestionLabel
+            // 
+            this.currentQuestionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.currentQuestionLabel.Location = new System.Drawing.Point(515, 4);
+            this.currentQuestionLabel.Name = "currentQuestionLabel";
+            this.currentQuestionLabel.Size = new System.Drawing.Size(40, 40);
+            this.currentQuestionLabel.TabIndex = 5;
+            this.currentQuestionLabel.Text = "13";
+            this.currentQuestionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // thirdAnswerView
+            // 
+            this.thirdAnswerView.BackColor = System.Drawing.Color.Green;
+            this.thirdAnswerView.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.thirdAnswerView.Location = new System.Drawing.Point(474, 7);
+            this.thirdAnswerView.Name = "thirdAnswerView";
+            this.thirdAnswerView.Size = new System.Drawing.Size(35, 35);
+            this.thirdAnswerView.TabIndex = 4;
+            this.thirdAnswerView.Text = "12";
+            this.thirdAnswerView.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // secondAnswerView
+            // 
+            this.secondAnswerView.BackColor = System.Drawing.Color.Maroon;
+            this.secondAnswerView.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.secondAnswerView.Location = new System.Drawing.Point(433, 7);
+            this.secondAnswerView.Name = "secondAnswerView";
+            this.secondAnswerView.Size = new System.Drawing.Size(35, 35);
+            this.secondAnswerView.TabIndex = 3;
+            this.secondAnswerView.Text = "11";
+            this.secondAnswerView.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // firstAnswerView
+            // 
+            this.firstAnswerView.BackColor = System.Drawing.Color.Green;
+            this.firstAnswerView.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.firstAnswerView.Location = new System.Drawing.Point(392, 7);
+            this.firstAnswerView.Name = "firstAnswerView";
+            this.firstAnswerView.Size = new System.Drawing.Size(35, 35);
+            this.firstAnswerView.TabIndex = 2;
+            this.firstAnswerView.Text = "10";
+            this.firstAnswerView.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // themeLabel
+            // 
+            this.themeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.themeLabel.Location = new System.Drawing.Point(183, 0);
+            this.themeLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.themeLabel.Name = "themeLabel";
+            this.themeLabel.Size = new System.Drawing.Size(206, 49);
+            this.themeLabel.TabIndex = 1;
+            this.themeLabel.Text = "label7";
+            this.themeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // nameLabel
+            // 
+            this.nameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.nameLabel.Location = new System.Drawing.Point(0, 29);
+            this.nameLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.nameLabel.Name = "nameLabel";
+            this.nameLabel.Size = new System.Drawing.Size(183, 20);
+            this.nameLabel.TabIndex = 0;
+            this.nameLabel.Text = "Имя";
+            this.nameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // surnameLable
+            // 
+            this.surnameLable.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.surnameLable.Location = new System.Drawing.Point(0, 0);
+            this.surnameLable.Margin = new System.Windows.Forms.Padding(0);
+            this.surnameLable.Name = "surnameLable";
+            this.surnameLable.Size = new System.Drawing.Size(183, 29);
+            this.surnameLable.TabIndex = 0;
+            this.surnameLable.Text = "Фамилия";
+            this.surnameLable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(663, 451);
+            this.ClientSize = new System.Drawing.Size(891, 451);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -247,6 +360,7 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -269,10 +383,19 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ToolStripMenuItem остановитьСерверToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
-        public System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         public System.Windows.Forms.Label label2;
-        public System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
+        public System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label totalQuestionLabel;
+        private System.Windows.Forms.Label rightQuestionLabel;
+        private System.Windows.Forms.Label currentQuestionLabel;
+        private System.Windows.Forms.Label thirdAnswerView;
+        private System.Windows.Forms.Label secondAnswerView;
+        private System.Windows.Forms.Label firstAnswerView;
+        private System.Windows.Forms.Label themeLabel;
+        private System.Windows.Forms.Label nameLabel;
+        private System.Windows.Forms.Label surnameLable;
     }
 }
 

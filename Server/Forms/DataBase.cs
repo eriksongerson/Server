@@ -85,7 +85,6 @@ namespace Server
             try
             {
                 List<Theme> themes = DatabaseHelper.GetThemes(subject.Id);
-                //string[] StringArray = DatabaseHelper.SelectQuery("Theme", "themes", "Id_s =" + Id_s).Split(';');
 
                 comboBox.Text = "";
                 comboBox.Items.Clear();
@@ -105,13 +104,11 @@ namespace Server
 
         private void UpdateQuestions(string Theme, ComboBox comboBox)
         {
-            //string Id_t = DatabaseHelper.SelectQuery("Id_t", "Theme", "Theme='" + Theme + "'");
             Theme theme = DatabaseHelper.GetThemeByName(Theme);
 
             try
             {
                 List<Question> questions = DatabaseHelper.GetQuestionsByTestAndSubjectId(theme.SubjectId, theme.Id);
-                //string[] StringArray = DatabaseHelper.SelectQuery("Question", "Question", "Id_t=" + Id_t).Split(';');
 
                 comboBox.Text = "";
                 comboBox.Items.Clear();
@@ -176,8 +173,6 @@ namespace Server
         {
             try
             {
-                //string ID = DatabaseHelper.SelectQuery("Id_s", "Subject", "Subject='" + comboBox2.Text + "'");
-
                 UpdateThemes(comboBox2.Text, comboBox3);
             }
             catch(SelectQueryException)
@@ -205,15 +200,12 @@ namespace Server
         {
             if (textBox1.Text != "")
             {
-                //string ID = DatabaseHelper.IdDistributor("Subject", "Id_s");
 
                 Subject subject = new Subject()
                 {
                     Name = textBox1.Text,
                 };
                 DatabaseHelper.InsertSubject(subject);
-
-                //DatabaseHelper.InsertQuery("subjects", "subject", $"'{textBox1.Text}'");
 
                 UpdateSubjects(true, false, false);
 
@@ -230,7 +222,6 @@ namespace Server
         {
             if (textBox2.Text != "")
             {
-                //string Id_s = DatabaseHelper.SelectQuery("Id_s", "Subject", "Subject='" + comboBox1.Text + "'");
                 Subject subject = DatabaseHelper.GetSubjectByName(comboBox1.Text);
 
                 Theme theme = new Theme()
@@ -240,8 +231,6 @@ namespace Server
                 };
 
                 DatabaseHelper.InsertTheme(theme);
-
-                //DatabaseHelper.InsertQuery("themes", "id_subject, theme", subject.Id + ", '" + textBox2.Text + "'");
 
                 textBox2.Enabled = false;
                 button2.Enabled = false;
@@ -274,19 +263,25 @@ namespace Server
                 || (checkBox1.Checked == false && checkBox2.Checked == false && checkBox3.Checked == true && checkBox4.Checked == false) 
                 || (checkBox1.Checked == false && checkBox2.Checked == false && checkBox3.Checked == false && checkBox4.Checked == true)))
             {
+
                 string questionName = textBox3.Text;
+                
+                List<Option> options = new List<Option>();
                 string firstOption = textBox4.Text;
+                Option option = new Option(firstOption, checkBox1.Checked);
+                options.Add(option);
+
                 string secondOption = textBox5.Text;
+                option = new Option(secondOption, checkBox2.Checked);
+                options.Add(option);
+
                 string thirdOption = textBox6.Text;
+                option = new Option(thirdOption, checkBox3.Checked);
+                options.Add(option);
+
                 string fourthOption = textBox7.Text;
-                int rightOption = 0;
-
-                if (checkBox1.Checked == true) { rightOption = 1; }
-                if (checkBox2.Checked == true) { rightOption = 2; }
-                if (checkBox3.Checked == true) { rightOption = 3; }
-                if (checkBox4.Checked == true) { rightOption = 4; }
-
-                //string Id_s = DatabaseHelper.SelectQuery("Id_s", "Subject", "Subject='" + comboBox2.Text + "'");
+                option = new Option(fourthOption, checkBox4.Checked);
+                options.Add(option);
 
                 Theme theme = DatabaseHelper.GetThemeByName(comboBox3.Text);
 
@@ -295,14 +290,8 @@ namespace Server
                     Id_subject = theme.SubjectId,
                     Id_theme = theme.Id,
                     Name = questionName,
-                    FirstOption = firstOption,
-                    SecondOption = secondOption,
-                    ThirdOption = thirdOption,
-                    FourthOption = fourthOption,
-                    RightOption = rightOption,
+                    Options = options,
                 };
-
-                //DatabaseHelper.InsertQuery("questions", "id_subject, id_theme, question, firstOption, secondOption, thirdOption, fourthOption, rightOption", theme.SubjectId + ", " + theme.Id + ", '" + Question + "', '" + FirstOption + "', '" + SecondOption + "', '" + ThirdOption + "', '" + FourthOption + "', " + RightOption);
 
                 DatabaseHelper.InsertQuestion(question);
 
@@ -341,7 +330,6 @@ namespace Server
 
         private void button5_Click(object sender, EventArgs e)
         {
-            //string Id_s = DatabaseHelper.SelectQuery("Id_s", "Subject", "Subject = '" + comboBox10.Text + "'");
             Subject subject = DatabaseHelper.GetSubjectByName(comboBox10.Text);
             
             DatabaseHelper.DeleteSubjectById(subject.Id);
@@ -357,7 +345,6 @@ namespace Server
         private void button6_Click(object sender, EventArgs e)
         {
             Theme theme = DatabaseHelper.GetThemeByName(comboBox12.Text);
-            //string Id_t = DatabaseHelper.SelectQuery("Id_t", "Theme", "Theme='" + comboBox12.Text + "'");
 
             DatabaseHelper.DeleteThemeById(theme.Id);
             UpdateThemes(comboBox11.Text, comboBox12);
@@ -376,10 +363,10 @@ namespace Server
 
         private void button7_Click(object sender, EventArgs e)
         {
-            //string ID = DatabaseHelper.SelectQuery("Id", "Question", "Question='" + comboBox15.Text + "'");
+
             Question question = DatabaseHelper.GetQuestionByName(comboBox15.Text);
             DatabaseHelper.DeleteQuestionById(question.Id);
-            //DatabaseHelper.DeleteQuery("", "question", "id=" + question.Id);
+
             UpdateQuestions(comboBox14.Text, comboBox15);
         }
 
@@ -397,11 +384,11 @@ namespace Server
 
         private void button8_Click(object sender, EventArgs e)
         {
-            //string Id_s = DatabaseHelper.SelectQuery("Id_s", "Subject", "Subject='" + Line + "'");
+
             Subject subject = DatabaseHelper.GetSubjectByName(Line);
             subject.Name = textBoxS.Text;
             DatabaseHelper.UpdateSubject(subject);
-            //DatabaseHelper.UpdateQuery("subjects", "subject = '" + textBoxS.Text + "'", "id = "+ subject.Id);
+
             textBoxS.Text = "";
             comboBox4.Visible = true;
             comboBox4.Text = "";
@@ -443,11 +430,9 @@ namespace Server
 
         private void button10_Click(object sender, EventArgs e)
         {
-            //string Id_t = DatabaseHelper.SelectQuery("Id_t", "Theme", "Theme='" + Line + "'");
             Theme theme = DatabaseHelper.GetThemeByName(Line);
             theme.Name = textBoxT.Text;
             DatabaseHelper.UpdateTheme(theme);
-            //DatabaseHelper.UpdateQuery("themes", "theme = '" + textBoxT.Text + "'", "id = " + theme.Id);
             textBoxT.Text = "";
             comboBox6.Visible = true;
             comboBox6.Text = "";
@@ -506,7 +491,6 @@ namespace Server
             groupBox6.Height = 349;
             this.Height = 661;
 
-
             Line = comboBox9.Text;
             comboBox9.Visible = false;
             groupBox6.Controls.Add(textBoxQ);
@@ -516,44 +500,19 @@ namespace Server
             button12.Enabled = true;
             button4.Enabled = true;
 
-            //Id_q = DatabaseHelper.SelectQuery("Id", "Question", "Question='" + Line + "'");
-
             CurrentQuestion = DatabaseHelper.GetQuestionByName(Line);
             Id_q = CurrentQuestion.Id.ToString();
 
-            //string[] StringArray = DatabaseHelper.SelectQuery("Question + ':' + FirstOption + ':' + SecondOption + ':' + ThirdOption + ':' + FourthOption + ':' + CONVERT(nvarchar, RightOption)", "Question", "Question='" + Line + "'").Split(';');
-
-            //string[] StringLines = StringArray[0].Split(':');
-
             textBoxQ.Text = CurrentQuestion.Name;
-            textBox8.Text = CurrentQuestion.FirstOption;
-            textBox9.Text = CurrentQuestion.SecondOption;
-            textBox10.Text = CurrentQuestion.ThirdOption;
-            textBox11.Text = CurrentQuestion.FourthOption;
 
-            switch (CurrentQuestion.RightOption)
-            {
-                case 1:
-                    {
-                        checkBox5.Checked = true;
-                        break;
-                    }
-                case 2:
-                    {
-                        checkBox6.Checked = true;
-                        break;
-                    }
-                case 3:
-                    {
-                        checkBox7.Checked = true;
-                        break;
-                    }
-                case 4:
-                    {
-                        checkBox8.Checked = true;
-                        break;
-                    }
-            }
+            textBox8.Text = CurrentQuestion.Options[0];
+            checkBox5.Checked = CurrentQuestion.Options[0].isRight;
+            textBox9.Text = CurrentQuestion.Options[1];
+            checkBox6.Checked = CurrentQuestion.Options[1].isRight;
+            textBox10.Text = CurrentQuestion.Options[2];
+            checkBox7.Checked = CurrentQuestion.Options[2].isRight;
+            textBox11.Text = CurrentQuestion.Options[3];
+            checkBox8.Checked = CurrentQuestion.Options[3].isRight;
         }
 
         private void checkBox5_CheckedChanged(object sender, EventArgs e)
@@ -586,22 +545,17 @@ namespace Server
 
         private void button12_Click(object sender, EventArgs e)
         {
-            int RO = 0;//RightOption
-            if (checkBox5.Checked == true) { RO = 1; }
-            if (checkBox6.Checked == true) { RO = 2; }
-            if (checkBox7.Checked == true) { RO = 3; }
-            if (checkBox8.Checked == true) { RO = 4; }
-
             CurrentQuestion.Name = textBoxQ.Text;
-            CurrentQuestion.FirstOption = textBox8.Text;
-            CurrentQuestion.SecondOption = textBox9.Text;
-            CurrentQuestion.ThirdOption = textBox10.Text;
-            CurrentQuestion.FourthOption = textBox11.Text;
-            CurrentQuestion.RightOption = RO;
+            CurrentQuestion.Options = new List<Option>()
+            {
+                new Option(textBox8.Text, checkBox5.Checked),
+                new Option(textBox9.Text, checkBox6.Checked),
+                new Option(textBox10.Text, checkBox7.Checked),
+                new Option(textBox11.Text, checkBox8.Checked),
+            };
 
             DatabaseHelper.UpdateQuestion(CurrentQuestion);
-            //DatabaseHelper.UpdateQuery("questions", "question='" + textBoxQ.Text + "', firstOption='" + textBox8.Text + "', secondOption='" + textBox9.Text + "', thirdOption='" + textBox10.Text + "', fourthOption='" + textBox11.Text + "', rightOption=" + RO + "", "id=" + Id_q);
-
+           
             textBoxQ.Text = "";
             textBox8.Text = "";
             textBox9.Text = "";

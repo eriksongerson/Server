@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 
+using  Server.Forms;
+
 namespace Server
 {
     static class Program

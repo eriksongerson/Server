@@ -1,4 +1,6 @@
-﻿namespace Server.Models
+﻿using System.Collections.Generic;
+
+namespace Server.Models
 {
     public class Question
     {
@@ -6,11 +8,7 @@
         int id_subject;
         int id_theme;
         string name;
-        string firstOption;
-        string secondOption;
-        string thirdOption;
-        string fourthOption;
-        int rightOption;
+        List<Option> options;
 
         public int Id
         {
@@ -32,44 +30,21 @@
             set { this.name = value; }
             get { return this.name; }
         }
-        public string FirstOption
+
+        public List<Option> Options
         {
-            set { this.firstOption = value; }
-            get { return this.firstOption; }
-        }
-        public string SecondOption
-        {
-            set { this.secondOption = value; }
-            get { return this.secondOption; }
-        }
-        public string ThirdOption
-        {
-            set { this.thirdOption = value; }
-            get { return this.thirdOption; }
-        }
-        public string FourthOption
-        {
-            set { this.fourthOption = value; }
-            get { return this.fourthOption; }
-        }
-        public int RightOption
-        {
-            set { this.rightOption = value; }
-            get { return this.rightOption; }
+            set { this.options = value; }
+            get { return this.options; }
         }
 
         public Question() { }
-        public Question(int id, int id_subject, int id_theme, string name, string firstOption, string secondOption, string thirdOption, string fourthOption, int rightOption)
+        public Question(int id, int id_subject, int id_theme, string name, List<Option> options)
         {
             this.id = id;
             this.id_subject = id_subject;
             this.id_theme = id_theme;
             this.name = name;
-            this.firstOption = firstOption;
-            this.secondOption = secondOption;
-            this.thirdOption = thirdOption;
-            this.fourthOption = fourthOption;
-            this.rightOption = rightOption;
+            this.options = options;
         }
 
     }

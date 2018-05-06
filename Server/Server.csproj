@@ -63,6 +63,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\Fragments\ClientFragment.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Forms\DataBase.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,7 +89,9 @@
     <Compile Include="Helpers\SocketHelper.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\Client.cs" />
+    <Compile Include="Models\ClientList.cs" />
     <Compile Include="Models\Journal.cs" />
+    <Compile Include="Models\Option.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\Response.cs" />
     <Compile Include="Program.cs" />
@@ -97,6 +102,9 @@
     <Compile Include="Models\Theme.cs" />
     <EmbeddedResource Include="Forms\DataBase.resx">
       <DependentUpon>DataBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Fragments\ClientFragment.resx">
+      <DependentUpon>ClientFragment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Journal.resx">
       <DependentUpon>Journal.cs</DependentUpon>

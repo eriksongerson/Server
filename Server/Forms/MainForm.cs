@@ -1,20 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Threading;
 using System.Windows.Forms;
 
 using Server.Helpers;
+using Server.Models;
 
-namespace Server
+namespace Server.Forms
 {
     public partial class MainForm : Form
     {
+        private static ClientList _clients = new ClientList();
 
-        //https://msdn.microsoft.com/ru-ru/library/7a2f3ay4(v=vs.80).aspx
-
-        //Label NoOneConnected = new Label();
-        //public static Thread WorkingThread = null;
+        public ClientList Clients
+        {
+            set
+            {
+                _clients = value;
+                _clients.onLengthChanged += (sender, e) => { Clients = Clients; }; // Событие само по себе костыльное. Но оно работает.
+                if (_clients != null)
+                {
+                    flowLayoutPanel1.Controls.Clear();
+                    foreach (Client client in _clients)
+                    {
+                        
+                    }
+                }
+            }
+            get { return _clients; }
+        }
 
         public MainForm()
         {
@@ -23,33 +35,36 @@ namespace Server
 
         private void запуститьСерверToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            StartServer();
+            ChangeStatus();
         }
 
         private void остановитьСерверToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            StopServer();
+            ChangeStatus();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
+            ChangeStatus();
+        }
+
+        private void ChangeStatus()
+        {
+            SocketHelper.ChangeStatus();
+            if (SocketHelper.Status)
+            {
+                
+            }
+            else
+            {
+
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            DataBase DBForm = new DataBase();
-            DBForm.Show();
-        }
-
-        private void StartServer()
-        {
-            
-        }
-
-        private void StopServer()
-        {
-            
+            DataBase dataBaseForm = new DataBase();
+            dataBaseForm.Show();
         }
 
         private void Main_Leave(object sender, EventArgs e)
@@ -62,7 +77,7 @@ namespace Server
         {
             SocketHelper.StartListener();
 
-            label4.Text = SocketHelper.GetLocalIPAddress();
+            label4.Text = SocketHelper.GetLocalIpAddress();
         }
 
         //private void timer1_Tick(object sender, EventArgs e)
@@ -115,8 +130,8 @@ namespace Server
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Journal J = new Journal();
-            J.Show();
+            Journal journal = new Journal();
+            journal.Show();
         }
     }
 }

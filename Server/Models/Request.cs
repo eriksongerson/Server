@@ -1,38 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 using Newtonsoft.Json;
 using Server.Helpers;
 
 namespace Server.Models
 {
-    public enum Method
+    class Discipline
     {
-        GET,
-        POST,
-        PUT,
+        private Subject _subject;
+        private Theme _theme;
+
+        public Subject Subject { get => _subject; set => _subject = value; }
+        public Theme Theme { get => _theme; set => _theme = value; }
     }
 
-    class discipline
+    class DisciplineWithMark
     {
-        public Subject subject;
-        public Theme theme;
-    }
+        private Subject _subject;
+        private Theme _theme;
+        private int _mark;
 
-    class disciplineWithMark
-    {
-        public Subject subject;
-        public Theme theme;
-        public int mark;
-    }
-
-    class someObject
-    {
-        public int id;
-        public string name;
+        public Subject Subject { get => _subject; set => _subject = value; }
+        public Theme Theme { get => _theme; set => _theme = value; }
+        public int Mark { get => _mark; set => _mark = value; }
     }
 
     public class Request
@@ -45,6 +35,7 @@ namespace Server.Models
 
         public string Handle()
         {
+
             switch (request)
             {
                 case "connect":
@@ -83,8 +74,8 @@ namespace Server.Models
                     }
                 case "getQuestions":
                     {
-                        discipline discipline = JsonConvert.DeserializeObject<discipline>(body);
-                        List<Question> questions = DatabaseHelper.GetQuestionsByTestAndSubjectId(discipline.subject.Id, discipline.theme.Id);
+                        Discipline discipline = JsonConvert.DeserializeObject<Discipline>(body);
+                        List<Question> questions = DatabaseHelper.GetQuestionsByTestAndSubjectId(discipline.Subject.Id, discipline.Theme.Id);
 
                         Response response = new Response()
                         {
@@ -109,14 +100,14 @@ namespace Server.Models
                     }
                 case "done":
                     {
-                        disciplineWithMark disciplineWithMark = JsonConvert.DeserializeObject<disciplineWithMark>(body);
+                        DisciplineWithMark disciplineWithMark = JsonConvert.DeserializeObject<DisciplineWithMark>(body);
                         
                         Journal journal = new Journal()
                         {
                             client = client,
-                            subject = disciplineWithMark.subject,
-                            theme = disciplineWithMark.theme,
-                            mark = disciplineWithMark.mark,
+                            subject = disciplineWithMark.Subject,
+                            theme = disciplineWithMark.Theme,
+                            mark = disciplineWithMark.Mark,
                         };
 
                         DatabaseHelper.InsertJournal(journal);

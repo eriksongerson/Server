@@ -185,16 +185,16 @@ namespace Server.Helpers
                     question.Id_subject = convertionInt(dataReader[1].ToString());
                     question.Id_theme = convertionInt(dataReader[2].ToString());
                     question.Name = dataReader[3].ToString();
-                    question.FirstOption = dataReader[4].ToString();
-                    question.SecondOption = dataReader[5].ToString();
-                    question.ThirdOption = dataReader[6].ToString();
-                    question.FourthOption = dataReader[7].ToString();
-                    question.RightOption = convertionInt(dataReader[8].ToString());
                     questions.Add(question);
                 }
             }
 
             Connection.Close();
+
+            foreach (Question question in questions)
+            {
+                question.Options = GetOptionsByQuestionId(question.Id);
+            }
 
             return questions;
         }
@@ -217,16 +217,16 @@ namespace Server.Helpers
                     question.Id_subject = convertionInt(dataReader[1].ToString());
                     question.Id_theme = convertionInt(dataReader[2].ToString());
                     question.Name = dataReader[3].ToString();
-                    question.FirstOption = dataReader[4].ToString();
-                    question.SecondOption = dataReader[5].ToString();
-                    question.ThirdOption = dataReader[6].ToString();
-                    question.FourthOption = dataReader[7].ToString();
-                    question.RightOption = convertionInt(dataReader[8].ToString());
                     questions.Add(question);
                 }
             }
 
             Connection.Close();
+
+            foreach (Question question in questions)
+            {
+                question.Options = GetOptionsByQuestionId(question.Id);
+            }
 
             return questions;
         }
@@ -248,15 +248,12 @@ namespace Server.Helpers
                     question.Id_subject = convertionInt(dataReader[1].ToString());
                     question.Id_theme = convertionInt(dataReader[2].ToString());
                     question.Name = dataReader[3].ToString();
-                    question.FirstOption = dataReader[4].ToString();
-                    question.SecondOption = dataReader[5].ToString();
-                    question.ThirdOption = dataReader[6].ToString();
-                    question.FourthOption = dataReader[7].ToString();
-                    question.RightOption = convertionInt(dataReader[8].ToString());
                 }
             }
 
             Connection.Close();
+
+            question.Options = GetOptionsByQuestionId(question.Id);
 
             return question;
         }
@@ -278,17 +275,39 @@ namespace Server.Helpers
                     question.Id_subject = convertionInt(dataReader[1].ToString());
                     question.Id_theme = convertionInt(dataReader[2].ToString());
                     question.Name = dataReader[3].ToString();
-                    question.FirstOption = dataReader[4].ToString();
-                    question.SecondOption = dataReader[5].ToString();
-                    question.ThirdOption = dataReader[6].ToString();
-                    question.FourthOption = dataReader[7].ToString();
-                    question.RightOption = convertionInt(dataReader[8].ToString());
                 }
             }
 
             Connection.Close();
 
+            question.Options = GetOptionsByQuestionId(question.Id);
+
             return question;
+        }
+
+        public static List<Option> GetOptionsByQuestionId(int id)
+        {
+            List<Option> options = new List<Option>();
+
+            SQLiteCommand command = new SQLiteCommand($"SELECT id, id_question, option, isRight FROM options WHERE id_question = {id}", Connection);
+
+            Connection.Open();
+            using (SQLiteDataReader dataReader = command.ExecuteReader())
+            {
+                while (dataReader.Read())
+                {
+                    Option option = new Option();
+                    option.id = convertionInt(dataReader[0].ToString());
+                    option.id_question = convertionInt(dataReader[1].ToString());
+                    option.option = dataReader[2].ToString();
+                    option.isRight = Convert.ToBoolean(dataReader[3]);
+                    options.Add(option);
+                }
+            }
+
+            Connection.Close();
+
+            return options;
         }
 
         #endregion
@@ -317,11 +336,43 @@ namespace Server.Helpers
 
         public static void InsertQuestion(Question question)
         {
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO questions (id_subject, id_theme, question, firstOption, secondOption, thirdOption, fourthOption, rightOption) VALUES ({question.Id_subject}, {question.Id_theme}, '{question.Name}', '{question.FirstOption}', '{question.SecondOption}', '{question.ThirdOption}', '{question.FourthOption}', {question.RightOption})", Connection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO questions (id_subject, id_theme, question) VALUES ({question.Id_subject}, {question.Id_theme}, '{question.Name}')", Connection);
 
             Connection.Open();
             SQLiteCommand.ExecuteNonQuery();
             Connection.Close();
+
+            int lastInsertedId = 0;
+            SQLiteCommand.CommandText = "SELECT last_insert_rowid() FROM questions";
+            Connection.Open();
+
+            using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
+            {
+                while (dataReader.Read())
+                {
+                    lastInsertedId = convertionInt(dataReader[0].ToString());
+                }
+            }
+
+            Connection.Close();
+
+            foreach (Option option in question.Options)
+            {
+                option.id_question = lastInsertedId;
+            }
+            InsertOptions(question.Options);
+        }
+
+        public static void InsertOptions(List<Option> options)
+        {
+            foreach (Option option in options)
+            {
+                SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO options (id_question, option, isRight) VALUES ({option.id_question}, '{option.option}', {option.isRight})", Connection);
+
+                Connection.Open();
+                SQLiteCommand.ExecuteNonQuery();
+                Connection.Close();
+            }
         }
 
         public static void InsertJournal(Models.Journal journal)
@@ -404,11 +455,30 @@ namespace Server.Helpers
 
         public static void UpdateQuestion(Question question)
         {
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"UPDATE questions SET id_subject = {question.Id_subject} , id_theme = {question.Id_theme} , question = '{question.Name}', firstOption = '{question.FirstOption}', secondOption = '{question.SecondOption}', thirdOption = '{question.ThirdOption}', fourthOption = '{question.FourthOption}', rightOption = {question.RightOption} WHERE id = {question.Id}", Connection);
+            SQLiteCommand SQLiteCommand =
+                new SQLiteCommand(
+                    $"UPDATE questions SET id_subject = {question.Id_subject} , id_theme = {question.Id_theme} , question = '{question.Name}' WHERE id = {question.Id}",
+                    Connection);
 
             Connection.Open();
             SQLiteCommand.ExecuteNonQuery();
             Connection.Close();
+
+            UpdateOptions(question.Options);
+        }
+
+        public static void UpdateOptions(List<Option> options)
+        {
+            foreach (Option option in options)
+            {
+                SQLiteCommand command = new SQLiteCommand(
+                    $"UPDATE options SET option = '{option.option}', isRight = {option.isRight} WHERE id = {option.id}",
+                    Connection);
+
+                Connection.Open();
+                command.ExecuteNonQuery();
+                Connection.Close();
+            }
         }
 
         #endregion

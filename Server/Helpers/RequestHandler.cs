@@ -50,6 +50,15 @@ namespace Server.Helpers
                 Request request = JsonConvert.DeserializeObject<Request> (message);
                     
                 message = request.Handle();
+                if (message.Length == 0)
+                {
+                    Response response = new Response()
+                    {
+                        response = "problem",
+                        body = JsonConvert.SerializeObject(null, Formatting.Indented),
+                    };
+                    message = JsonConvert.SerializeObject(response, Formatting.Indented);
+                }
                 buffer = Encoding.Unicode.GetBytes(message);
                 networkStream.Write(buffer, 0, buffer.Length);
             }
