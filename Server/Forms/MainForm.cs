@@ -53,11 +53,11 @@ namespace Server.Forms
             SocketHelper.ChangeStatus();
             if (SocketHelper.Status)
             {
-                
+                button1.Text = "Остановить сервер";
             }
             else
             {
-
+                button1.Text = "Запустить сервер";
             }
         }
 
@@ -75,7 +75,7 @@ namespace Server.Forms
 
         private void Main_Load(object sender, EventArgs e)
         {
-            SocketHelper.StartListener();
+            //SocketHelper.StartListener();
 
             label4.Text = SocketHelper.GetLocalIpAddress();
         }

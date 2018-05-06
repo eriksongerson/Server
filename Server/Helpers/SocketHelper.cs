@@ -32,25 +32,31 @@ namespace Server.Helpers
             Status = !Status;
         }
 
+        private static AutoResetEvent autoResetEvent = new AutoResetEvent(true);
         // TODO: нужно научиться приостанавливать поток
         private static Thread processingOfListening = new Thread(() =>
             {
                 while (true)
                 {
-                    TcpClient tcpClient;
-                    try
+                    autoResetEvent.WaitOne();
+                    while (Status)
                     {
-                        tcpClient = tcpListener.AcceptTcpClient();
-
-                        new Thread(() => 
+                        //Thread.Sleep(30);
+                        TcpClient tcpClient;
+                        try
                         {
-                            RequestHandler requestHandler = new RequestHandler(tcpClient);
-                            requestHandler.Process();
-                        }).Start();
-                    }
-                    catch (SocketException)
-                    {
-                        // TODO: не оставлять пустым
+                            tcpClient = tcpListener.AcceptTcpClient();
+
+                            new Thread(() => 
+                            {
+                                RequestHandler requestHandler = new RequestHandler(tcpClient);
+                                requestHandler.Process();
+                            }).Start();
+                        }
+                        catch (SocketException)
+                        {
+                            // TODO: не оставлять пустым
+                        }
                     }
                 }
             });
@@ -59,7 +65,11 @@ namespace Server.Helpers
         public static void StartListener()
         {
             tcpListener.Start();
-            processingOfListening.Start();
+            if(processingOfListening.ThreadState == ThreadState.Unstarted)
+            {
+                processingOfListening.Start();
+            }
+            autoResetEvent.Set();
         }
 
         public static void StopListener()
