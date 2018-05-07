@@ -40,6 +40,7 @@ namespace Server.Models
             {
                 case "connect":
                     {
+
                         //Server.AddClient(this.client);
                         return "";
                     }
@@ -82,6 +83,44 @@ namespace Server.Models
                             response = request,
                             body = JsonConvert.SerializeObject(questions, Formatting.Indented),
                         };
+
+                        /*
+                        [
+                            {
+                            "Id": 1,
+                            "Id_subject": 1,
+                            "Id_theme": 1,
+                            "Name": "Какая версия Visual Studio последняя?",
+                            "Options": [
+                                {
+                                    "id": 1,
+                                    "id_question": 1,
+                                    "option": "2008",
+                                    "isRight": false
+                                },
+                                {
+                                    "id": 2,
+                                    "id_question": 1,
+                                    "option": "2003",
+                                    "isRight": false
+                                },
+                                {
+                                    "id": 3,
+                                    "id_question": 1,
+                                    "option": "2012",
+                                    "isRight": false
+                                },
+                                {
+                                    "id": 4,
+                                    "id_question": 1,
+                                    "option": "2017",
+                                    "isRight": true
+                                }
+                            ],
+                            "Type": 1
+                            }
+                        ]"
+                         */
 
                         return JsonConvert.SerializeObject(response, Formatting.Indented);
                     }

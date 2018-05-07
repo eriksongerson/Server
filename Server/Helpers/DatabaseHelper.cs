@@ -171,8 +171,7 @@ namespace Server.Helpers
         {
             List<Question> questions = new List<Question>();
 
-            // TODO: Переделать запрос
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT * FROM questions WHERE id_subject={SubjectId} AND id_theme={ThemeId}", Connection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, id_subject, id_theme, question, type FROM questions WHERE id_subject={SubjectId} AND id_theme={ThemeId}", Connection);
 
             Connection.Open();
 
@@ -185,6 +184,7 @@ namespace Server.Helpers
                     question.Id_subject = convertionInt(dataReader[1].ToString());
                     question.Id_theme = convertionInt(dataReader[2].ToString());
                     question.Name = dataReader[3].ToString();
+                    question.Type = (Models.Type) convertionInt(dataReader[4].ToString());
                     questions.Add(question);
                 }
             }
@@ -203,8 +203,7 @@ namespace Server.Helpers
         {
             List<Question> questions = new List<Question>();
 
-            // TODO: Переделать запрос
-            SQLiteCommand SQLiteCommand = new SQLiteCommand("SELECT * FROM questions", Connection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand("SELECT id, id_subject, id_theme, question, type FROM questions", Connection);
 
             Connection.Open();
 
@@ -217,6 +216,7 @@ namespace Server.Helpers
                     question.Id_subject = convertionInt(dataReader[1].ToString());
                     question.Id_theme = convertionInt(dataReader[2].ToString());
                     question.Name = dataReader[3].ToString();
+                    question.Type = (Models.Type) convertionInt(dataReader[4].ToString());
                     questions.Add(question);
                 }
             }
@@ -235,8 +235,7 @@ namespace Server.Helpers
         {
             Question question = new Question();
 
-            // TODO: Переделать запрос
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT * FROM questions WHERE id={id}", Connection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, id_subject, id_theme, question, type FROM questions WHERE id={id}", Connection);
 
             Connection.Open();
 
@@ -248,6 +247,7 @@ namespace Server.Helpers
                     question.Id_subject = convertionInt(dataReader[1].ToString());
                     question.Id_theme = convertionInt(dataReader[2].ToString());
                     question.Name = dataReader[3].ToString();
+                    question.Type = (Models.Type) convertionInt(dataReader[4].ToString());
                 }
             }
 
@@ -262,8 +262,7 @@ namespace Server.Helpers
         {
             Question question = new Question();
 
-            // TODO: Переделать запрос
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT * FROM questions WHERE question='{name}'", Connection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, id_subject, id_theme, question, type FROM questions WHERE question='{name}'", Connection);
 
             Connection.Open();
 
@@ -275,6 +274,7 @@ namespace Server.Helpers
                     question.Id_subject = convertionInt(dataReader[1].ToString());
                     question.Id_theme = convertionInt(dataReader[2].ToString());
                     question.Name = dataReader[3].ToString();
+                    question.Type = (Models.Type) convertionInt(dataReader[4].ToString());
                 }
             }
 
@@ -336,7 +336,7 @@ namespace Server.Helpers
 
         public static void InsertQuestion(Question question)
         {
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO questions (id_subject, id_theme, question) VALUES ({question.Id_subject}, {question.Id_theme}, '{question.Name}')", Connection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO questions (id_subject, id_theme, question, type) VALUES ({question.Id_subject}, {question.Id_theme}, '{question.Name}', {question.Type})", Connection);
 
             Connection.Open();
             SQLiteCommand.ExecuteNonQuery();
@@ -367,7 +367,7 @@ namespace Server.Helpers
         {
             foreach (Option option in options)
             {
-                SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO options (id_question, option, isRight) VALUES ({option.id_question}, '{option.option}', {option.isRight})", Connection);
+                SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO options (id_question, option, isRight) VALUES ({option.id_question}, '{option.option}', '{Convert.ToInt32(option.isRight)}')", Connection);
 
                 Connection.Open();
                 SQLiteCommand.ExecuteNonQuery();
@@ -457,7 +457,7 @@ namespace Server.Helpers
         {
             SQLiteCommand SQLiteCommand =
                 new SQLiteCommand(
-                    $"UPDATE questions SET id_subject = {question.Id_subject} , id_theme = {question.Id_theme} , question = '{question.Name}' WHERE id = {question.Id}",
+                    $"UPDATE questions SET id_subject = {question.Id_subject} , id_theme = {question.Id_theme} , question = '{question.Name}', type = {question.Type} WHERE id = {question.Id}",
                     Connection);
 
             Connection.Open();
@@ -472,7 +472,7 @@ namespace Server.Helpers
             foreach (Option option in options)
             {
                 SQLiteCommand command = new SQLiteCommand(
-                    $"UPDATE options SET option = '{option.option}', isRight = {option.isRight} WHERE id = {option.id}",
+                    $"UPDATE options SET option = '{option.option}', isRight = {Convert.ToInt32(option.isRight)} WHERE id = {option.id}",
                     Connection);
 
                 Connection.Open();

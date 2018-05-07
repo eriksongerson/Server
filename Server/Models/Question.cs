@@ -9,6 +9,7 @@ namespace Server.Models
         int id_theme;
         string name;
         List<Option> options;
+        Type type = Type.single;
 
         public int Id
         {
@@ -30,21 +31,26 @@ namespace Server.Models
             set { this.name = value; }
             get { return this.name; }
         }
-
         public List<Option> Options
         {
             set { this.options = value; }
             get { return this.options; }
         }
+        public Type Type
+        {
+            set { this.type = value; }
+            get { return this.type; }
+        }
 
         public Question() { }
-        public Question(int id, int id_subject, int id_theme, string name, List<Option> options)
+        public Question(int id, int id_subject, int id_theme, string name, List<Option> options, Type type)
         {
             this.id = id;
             this.id_subject = id_subject;
             this.id_theme = id_theme;
             this.name = name;
             this.options = options;
+            this.type = type;
         }
 
     }

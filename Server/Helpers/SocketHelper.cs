@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using Server.Models;
 
 namespace Server.Helpers
 {
@@ -9,7 +10,21 @@ namespace Server.Helpers
         private const int port = 32768;
         private static TcpListener tcpListener = new TcpListener(IPAddress.Parse(GetLocalIpAddress()), port);
 
-        private static bool _status = false;
+        private static ClientList _clients = new ClientList();
+
+        public static ClientList Clients
+        {
+            set
+            {
+                _clients = value; 
+            }
+            get
+            {
+                return _clients;
+            }
+        }
+
+        private static volatile bool _status = false;
         public static bool Status
         {
             set
@@ -36,12 +51,12 @@ namespace Server.Helpers
         // TODO: нужно научиться приостанавливать поток
         private static Thread processingOfListening = new Thread(() =>
             {
+                processingOfListening.IsBackground = true;
                 while (true)
                 {
                     autoResetEvent.WaitOne();
                     while (Status)
                     {
-                        //Thread.Sleep(30);
                         TcpClient tcpClient;
                         try
                         {

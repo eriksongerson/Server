@@ -8,25 +8,23 @@ namespace Server.Forms
 {
     public partial class MainForm : Form
     {
-        private static ClientList _clients = new ClientList();
-
-        public ClientList Clients
-        {
-            set
-            {
-                _clients = value;
-                _clients.onLengthChanged += (sender, e) => { Clients = Clients; }; // Событие само по себе костыльное. Но оно работает.
-                if (_clients != null)
-                {
-                    flowLayoutPanel1.Controls.Clear();
-                    foreach (Client client in _clients)
-                    {
+        //public ClientList Clients
+        //{
+        //    set
+        //    {
+        //        _clients = value;
+        //        _clients.onLengthChanged += (sender, e) => { Clients = Clients; }; // Событие само по себе костыльное. Но оно работает.
+        //        if (_clients != null)
+        //        {
+        //            flowLayoutPanel1.Controls.Clear();
+        //            foreach (Client client in _clients)
+        //            {
                         
-                    }
-                }
-            }
-            get { return _clients; }
-        }
+        //            }
+        //        }
+        //    }
+        //    get { return _clients; }
+        //}
 
         public MainForm()
         {
