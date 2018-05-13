@@ -35,18 +35,17 @@ namespace Server.Models
 
         public string Handle()
         {
-
             switch (request)
             {
                 case "connect":
                     {
-
-                        //Server.AddClient(this.client);
-                        return "";
+                        SocketHelper.Clients.Add(client);
+                        return JsonConvert.SerializeObject("OK", Formatting.Indented);
                     }
                 case "disconnect": 
                     {
-                        return "";
+                        SocketHelper.Clients.Remove(client);
+                        return JsonConvert.SerializeObject("OK", Formatting.Indented);;
                     }
                 case "getSubjects": 
                     {

@@ -34,49 +34,49 @@ namespace Server
         }
 
         // TODO: Переписать
-        private void UpdateSubjects(bool isAdd, bool isEdit, bool isDelete)
-        {
-            List<Subject> subjects = DatabaseHelper.GetSubjects();
+        //private void UpdateSubjects(bool isAdd, bool isEdit, bool isDelete)
+        //{
+        //    List<Subject> subjects = DatabaseHelper.GetSubjects();
            
-            if(isAdd == true)
-            {
-                comboBox1.Items.Clear();
-                comboBox2.Items.Clear();
-            }
-            if(isEdit == true)
-            {
-                comboBox4.Items.Clear();
-                comboBox5.Items.Clear();
-                comboBox7.Items.Clear();
-            }
-            if(isDelete == true)
-            {
-                comboBox10.Items.Clear();
-                comboBox11.Items.Clear();
-                comboBox13.Items.Clear();
-            }
+        //    if(isAdd == true)
+        //    {
+        //        comboBox1.Items.Clear();
+        //        comboBox2.Items.Clear();
+        //    }
+        //    if(isEdit == true)
+        //    {
+        //        comboBox4.Items.Clear();
+        //        comboBox5.Items.Clear();
+        //        comboBox7.Items.Clear();
+        //    }
+        //    if(isDelete == true)
+        //    {
+        //        comboBox10.Items.Clear();
+        //        comboBox11.Items.Clear();
+        //        comboBox13.Items.Clear();
+        //    }
 
-            foreach (var subject in subjects)
-            {
-                if (isAdd == true)
-                {
-                    comboBox1.Items.Add(subject.Name);
-                    comboBox2.Items.Add(subject.Name);
-                }
-                if (isEdit == true)
-                {
-                    comboBox4.Items.Add(subject.Name);
-                    comboBox5.Items.Add(subject.Name);
-                    comboBox7.Items.Add(subject.Name);
-                }
-                if (isDelete == true)
-                {
-                    comboBox10.Items.Add(subject.Name);
-                    comboBox11.Items.Add(subject.Name);
-                    comboBox13.Items.Add(subject.Name);
-                }
-            }
-        }
+        //    foreach (var subject in subjects)
+        //    {
+        //        if (isAdd == true)
+        //        {
+        //            comboBox1.Items.Add(subject.Name);
+        //            comboBox2.Items.Add(subject.Name);
+        //        }
+        //        if (isEdit == true)
+        //        {
+        //            comboBox4.Items.Add(subject.Name);
+        //            comboBox5.Items.Add(subject.Name);
+        //            comboBox7.Items.Add(subject.Name);
+        //        }
+        //        if (isDelete == true)
+        //        {
+        //            comboBox10.Items.Add(subject.Name);
+        //            comboBox11.Items.Add(subject.Name);
+        //            comboBox13.Items.Add(subject.Name);
+        //        }
+        //    }
+        //}
 
         private void UpdateThemes(string Subject, ComboBox comboBox)
         {
@@ -126,40 +126,59 @@ namespace Server
             }
         }
 
+        private void UpdateViews()
+        {
+            List<Subject> subjects = DatabaseHelper.GetSubjects();
+
+            comboBox1.Items.Clear();
+            comboBox2.Items.Clear();
+            comboBox4.Items.Clear();
+            comboBox5.Items.Clear();
+            comboBox7.Items.Clear();
+            foreach (Subject subject in subjects)
+            {
+                comboBox1.Items.Add(subject);
+                comboBox2.Items.Add(subject);
+                comboBox4.Items.Add(subject);
+                comboBox5.Items.Add(subject);
+                comboBox7.Items.Add(subject);
+            }
+        }
+
         private void DataBase_Load(object sender, EventArgs e)
         {
-            TabControl1.Height = 594;
-            groupBox9.Height = 349;
-            this.Height = 661;
+            //TabControl1.Height = 594;
+            //groupBox3.Height = 349;
+            //this.Height = 729;
 
-            UpdateSubjects(true,false,false);
+            UpdateViews();
         }
 
         private void tabControl1_Selected(object sender, TabControlEventArgs e)
         {
             if(TabControl1.SelectedTab.Name == "AddTab")
             {
-                TabControl1.Height = 594;
-                groupBox9.Height = 349;
-                this.Height = 661;
+                //TabControl1.Height = 594;
+                //groupBox3.Height = 349;
+                //this.Height = 729;
 
-                UpdateSubjects(true, false, false);
+                UpdateViews();
             }
             if (TabControl1.SelectedTab.Name == "EditTab")
             {
-                TabControl1.Height = 396;
-                groupBox6.Height = 154;
-                this.Height = 460;
+                //TabControl1.Height = 396;
+                //groupBox6.Height = 154;
+                //this.Height = 460;
 
-                UpdateSubjects(false, true, false);
+                UpdateViews();
             }
             if (TabControl1.SelectedTab.Name == "DeleteTab")
             {
-                TabControl1.Height = 396;
-                groupBox9.Height = 154;
-                this.Height = 460;
+                //TabControl1.Height = 396;
+                //groupBox9.Height = 154;
+                //this.Height = 460;
 
-                UpdateSubjects(false, false, true);
+                UpdateViews();
             }
         }
 
@@ -185,15 +204,17 @@ namespace Server
         {
             comboBox3.Enabled = true;
             textBox3.Enabled = true;
-            textBox4.Enabled = true;
-            textBox5.Enabled = true;
-            textBox6.Enabled = true;
-            textBox7.Enabled = true;
-            checkBox1.Enabled = true;
-            checkBox2.Enabled = true;
-            checkBox3.Enabled = true;
-            checkBox4.Enabled = true;
+            addSingleChoiceFirstOptionTextBox.Enabled = true;
+            addSingleChoiceSecondOptionTextBox.Enabled = true;
+            addSingleChoiceThirdOptionTextBox.Enabled = true;
+            addSingleChoiceFourthOptionTextBox.Enabled = true;
+            addSingleChoiceFirstOptionRadioButton.Enabled = true;
+            addSingleChoiceSecondOptionRadioButton.Enabled = true;
+            addSingleChoiceThirdOptionRadioButton.Enabled = true;
+            addSingleChoiceFourthOptionRadioButton.Enabled = true;
             button3.Enabled = true;
+            addTypeComboBox.Enabled = true;
+            addTypeComboBox.SelectedIndex = 0;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -207,7 +228,7 @@ namespace Server
                 };
                 DatabaseHelper.InsertSubject(subject);
 
-                UpdateSubjects(true, false, false);
+                UpdateViews();
 
                 textBox1.Enabled = false;
                 button1.Enabled = false;
@@ -255,35 +276,144 @@ namespace Server
             button2.Enabled = true;
         }
 
+        private List<Option> ConfigureAddOptions()
+        {
+            List<Option> options = new List<Option>();
+
+            Models.Type type = (Models.Type)addTypeComboBox.SelectedIndex + 1;
+
+            switch (type)
+            {
+                    case Models.Type.single: {      // Вопрос на одиночный ответ
+                        
+                        // Первый вариант ответа
+                        Option option = new Option()
+                        {
+                            option = addSingleChoiceFirstOptionTextBox.Text,
+                            isRight = addSingleChoiceFirstOptionRadioButton.Checked,
+                        };
+                        options.Add(option);
+
+                        // Второй вариант ответа
+                        option = new Option()
+                        {
+                            option = addSingleChoiceSecondOptionTextBox.Text,
+                            isRight = addSingleChoiceSecondOptionRadioButton.Checked,
+                        };
+                        options.Add(option);
+
+                        // Третий вариант ответа
+                        option = new Option()
+                        {
+                            option = addSingleChoiceThirdOptionTextBox.Text,
+                            isRight = addSingleChoiceThirdOptionRadioButton.Checked,
+                        };
+                        options.Add(option);
+
+                        // Четвертый вариант ответа
+                        option = new Option()
+                        {
+                            option = addSingleChoiceFourthOptionTextBox.Text,
+                            isRight = addSingleChoiceFourthOptionRadioButton.Checked,
+                        };
+                        options.Add(option);
+
+                        break;
+                    }
+                    case Models.Type.multiple: {    //Вопрос на множественный ответ
+                        
+                        // Первый вариант ответа
+                        Option option = new Option()
+                        {
+                            option = addMultipleChoiceFirstOptionTextBox.Text,
+                            isRight = addMultipleChioceFirstOptionCheckBox.Checked,
+                        };
+                        options.Add(option);
+
+                        // Второй вариант ответа
+                        option = new Option()
+                        {
+                            option = addMultipleChoiceSecondOptionTextBox.Text,
+                            isRight = addMultipleChioceSecondOptionCheckBox.Checked,
+                        };
+                        options.Add(option);
+
+                        // Третий вариант ответа
+                        option = new Option()
+                        {
+                            option = addMultipleChoiceThirdOptionTextBox.Text,
+                            isRight = addMultipleChioceThirdOptionCheckBox.Checked,
+                        };
+                        options.Add(option);
+
+                        // Четвертый вариант ответа
+                        option = new Option()
+                        {
+                            option = addMultipleChoiceFourthOptionTextBox.Text,
+                            isRight = addMultipleChioceFourthOptionCheckBox.Checked,
+                        };
+                        options.Add(option);
+
+                        break;
+                    }
+                    case Models.Type.filling: {     // Вопрос на заполнение
+                        
+                        Option option = new Option()
+                        {
+                            option = addFillingTextBox.Text,
+                        };
+                        options.Add(option);
+
+                        break;
+                    }
+            }
+            return options;
+        }
+
+        private bool CheckFilledOptions()
+        {
+            Models.Type type = (Models.Type)addTypeComboBox.SelectedIndex + 1;
+
+            switch (type)
+            {
+                case Models.Type.single:{
+                        if ((addSingleChoiceFirstOptionRadioButton.Checked || addSingleChoiceSecondOptionRadioButton.Checked || addSingleChoiceThirdOptionRadioButton.Checked || addSingleChoiceFourthOptionRadioButton.Checked) 
+                            && (addSingleChoiceFirstOptionTextBox.Text != "" && addSingleChoiceSecondOptionTextBox.Text != "" && addSingleChoiceThirdOptionTextBox.Text != "" && addSingleChoiceFourthOptionTextBox.Text != ""))
+                        {
+                            return true;
+                        }
+                        return false;   
+                    }
+                case Models.Type.multiple:{
+                        if ((addMultipleChioceFirstOptionCheckBox.Checked || addMultipleChioceSecondOptionCheckBox.Checked || addMultipleChioceThirdOptionCheckBox.Checked || addMultipleChioceFourthOptionCheckBox.Checked) 
+                            && (addMultipleChoiceFirstOptionTextBox.Text != "" && addMultipleChoiceSecondOptionTextBox.Text != "" && addMultipleChoiceThirdOptionTextBox.Text != "" && addMultipleChoiceFourthOptionTextBox.Text != ""))
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+                case Models.Type.filling: {
+                        if(addFillingTextBox.Text != "")
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+            }
+            return false;
+        }
+
         private void button3_Click(object sender, EventArgs e)
         {
-            if (textBox3.Text != "" && textBox4.Text != "" && textBox5.Text != "" && textBox6.Text != "" && textBox7.Text != "" && 
-                ((checkBox1.Checked == true && checkBox2.Checked == false && checkBox3.Checked == false && checkBox4.Checked == false) 
-                || (checkBox1.Checked == false && checkBox2.Checked == true && checkBox3.Checked == false && checkBox4.Checked == false) 
-                || (checkBox1.Checked == false && checkBox2.Checked == false && checkBox3.Checked == true && checkBox4.Checked == false) 
-                || (checkBox1.Checked == false && checkBox2.Checked == false && checkBox3.Checked == false && checkBox4.Checked == true)))
+            if (textBox3.Text != "" && CheckFilledOptions())
             {
-
                 string questionName = textBox3.Text;
                 
-                List<Option> options = new List<Option>();
-                string firstOption = textBox4.Text;
-                Option option = new Option(firstOption, checkBox1.Checked);
-                options.Add(option);
-
-                string secondOption = textBox5.Text;
-                option = new Option(secondOption, checkBox2.Checked);
-                options.Add(option);
-
-                string thirdOption = textBox6.Text;
-                option = new Option(thirdOption, checkBox3.Checked);
-                options.Add(option);
-
-                string fourthOption = textBox7.Text;
-                option = new Option(fourthOption, checkBox4.Checked);
-                options.Add(option);
-
+                List<Option> options = ConfigureAddOptions();
+                
                 Theme theme = DatabaseHelper.GetThemeByName(comboBox3.Text);
+
+                Models.Type type = (Models.Type)addTypeComboBox.SelectedIndex + 1; // Тип вопроса
 
                 Question question = new Question()
                 {
@@ -291,21 +421,23 @@ namespace Server
                     Id_theme = theme.Id,
                     Name = questionName,
                     Options = options,
+                    Type = type,
                 };
 
                 DatabaseHelper.InsertQuestion(question);
 
                 comboBox3.Enabled = true;
                 textBox3.Enabled = false;
-                textBox4.Enabled = false;
-                textBox5.Enabled = false;
-                textBox6.Enabled = false;
-                textBox7.Enabled = false;
-                checkBox1.Enabled = false;
-                checkBox2.Enabled = false;
-                checkBox3.Enabled = false;
-                checkBox4.Enabled = false;
+                addSingleChoiceFirstOptionTextBox.Enabled = false;
+                addSingleChoiceSecondOptionTextBox.Enabled = false;
+                addSingleChoiceThirdOptionTextBox.Enabled = false;
+                addSingleChoiceFourthOptionTextBox.Enabled = false;
+                addSingleChoiceFirstOptionRadioButton.Enabled = false;
+                addSingleChoiceSecondOptionRadioButton.Enabled = false;
+                addSingleChoiceThirdOptionRadioButton.Enabled = false;
+                addSingleChoiceFourthOptionRadioButton.Enabled = false;
                 button3.Enabled = false;
+                addTypeComboBox.Enabled = false;
             }
             else
             {
@@ -317,14 +449,14 @@ namespace Server
         {
             comboBox3.Enabled = true;
             textBox3.Enabled = true;
-            textBox4.Enabled = true;
-            textBox5.Enabled = true;
-            textBox6.Enabled = true;
-            textBox7.Enabled = true;
-            checkBox1.Enabled = true;
-            checkBox2.Enabled = true;
-            checkBox3.Enabled = true;
-            checkBox4.Enabled = true;
+            addSingleChoiceFirstOptionTextBox.Enabled = true;
+            addSingleChoiceSecondOptionTextBox.Enabled = true;
+            addSingleChoiceThirdOptionTextBox.Enabled = true;
+            addSingleChoiceFourthOptionTextBox.Enabled = true;
+            addSingleChoiceFirstOptionRadioButton.Enabled = true;
+            addSingleChoiceSecondOptionRadioButton.Enabled = true;
+            addSingleChoiceThirdOptionRadioButton.Enabled = true;
+            addSingleChoiceFourthOptionRadioButton.Enabled = true;
             button3.Enabled = true;
         }
 
@@ -334,7 +466,7 @@ namespace Server
             
             DatabaseHelper.DeleteSubjectById(subject.Id);
             comboBox10.Text = "";
-            UpdateSubjects(false, false, true);
+            UpdateViews();
         }
 
         private void comboBox11_SelectedIndexChanged(object sender, EventArgs e)
@@ -397,7 +529,7 @@ namespace Server
             textBoxS.Visible = false;
             button8.Enabled = false;
             button9.Enabled = false;
-            UpdateSubjects(false, true, false);
+            UpdateViews();
         }
 
         private void button9_Click(object sender, EventArgs e)
@@ -408,7 +540,7 @@ namespace Server
             textBoxS.Visible = false;
             button8.Enabled = false;
             button9.Enabled = false;
-            UpdateSubjects(false, true, false);
+            UpdateViews();
         }
 
         private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
@@ -467,29 +599,61 @@ namespace Server
             UpdateQuestions(comboBox8.Text, comboBox9);
         }
 
+        private void ConfigureEditOptions(Models.Type type, List<Option> options)
+        {
+            editSingleGroupBox.Visible = false;
+            editMultipleGroupBox.Visible = false;
+            editFillingGroupBox.Visible = false;
+
+            switch (type)
+            {
+                case Models.Type.single:
+                    {
+                        editSingleGroupBox.Visible = true;
+                        
+                        editSingleChoiceFirstOptionTextBox.Text = options[0];
+                        editSingleChoiceFirstOptionRadioButton.Checked = options[0].isRight;
+                        editSingleChoiceSecondOptionTextBox.Text = options[1];
+                        editSingleChoiceSecondOptionRadioButton.Checked = options[1].isRight;
+                        editSingleChoiceThirdOptionTextBox.Text = options[2];
+                        editSingleChoiceThirdOptionRadioButton.Checked = options[2].isRight;
+                        editSingleChoiceFourthOptionTextBox.Text = options[3];
+                        editSingleChoiceFourthOptionRadioButton.Checked = options[3].isRight;
+
+                        return;
+                    }
+                case Models.Type.multiple:
+                    {
+                        editMultipleGroupBox.Visible = true;
+                        
+                        editMultipleChoiceFirstOptionTextBox.Text = options[0];
+                        editMultipleChoiceFirstOptionCheckBox.Checked = options[0].isRight;
+                        editMultipleChoiceSecondOptionTextBox.Text = options[1];
+                        editMultipleChoiceSecondOptionCheckBox.Checked = options[1].isRight;
+                        editMultipleChoiceThirdOptionTextBox.Text = options[2];
+                        editMultipleChoiceThirdOptionCheckBox.Checked = options[2].isRight;
+                        editMultipleChoiceFourthOptionTextBox.Text = options[3];
+                        editMultipleChoiceFourthOptionCheckBox.Checked = options[3].isRight;
+
+                        return;
+                    }
+                case Models.Type.filling:
+                    {
+                        editFillingGroupBox.Visible = true;
+                        
+                        editFillingTextBox.Text = options[0];
+
+                        return;
+                    }
+                default:
+                    break;
+            }
+        }
+
         private void comboBox9_SelectedIndexChanged(object sender, EventArgs e)
         {
-            label6.Visible = true;
-            label7.Visible = true;
-            label8.Visible = true;
-            label9.Visible = true;
-
-            textBox8.Visible = true;
-            textBox9.Visible = true;
-            textBox10.Visible = true;
-            textBox11.Visible = true;
-
-            checkBox5.Visible = true;
-            checkBox6.Visible = true;
-            checkBox7.Visible = true;
-            checkBox8.Visible = true;
-
             button12.Visible = true;
             button4.Visible = true;
-
-            TabControl1.Height = 594;
-            groupBox6.Height = 349;
-            this.Height = 661;
 
             Line = comboBox9.Text;
             comboBox9.Visible = false;
@@ -499,68 +663,78 @@ namespace Server
             textBoxQ.Location = comboBox9.Location;
             button12.Enabled = true;
             button4.Enabled = true;
+            editTypeComboBox.Enabled = true;
 
             CurrentQuestion = DatabaseHelper.GetQuestionByName(Line);
-            Id_q = CurrentQuestion.Id.ToString();
 
             textBoxQ.Text = CurrentQuestion.Name;
 
-            textBox8.Text = CurrentQuestion.Options[0];
-            checkBox5.Checked = CurrentQuestion.Options[0].isRight;
-            textBox9.Text = CurrentQuestion.Options[1];
-            checkBox6.Checked = CurrentQuestion.Options[1].isRight;
-            textBox10.Text = CurrentQuestion.Options[2];
-            checkBox7.Checked = CurrentQuestion.Options[2].isRight;
-            textBox11.Text = CurrentQuestion.Options[3];
-            checkBox8.Checked = CurrentQuestion.Options[3].isRight;
+            switch (CurrentQuestion.Type)
+            {
+                case Models.Type.single:
+                    editTypeComboBox.SelectedIndex = 0;
+                    break;
+                case Models.Type.multiple:
+                    editTypeComboBox.SelectedIndex = 1;
+                    break;
+                case Models.Type.filling:
+                    editTypeComboBox.SelectedIndex = 2;
+                    break;
+                default:
+                    break;
+            }
+
+            ConfigureEditOptions(CurrentQuestion.Type, CurrentQuestion.Options);
         }
 
-        private void checkBox5_CheckedChanged(object sender, EventArgs e)
+        private List<Option> GettingEditOptions(Models.Type type)
         {
-            checkBox6.Checked = false;
-            checkBox7.Checked = false;
-            checkBox8.Checked = false;
-        }
+            List<Option> options = new List<Option>();
 
-        private void checkBox6_CheckedChanged(object sender, EventArgs e)
-        {
-            checkBox5.Checked = false;
-            checkBox7.Checked = false;
-            checkBox8.Checked = false;
-        }
-
-        private void checkBox7_CheckedChanged(object sender, EventArgs e)
-        {
-            checkBox5.Checked = false;
-            checkBox6.Checked = false;
-            checkBox8.Checked = false;
-        }
-
-        private void checkBox8_CheckedChanged(object sender, EventArgs e)
-        {
-            checkBox5.Checked = false;
-            checkBox6.Checked = false;
-            checkBox7.Checked = false;
+            switch (type)
+            {
+                case Models.Type.single:
+                    {
+                        Option option = new Option(editSingleChoiceFirstOptionTextBox.Text, editSingleChoiceFirstOptionRadioButton.Checked);
+                        options.Add(option);
+                        option = new Option(editSingleChoiceSecondOptionTextBox.Text, editSingleChoiceSecondOptionRadioButton.Checked);
+                        options.Add(option);
+                        option = new Option(editSingleChoiceThirdOptionTextBox.Text, editSingleChoiceThirdOptionRadioButton.Checked);
+                        options.Add(option);
+                        option = new Option(editSingleChoiceFourthOptionTextBox.Text, editSingleChoiceFourthOptionRadioButton.Checked);
+                        options.Add(option);
+                        break;
+                    }
+                case Models.Type.multiple:
+                    {
+                        Option option = new Option(editMultipleChoiceFirstOptionTextBox.Text, editMultipleChoiceFirstOptionCheckBox.Checked);
+                        options.Add(option);
+                        option = new Option(editMultipleChoiceSecondOptionTextBox.Text, editMultipleChoiceSecondOptionCheckBox.Checked);
+                        options.Add(option);
+                        option = new Option(editMultipleChoiceThirdOptionTextBox.Text, editMultipleChoiceThirdOptionCheckBox.Checked);
+                        options.Add(option);
+                        option = new Option(editMultipleChoiceFourthOptionTextBox.Text, editMultipleChoiceFourthOptionCheckBox.Checked);
+                        options.Add(option);
+                        break;
+                    }
+                case Models.Type.filling:
+                    {
+                        Option option = new Option(editFillingTextBox.Text, true);
+                        options.Add(option);
+                        break;
+                    }
+            }
+            return options;
         }
 
         private void button12_Click(object sender, EventArgs e)
         {
             CurrentQuestion.Name = textBoxQ.Text;
-            CurrentQuestion.Options = new List<Option>()
-            {
-                new Option(textBox8.Text, checkBox5.Checked),
-                new Option(textBox9.Text, checkBox6.Checked),
-                new Option(textBox10.Text, checkBox7.Checked),
-                new Option(textBox11.Text, checkBox8.Checked),
-            };
+            CurrentQuestion.Options = GettingEditOptions(CurrentQuestion.Type);
 
             DatabaseHelper.UpdateQuestion(CurrentQuestion);
            
             textBoxQ.Text = "";
-            textBox8.Text = "";
-            textBox9.Text = "";
-            textBox10.Text = "";
-            textBox11.Text = "";
             comboBox9.Visible = true;
             comboBox9.Text = "";
             comboBox9.SelectedText = "";
@@ -570,36 +744,13 @@ namespace Server
             button4.Enabled = false;
             UpdateQuestions(comboBox8.Text, comboBox9);
 
-            label6.Visible = false;
-            label7.Visible = false;
-            label8.Visible = false;
-            label9.Visible = false;
-
-            textBox8.Visible = false;
-            textBox9.Visible = false;
-            textBox10.Visible = false;
-            textBox11.Visible = false;
-
-            checkBox5.Visible = false;
-            checkBox6.Visible = false;
-            checkBox7.Visible = false;
-            checkBox8.Visible = false;
-
             button12.Visible = false;
             button4.Visible = false;
-
-            TabControl1.Height = 396;
-            groupBox6.Height = 154;
-            this.Height = 460;
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
             textBoxQ.Text = "";
-            textBox8.Text = "";
-            textBox9.Text = "";
-            textBox10.Text = "";
-            textBox11.Text = "";
             comboBox9.Visible = true;
             comboBox9.Text = "";
             comboBox9.SelectedText = "";
@@ -609,28 +760,8 @@ namespace Server
             button4.Enabled = false;
             UpdateQuestions(comboBox8.Text, comboBox9);
 
-            label6.Visible = false;
-            label7.Visible = false;
-            label8.Visible = false;
-            label9.Visible = false;
-
-            textBox8.Visible = false;
-            textBox9.Visible = false;
-            textBox10.Visible = false;
-            textBox11.Visible = false;
-
-            checkBox5.Visible = false;
-            checkBox6.Visible = false;
-            checkBox7.Visible = false;
-            checkBox8.Visible = false;
-
             button12.Visible = false;
             button4.Visible = false;
-
-            TabControl1.Height = 396;
-            groupBox6.Height = 154;
-            this.Height = 460;
-
         }
 
         private void comboBox1_KeyPress(object sender, KeyPressEventArgs e)
@@ -648,5 +779,66 @@ namespace Server
             e.Handled = true;
         }
 
+        private void comboBox16_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            addSingleChoiceGroupBox.Visible = addTypeComboBox.SelectedIndex == 0;   // Одиночный выбор
+            addMultipleChoiceGroupBox.Visible = addTypeComboBox.SelectedIndex == 1; // Множественный выбор
+            fillingGroupBox.Visible = addTypeComboBox.SelectedIndex == 2;        // Заполнение
+        }
+
+        private void editTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            editSingleGroupBox.Visible = false;
+            editMultipleGroupBox.Visible = false;
+            editFillingGroupBox.Visible = false;
+
+            Models.Type type = (Models.Type)editTypeComboBox.SelectedIndex + 1;
+
+            CurrentQuestion.Type = type;
+
+            var options = CurrentQuestion.Options;
+
+            switch (type)
+            {
+                case Models.Type.single:
+                    {
+                        editSingleGroupBox.Visible = true;
+
+                        editSingleChoiceFirstOptionTextBox.Text = options[0];
+                        editSingleChoiceFirstOptionRadioButton.Checked = options[0].isRight;
+                        editSingleChoiceSecondOptionTextBox.Text = options[1];
+                        editSingleChoiceSecondOptionRadioButton.Checked = options[1].isRight;
+                        editSingleChoiceThirdOptionTextBox.Text = options[2];
+                        editSingleChoiceThirdOptionRadioButton.Checked = options[2].isRight;
+                        editSingleChoiceFourthOptionTextBox.Text = options[3];
+                        editSingleChoiceFourthOptionRadioButton.Checked = options[3].isRight;
+
+                        return;
+                    }
+                case Models.Type.multiple:
+                    {
+                        editMultipleGroupBox.Visible = true;
+                     
+                        editMultipleChoiceFirstOptionTextBox.Text = options[0];
+                        editMultipleChoiceFirstOptionCheckBox.Checked = options[0].isRight;
+                        editMultipleChoiceSecondOptionTextBox.Text = options[1];
+                        editMultipleChoiceSecondOptionCheckBox.Checked = options[1].isRight;
+                        editMultipleChoiceThirdOptionTextBox.Text = options[2];
+                        editMultipleChoiceThirdOptionCheckBox.Checked = options[2].isRight;
+                        editMultipleChoiceFourthOptionTextBox.Text = options[3];
+                        editMultipleChoiceFourthOptionCheckBox.Checked = options[3].isRight;
+
+                        return;
+                    }
+                case Models.Type.filling:
+                    {
+                        editFillingGroupBox.Visible = true;
+
+                        editFillingTextBox.Text = options[0];
+
+                        return;
+                    }
+            }
+        }
     }
 }

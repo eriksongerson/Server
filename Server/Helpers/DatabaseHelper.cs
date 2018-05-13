@@ -336,14 +336,14 @@ namespace Server.Helpers
 
         public static void InsertQuestion(Question question)
         {
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO questions (id_subject, id_theme, question, type) VALUES ({question.Id_subject}, {question.Id_theme}, '{question.Name}', {question.Type})", Connection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO questions (id_subject, id_theme, question, type) VALUES ({question.Id_subject}, {question.Id_theme}, '{question.Name}', {Convert.ToInt32(question.Type)})", Connection);
 
             Connection.Open();
             SQLiteCommand.ExecuteNonQuery();
             Connection.Close();
 
             int lastInsertedId = 0;
-            SQLiteCommand.CommandText = "SELECT last_insert_rowid() FROM questions";
+            SQLiteCommand.CommandText = $"SELECT id FROM questions WHERE id_subject = {question.Id_subject} AND id_theme = {question.Id_theme} AND question = '{question.Name}'";
             Connection.Open();
 
             using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
