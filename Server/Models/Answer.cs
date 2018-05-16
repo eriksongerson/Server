@@ -1,10 +1,12 @@
-﻿namespace Server.Models
+﻿using System.Collections.Generic;
+
+namespace Server.Models
 {
     class Answer
     {
         
         public Question question;
-        public int choosen;
+        public List<Option> choosen;
 
         public void Handle(Client client)
         {

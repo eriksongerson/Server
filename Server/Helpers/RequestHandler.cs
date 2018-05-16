@@ -46,13 +46,11 @@ namespace Server.Helpers
                 while (networkStream.DataAvailable);
 
                 string message = stringBuilder.ToString();
-
-                if(message != null)
-                {
-                    Request request = JsonConvert.DeserializeObject<Request> (message);
+                
+                Request request = JsonConvert.DeserializeObject<Request> (message);
                     
-                    message = request.Handle();
-                }
+                message = request.Handle();
+                
                 
                 if (message.Length == 0 || message == null)
                 {
