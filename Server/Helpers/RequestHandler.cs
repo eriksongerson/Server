@@ -47,10 +47,14 @@ namespace Server.Helpers
 
                 string message = stringBuilder.ToString();
 
-                Request request = JsonConvert.DeserializeObject<Request> (message);
+                if(message != null)
+                {
+                    Request request = JsonConvert.DeserializeObject<Request> (message);
                     
-                message = request.Handle();
-                if (message.Length == 0)
+                    message = request.Handle();
+                }
+                
+                if (message.Length == 0 || message == null)
                 {
                     Response response = new Response()
                     {
@@ -61,6 +65,19 @@ namespace Server.Helpers
                 }
                 buffer = Encoding.Unicode.GetBytes(message);
                 networkStream.Write(buffer, 0, buffer.Length);
+            }
+            catch (NullReferenceException)
+            {
+                Response response = new Response()
+                    {
+                        response = "problem",
+                        body = JsonConvert.SerializeObject(null, Formatting.Indented),
+                    };
+                string message = JsonConvert.SerializeObject(response, Formatting.Indented);
+                byte[] buffer = new byte[256];
+                buffer = Encoding.Unicode.GetBytes(message);
+                networkStream.Write(buffer, 0, buffer.Length);
+                
             }
             //catch (Exception ex)
             //{
