@@ -51,8 +51,7 @@ namespace Server.Helpers
                     
                 message = request.Handle();
                 
-                
-                if (message.Length == 0 || message == null)
+                if (message == null || message.Length == 0)
                 {
                     Response response = new Response()
                     {

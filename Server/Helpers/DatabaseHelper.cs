@@ -48,7 +48,9 @@ namespace Server.Helpers
         {
             Subject subject = new Subject();
 
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, subject FROM subjects WHERE id={id}", Connection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, subject FROM subjects WHERE id=@Id", Connection);
+
+            SQLiteCommand.Parameters.AddWithValue("@Id", id);
 
             Connection.Open();
 
@@ -70,7 +72,9 @@ namespace Server.Helpers
         {
             Subject subject = new Subject();
 
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, subject FROM subjects WHERE subject='{name}'", Connection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, subject FROM subjects WHERE subject=@Name", Connection);
+
+            SQLiteCommand.Parameters.AddWithValue("@Name", name);
 
             Connection.Open();
 
@@ -96,7 +100,9 @@ namespace Server.Helpers
         {
             List<Theme> themes = new List<Theme>();
 
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, id_subject, theme FROM themes WHERE id_subject={id_subject}", Connection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, id_subject, theme FROM themes WHERE id_subject=@Id_subject", Connection);
+
+            SQLiteCommand.Parameters.AddWithValue("@Id_subject", id_subject);
 
             Connection.Open();
 
@@ -121,7 +127,9 @@ namespace Server.Helpers
         {
             Theme theme = new Theme();
 
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, id_subject, theme FROM themes WHERE id={id}", Connection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, id_subject, theme FROM themes WHERE id=@Id", Connection);
+
+            SQLiteCommand.Parameters.AddWithValue("@Id", id);
 
             Connection.Open();
 
@@ -144,7 +152,9 @@ namespace Server.Helpers
         {
             Theme theme = new Theme();
 
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, id_subject, theme FROM themes WHERE theme='{name}'", Connection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, id_subject, theme FROM themes WHERE theme=@Name", Connection);
+
+            SQLiteCommand.Parameters.AddWithValue("@Name", name);
 
             Connection.Open();
 
@@ -171,7 +181,10 @@ namespace Server.Helpers
         {
             List<Question> questions = new List<Question>();
 
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, id_subject, id_theme, question, type FROM questions WHERE id_subject={SubjectId} AND id_theme={ThemeId}", Connection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, id_subject, id_theme, question, type FROM questions WHERE id_subject=@Id_subject AND id_theme=@Id_theme", Connection);
+
+            SQLiteCommand.Parameters.AddWithValue("@Id_subject", SubjectId);
+            SQLiteCommand.Parameters.AddWithValue("@Id_theme", ThemeId);
 
             Connection.Open();
 
@@ -235,7 +248,9 @@ namespace Server.Helpers
         {
             Question question = new Question();
 
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, id_subject, id_theme, question, type FROM questions WHERE id={id}", Connection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, id_subject, id_theme, question, type FROM questions WHERE id=@Id", Connection);
+
+            SQLiteCommand.Parameters.AddWithValue("@Id", id);
 
             Connection.Open();
 
@@ -262,7 +277,9 @@ namespace Server.Helpers
         {
             Question question = new Question();
 
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, id_subject, id_theme, question, type FROM questions WHERE question='{name}'", Connection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, id_subject, id_theme, question, type FROM questions WHERE question=@Name", Connection);
+
+            SQLiteCommand.Parameters.AddWithValue("@Name", name);
 
             Connection.Open();
 
@@ -289,10 +306,12 @@ namespace Server.Helpers
         {
             List<Option> options = new List<Option>();
 
-            SQLiteCommand command = new SQLiteCommand($"SELECT id, id_question, option, isRight FROM options WHERE id_question = {id}", Connection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, id_question, option, isRight FROM options WHERE id_question = @Id", Connection);
+
+            SQLiteCommand.Parameters.AddWithValue("@Id", id);
 
             Connection.Open();
-            using (SQLiteDataReader dataReader = command.ExecuteReader())
+            using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
             {
                 while (dataReader.Read())
                 {
@@ -318,7 +337,9 @@ namespace Server.Helpers
 
         public static void InsertSubject(Subject subject)
         {
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO subjects (subject) VALUES ('{subject.Name}')", Connection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO subjects (subject) VALUES (@Name)", Connection);
+
+            SQLiteCommand.Parameters.AddWithValue("@Name", subject.Name);
 
             Connection.Open();
             SQLiteCommand.ExecuteNonQuery();
@@ -327,7 +348,10 @@ namespace Server.Helpers
 
         public static void InsertTheme(Theme theme)
         {
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO themes (id_subject, theme) VALUES ({theme.SubjectId}, '{theme.Name}')", Connection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO themes (id_subject, theme) VALUES (@Id_subject, @Name)", Connection);
+            
+            SQLiteCommand.Parameters.AddWithValue("@Id_subject", theme.SubjectId);
+            SQLiteCommand.Parameters.AddWithValue("@Name", theme.Name);
             
             Connection.Open();
             SQLiteCommand.ExecuteNonQuery();
@@ -336,14 +360,24 @@ namespace Server.Helpers
 
         public static void InsertQuestion(Question question)
         {
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO questions (id_subject, id_theme, question, type) VALUES ({question.Id_subject}, {question.Id_theme}, '{question.Name}', {Convert.ToInt32(question.Type)})", Connection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO questions (id_subject, id_theme, question, type) VALUES (@Id_subject, @Id_theme, @Name, @Type)", Connection);
+
+            SQLiteCommand.Parameters.AddWithValue("@Id_subject", question.Id_subject);
+            SQLiteCommand.Parameters.AddWithValue("@Id_theme", question.Id_theme);
+            SQLiteCommand.Parameters.AddWithValue("@Name", question.Name);
+            SQLiteCommand.Parameters.AddWithValue("@Type", Convert.ToInt32(question.Type));
 
             Connection.Open();
             SQLiteCommand.ExecuteNonQuery();
             Connection.Close();
 
             int lastInsertedId = 0;
-            SQLiteCommand.CommandText = $"SELECT id FROM questions WHERE id_subject = {question.Id_subject} AND id_theme = {question.Id_theme} AND question = '{question.Name}'";
+            SQLiteCommand.CommandText = $"SELECT id FROM questions WHERE id_subject = @Id_subject AND id_theme = @Id_theme AND question = @Name";
+
+            SQLiteCommand.Parameters.AddWithValue("@Id_subject", question.Id_subject);
+            SQLiteCommand.Parameters.AddWithValue("@Id_theme", question.Id_theme);
+            SQLiteCommand.Parameters.AddWithValue("@Name", question.Name);
+
             Connection.Open();
 
             using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
@@ -367,7 +401,11 @@ namespace Server.Helpers
         {
             foreach (Option option in options)
             {
-                SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO options (id_question, option, isRight) VALUES ({option.id_question}, '{option.option}', '{Convert.ToInt32(option.isRight)}')", Connection);
+                SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO options (id_question, option, isRight) VALUES (@Id_question, @Option, @IsRight)", Connection);
+
+                SQLiteCommand.Parameters.AddWithValue("@Id_question", option.id_question);
+                SQLiteCommand.Parameters.AddWithValue("@Option", option.option);
+                SQLiteCommand.Parameters.AddWithValue("@IsRight", Convert.ToInt32(option.isRight));
 
                 Connection.Open();
                 SQLiteCommand.ExecuteNonQuery();
@@ -377,7 +415,13 @@ namespace Server.Helpers
 
         public static void InsertJournal(Models.Journal journal)
         {
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO journals (surname, name, id_subject, id_theme, mark) VALUES ('{journal.client.surname}', '{journal.client.name}', {journal.subject.Id}, {journal.theme.Id}, {journal.mark})", Connection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO journals (surname, name, id_subject, id_theme, mark) VALUES (@Surname, @Name, @Id_subject, @Id_theme, @Mark)", Connection);
+
+            SQLiteCommand.Parameters.AddWithValue("@Surname", journal.client.surname);
+            SQLiteCommand.Parameters.AddWithValue("@Name", journal.client.name);
+            SQLiteCommand.Parameters.AddWithValue("@Id_subject", journal.subject.Id);
+            SQLiteCommand.Parameters.AddWithValue("@Id_theme", journal.theme.Id);
+            SQLiteCommand.Parameters.AddWithValue("@Mark", journal.mark);
 
             Connection.Open();
             SQLiteCommand.ExecuteNonQuery();
@@ -393,11 +437,13 @@ namespace Server.Helpers
         {
             SQLiteCommand SQLiteCommand = new SQLiteCommand()
             {
-                CommandText = $"DELETE FROM subjects WHERE id = {id};" +
-                $"DELETE FROM themes WHERE id_subject = {id};" +
-                $"DELETE FROM questions WHERE id_subject = {id};",
+                CommandText = $"DELETE FROM subjects WHERE id = @Id;" +
+                $"DELETE FROM themes WHERE id_subject = @Id;" +
+                $"DELETE FROM questions WHERE id_subject = @Id;",
                 Connection = Connection,
             };
+
+            SQLiteCommand.Parameters.AddWithValue("@Id", id);
 
             Connection.Open();
             SQLiteCommand.ExecuteNonQuery();
@@ -408,10 +454,12 @@ namespace Server.Helpers
         {
             SQLiteCommand SQLiteCommand = new SQLiteCommand()
             {
-                CommandText = $"DELETE FROM themes WHERE id={id};" +
-                $"DELETE FROM questions WHERE id_theme = {id};",
+                CommandText = $"DELETE FROM themes WHERE id=@Id;" +
+                $"DELETE FROM questions WHERE id_theme = @Id;",
                 Connection = Connection,
             };
+
+            SQLiteCommand.Parameters.AddWithValue("@Id", id);
 
             Connection.Open();
             SQLiteCommand.ExecuteNonQuery();
@@ -422,9 +470,11 @@ namespace Server.Helpers
         {
             SQLiteCommand SQLiteCommand = new SQLiteCommand()
             {
-                CommandText = $"DELETE FROM questions WHERE id={id}",
+                CommandText = $"DELETE FROM questions WHERE id=@Id",
                 Connection = Connection,
             };                
+
+            SQLiteCommand.Parameters.AddWithValue("@Id", id);
 
             Connection.Open();
             SQLiteCommand.ExecuteNonQuery();
@@ -437,7 +487,10 @@ namespace Server.Helpers
 
         public static void UpdateSubject(Subject subject)
         {
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"UPDATE subjects SET subject = '{subject.Name}' WHERE id = {subject.Id}", Connection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"UPDATE subjects SET subject = '@Name' WHERE id = @Id_subject", Connection);
+
+            SQLiteCommand.Parameters.AddWithValue("@Name", subject.Name);
+            SQLiteCommand.Parameters.AddWithValue("@Id_subject", subject.Id);
 
             Connection.Open();
             SQLiteCommand.ExecuteNonQuery();
@@ -446,7 +499,11 @@ namespace Server.Helpers
 
         public static void UpdateTheme(Theme theme)
         {
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"UPDATE themes SET id_subject = {theme.SubjectId}, theme = '{theme.Name}' WHERE id = {theme.Id}", Connection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"UPDATE themes SET id_subject = @Id_subject, theme = '@Name' WHERE id = @Id", Connection);
+
+            SQLiteCommand.Parameters.AddWithValue("@Id_subject", theme.SubjectId);
+            SQLiteCommand.Parameters.AddWithValue("@Name", theme.Name);
+            SQLiteCommand.Parameters.AddWithValue("@Id", theme.Id);
 
             Connection.Open();
             SQLiteCommand.ExecuteNonQuery();
@@ -457,8 +514,14 @@ namespace Server.Helpers
         {
             SQLiteCommand SQLiteCommand =
                 new SQLiteCommand(
-                    $"UPDATE questions SET id_subject = {question.Id_subject} , id_theme = {question.Id_theme} , question = '{question.Name}', type = {question.Type} WHERE id = {question.Id}",
+                    $"UPDATE questions SET id_subject = @Id_subject , id_theme = @Id_theme , question = '@Name', type = @Type WHERE id = @Id",
                     Connection);
+
+            SQLiteCommand.Parameters.AddWithValue("@Id_subject", question.Id_subject);
+            SQLiteCommand.Parameters.AddWithValue("@Id_theme", question.Id_theme);
+            SQLiteCommand.Parameters.AddWithValue("@Name", question.Name);
+            SQLiteCommand.Parameters.AddWithValue("@Type", question.Type);
+            SQLiteCommand.Parameters.AddWithValue("@Id", question.Id);
 
             Connection.Open();
             SQLiteCommand.ExecuteNonQuery();
@@ -471,12 +534,16 @@ namespace Server.Helpers
         {
             foreach (Option option in options)
             {
-                SQLiteCommand command = new SQLiteCommand(
-                    $"UPDATE options SET option = '{option.option}', isRight = {Convert.ToInt32(option.isRight)} WHERE id = {option.id}",
+                SQLiteCommand SQLiteCommand = new SQLiteCommand(
+                    $"UPDATE options SET option = '@Option', isRight = @IsRight WHERE id = @id",
                     Connection);
 
+                SQLiteCommand.Parameters.AddWithValue("@Option", option.option);
+                SQLiteCommand.Parameters.AddWithValue("@IsRight", Convert.ToInt32(option.isRight));
+                SQLiteCommand.Parameters.AddWithValue("@Id", option.id);
+
                 Connection.Open();
-                command.ExecuteNonQuery();
+                SQLiteCommand.ExecuteNonQuery();
                 Connection.Close();
             }
         }
