@@ -16,7 +16,7 @@ namespace Server
 
         private void Journal_Load(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = DatabaseHelper.SelectAdapter();
+            dataGridView1.DataSource = DatabaseHelper.SelectJournalsAdapter();
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font(FontFamily.GenericSansSerif, 14, FontStyle.Regular);
         }

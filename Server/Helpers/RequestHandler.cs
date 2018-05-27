@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-
-using System.Net;
 using System.Net.Sockets;
-using System.Windows.Forms;
 
 using Server.Models;
-
 using Newtonsoft.Json;
 
 namespace Server.Helpers
@@ -31,10 +24,10 @@ namespace Server.Helpers
         public void Process()
         {
             NetworkStream networkStream = null;
+            byte[] buffer = new byte[1_048_576];
             try
             {
                 networkStream = TcpClient.GetStream();
-                byte[] buffer = new byte[256];
                
                 StringBuilder stringBuilder = new StringBuilder();
                 int bytes = 0;
@@ -71,7 +64,7 @@ namespace Server.Helpers
                         body = JsonConvert.SerializeObject(null, Formatting.Indented),
                     };
                 string message = JsonConvert.SerializeObject(response, Formatting.Indented);
-                byte[] buffer = new byte[256];
+                
                 buffer = Encoding.Unicode.GetBytes(message);
                 networkStream.Write(buffer, 0, buffer.Length);
                 

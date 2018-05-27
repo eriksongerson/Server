@@ -27,8 +27,6 @@ namespace Server.Models
 
     public class Request
     {
-
-        //public Method method;
         public string request;
         public Client client;
         public string body;
@@ -39,17 +37,18 @@ namespace Server.Models
             {
                 case "connect":
                     {
-                        SocketHelper.Clients.Add(client);
+                        ClientHandler.addClient(client);
                         return JsonConvert.SerializeObject("OK", Formatting.Indented);
                     }
                 case "disconnect": 
                     {
-                        SocketHelper.Clients.Remove(client);
+                        ClientHandler.removeClient(client);   
                         return JsonConvert.SerializeObject("OK", Formatting.Indented);;
                     }
                 case "getSubjects": 
                     {
                         List<Subject> subjects = DatabaseHelper.GetSubjects();
+                        ClientHandler.updateClient(client);
 
                         Response response = new Response()
                         {
@@ -63,6 +62,7 @@ namespace Server.Models
                     {
                         Subject subject = JsonConvert.DeserializeObject<Subject>(body);
                         List<Theme> themes = DatabaseHelper.GetThemes(subject.Id);
+                        ClientHandler.updateClient(client);
 
                         Response response = new Response()
                         {
@@ -76,6 +76,9 @@ namespace Server.Models
                     {
                         Discipline discipline = JsonConvert.DeserializeObject<Discipline>(body);
                         List<Question> questions = DatabaseHelper.GetQuestionsByTestAndSubjectId(discipline.Subject.Id, discipline.Theme.Id);
+                        ClientHandler.updateClient(client);
+                        ClientHandler.setSubjectAndTheme(client, discipline.Subject, discipline.Theme);
+                        ClientHandler.setCountOfQuestion(client, questions.Count);
 
                         Response response = new Response()
                         {
@@ -123,10 +126,14 @@ namespace Server.Models
 
                         return JsonConvert.SerializeObject(response, Formatting.Indented);
                     }
+                case "getGroups":
+                    {
+                        return "";
+                    }
                 case "answer":
                     {
                         Answer answer = JsonConvert.DeserializeObject<Answer>(body);
-                        answer.Handle(client);
+                        ClientHandler.addAnswer(client, answer);
 
                         Response response = new Response()
                         {
@@ -139,7 +146,8 @@ namespace Server.Models
                 case "done":
                     {
                         DisciplineWithMark disciplineWithMark = JsonConvert.DeserializeObject<DisciplineWithMark>(body);
-                        
+                        ClientHandler.removeClient(client);
+
                         Journal journal = new Journal()
                         {
                             client = client,

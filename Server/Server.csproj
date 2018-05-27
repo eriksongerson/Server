@@ -99,10 +99,20 @@
     </Reference>
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\AddressChoosingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddressChoosingForm.Designer.cs">
+      <DependentUpon>AddressChoosingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Fragments\AnswerFragment.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Forms\Fragments\ClientFragment.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -111,6 +121,24 @@
     </Compile>
     <Compile Include="Forms\DataBase.Designer.cs">
       <DependentUpon>DataBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\groupModal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\groupModal.Designer.cs">
+      <DependentUpon>groupModal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\GroupsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\GroupsForm.Designer.cs">
+      <DependentUpon>GroupsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\VisaulizationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\VisaulizationForm.Designer.cs">
+      <DependentUpon>VisaulizationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\DatabaseHelper.cs" />
     <Compile Include="Forms\Journal.cs">
@@ -125,15 +153,19 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ClientHandler.cs" />
     <Compile Include="Helpers\RequestHandler.cs" />
     <Compile Include="Helpers\SocketHelper.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\ClientList.cs" />
+    <Compile Include="Models\CustomList.cs" />
+    <Compile Include="Models\Group.cs" />
     <Compile Include="Models\Journal.cs" />
     <Compile Include="Models\Option.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\Response.cs" />
+    <Compile Include="Models\Testing.cs" />
     <Compile Include="Models\Type.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -142,17 +174,29 @@
     <Compile Include="Models\Subject.cs" />
     <Compile Include="Models\Theme.cs" />
     <Content Include="Users.ico" />
+    <EmbeddedResource Include="Forms\AddressChoosingForm.resx">
+      <DependentUpon>AddressChoosingForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\DataBase.resx">
       <DependentUpon>DataBase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Fragments\ClientFragment.resx">
       <DependentUpon>ClientFragment.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\groupModal.resx">
+      <DependentUpon>groupModal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\GroupsForm.resx">
+      <DependentUpon>GroupsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Journal.resx">
       <DependentUpon>Journal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\VisaulizationForm.resx">
+      <DependentUpon>VisaulizationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
