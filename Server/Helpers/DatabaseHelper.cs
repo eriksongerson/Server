@@ -2,14 +2,37 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
-
+using System.Threading;
 using Server.Models;
 
 namespace Server.Helpers
 {
     public static class DatabaseHelper
     {
-        public static SQLiteConnection Connection = new SQLiteConnection("Data Source='DataBase.db'");
+        private static SQLiteConnection connection = new SQLiteConnection("Data Source='DataBase.db'");
+
+        public static SQLiteConnection Connection
+        {
+            get
+            {
+                return connection;
+            }
+        }
+
+        static Mutex mutex = new Mutex();
+        private static void OpenConnection()
+        {
+            mutex.WaitOne();
+
+            Connection.Open();
+        }
+
+        private static void CloseConnection()
+        {
+            Connection.Close();
+
+            mutex.ReleaseMutex();
+        }
 
         private static int ToInt(string line)
         {
@@ -26,7 +49,7 @@ namespace Server.Helpers
             
             SQLiteCommand SQLiteCommand = new SQLiteCommand("SELECT id, subject FROM subjects", Connection);
 
-            Connection.Open();
+            OpenConnection();
 
             using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
             {
@@ -39,7 +62,7 @@ namespace Server.Helpers
                 }
             }
 
-            Connection.Close();
+            CloseConnection();
 
             return subjects;
         }
@@ -52,7 +75,7 @@ namespace Server.Helpers
 
             SQLiteCommand.Parameters.AddWithValue("@Id", id);
 
-            Connection.Open();
+            OpenConnection();
 
             using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
             {
@@ -63,7 +86,7 @@ namespace Server.Helpers
                 }
             }
 
-            Connection.Close();
+            CloseConnection();
 
             return subject;
         }
@@ -76,7 +99,7 @@ namespace Server.Helpers
 
             SQLiteCommand.Parameters.AddWithValue("@Name", name);
 
-            Connection.Open();
+            OpenConnection();
 
             using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
             {
@@ -87,7 +110,7 @@ namespace Server.Helpers
                 }
             }
 
-            Connection.Close();
+            CloseConnection();
 
             return subject;
         }
@@ -104,7 +127,7 @@ namespace Server.Helpers
 
             SQLiteCommand.Parameters.AddWithValue("@Id_subject", id_subject);
 
-            Connection.Open();
+            OpenConnection();
 
             using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
             {
@@ -118,7 +141,7 @@ namespace Server.Helpers
                 }
             }
 
-            Connection.Close();
+            CloseConnection();
 
             return themes;
         }
@@ -131,7 +154,7 @@ namespace Server.Helpers
 
             SQLiteCommand.Parameters.AddWithValue("@Id", id);
 
-            Connection.Open();
+            OpenConnection();
 
             using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
             {
@@ -143,7 +166,7 @@ namespace Server.Helpers
                 }
             }
 
-            Connection.Close();
+            CloseConnection();
 
             return theme;
         }
@@ -156,7 +179,7 @@ namespace Server.Helpers
 
             SQLiteCommand.Parameters.AddWithValue("@Name", name);
 
-            Connection.Open();
+            OpenConnection();
 
             using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
             {
@@ -168,7 +191,7 @@ namespace Server.Helpers
                 }
             }
 
-            Connection.Close();
+            CloseConnection();
 
             return theme;
         }
@@ -186,7 +209,7 @@ namespace Server.Helpers
             SQLiteCommand.Parameters.AddWithValue("@Id_subject", SubjectId);
             SQLiteCommand.Parameters.AddWithValue("@Id_theme", ThemeId);
 
-            Connection.Open();
+            OpenConnection();
 
             using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
             {
@@ -202,7 +225,7 @@ namespace Server.Helpers
                 }
             }
 
-            Connection.Close();
+            CloseConnection();
 
             foreach (Question question in questions)
             {
@@ -218,7 +241,7 @@ namespace Server.Helpers
 
             SQLiteCommand SQLiteCommand = new SQLiteCommand("SELECT id, id_subject, id_theme, question, type FROM questions", Connection);
 
-            Connection.Open();
+            OpenConnection();
 
             using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
             {
@@ -234,7 +257,7 @@ namespace Server.Helpers
                 }
             }
 
-            Connection.Close();
+            CloseConnection();
 
             foreach (Question question in questions)
             {
@@ -252,7 +275,7 @@ namespace Server.Helpers
 
             SQLiteCommand.Parameters.AddWithValue("@Id", id);
 
-            Connection.Open();
+            OpenConnection();
 
             using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
             {
@@ -266,7 +289,7 @@ namespace Server.Helpers
                 }
             }
 
-            Connection.Close();
+            CloseConnection();
 
             question.Options = GetOptionsByQuestionId(question.Id);
 
@@ -281,7 +304,7 @@ namespace Server.Helpers
 
             SQLiteCommand.Parameters.AddWithValue("@Name", name);
 
-            Connection.Open();
+            OpenConnection();
 
             using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
             {
@@ -295,7 +318,7 @@ namespace Server.Helpers
                 }
             }
 
-            Connection.Close();
+            CloseConnection();
 
             question.Options = GetOptionsByQuestionId(question.Id);
 
@@ -310,7 +333,7 @@ namespace Server.Helpers
 
             SQLiteCommand.Parameters.AddWithValue("@Id", id);
 
-            Connection.Open();
+            OpenConnection();
             using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
             {
                 while (dataReader.Read())
@@ -324,7 +347,7 @@ namespace Server.Helpers
                 }
             }
 
-            Connection.Close();
+            CloseConnection();
 
             return options;
         }
@@ -338,8 +361,8 @@ namespace Server.Helpers
             List<Group> groups = new List<Group>();
 
             SQLiteCommand SQLiteCommand = new SQLiteCommand("SELECT id, name FROM groups", Connection);
-
-            Connection.Open();
+            
+            OpenConnection();
 
             using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
             {
@@ -354,7 +377,7 @@ namespace Server.Helpers
                 }
             }
 
-            Connection.Close();
+            CloseConnection();
 
             return groups;
         }
@@ -371,9 +394,9 @@ namespace Server.Helpers
 
             SQLiteCommand.Parameters.AddWithValue("@Name", subject.Name);
 
-            Connection.Open();
+            OpenConnection();
             SQLiteCommand.ExecuteNonQuery();
-            Connection.Close();
+            CloseConnection();
         }
 
         public static void InsertTheme(Theme theme)
@@ -383,9 +406,9 @@ namespace Server.Helpers
             SQLiteCommand.Parameters.AddWithValue("@Id_subject", theme.SubjectId);
             SQLiteCommand.Parameters.AddWithValue("@Name", theme.Name);
             
-            Connection.Open();
+            OpenConnection();
             SQLiteCommand.ExecuteNonQuery();
-            Connection.Close();
+            CloseConnection();
         }
 
         public static void InsertQuestion(Question question)
@@ -397,9 +420,9 @@ namespace Server.Helpers
             SQLiteCommand.Parameters.AddWithValue("@Name", question.Name);
             SQLiteCommand.Parameters.AddWithValue("@Type", Convert.ToInt32(question.Type));
 
-            Connection.Open();
+            OpenConnection();
             SQLiteCommand.ExecuteNonQuery();
-            Connection.Close();
+            CloseConnection();
 
             int lastInsertedId = 0;
             SQLiteCommand.CommandText = $"SELECT id FROM questions WHERE id_subject = @Id_subject AND id_theme = @Id_theme AND question = @Name";
@@ -408,7 +431,7 @@ namespace Server.Helpers
             SQLiteCommand.Parameters.AddWithValue("@Id_theme", question.Id_theme);
             SQLiteCommand.Parameters.AddWithValue("@Name", question.Name);
 
-            Connection.Open();
+            OpenConnection();
 
             using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
             {
@@ -418,7 +441,7 @@ namespace Server.Helpers
                 }
             }
 
-            Connection.Close();
+            CloseConnection();
 
             foreach (Option option in question.Options)
             {
@@ -437,25 +460,26 @@ namespace Server.Helpers
                 SQLiteCommand.Parameters.AddWithValue("@Option", option.option);
                 SQLiteCommand.Parameters.AddWithValue("@IsRight", Convert.ToInt32(option.isRight));
 
-                Connection.Open();
+                OpenConnection();
                 SQLiteCommand.ExecuteNonQuery();
-                Connection.Close();
+                CloseConnection();
             }
         }
 
         public static void InsertJournal(Models.Journal journal)
         {
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO journals (surname, name, id_subject, id_theme, mark) VALUES (@Surname, @Name, @Id_subject, @Id_theme, @Mark)", Connection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO journals (surname, name, id_subject, id_theme, mark, id_group) VALUES (@Surname, @Name, @Id_subject, @Id_theme, @Mark, @Group)", Connection);
 
             SQLiteCommand.Parameters.AddWithValue("@Surname", journal.client.surname);
             SQLiteCommand.Parameters.AddWithValue("@Name", journal.client.name);
             SQLiteCommand.Parameters.AddWithValue("@Id_subject", journal.subject.Id);
             SQLiteCommand.Parameters.AddWithValue("@Id_theme", journal.theme.Id);
             SQLiteCommand.Parameters.AddWithValue("@Mark", journal.mark);
+            SQLiteCommand.Parameters.AddWithValue("@Group", journal.client.group.Id);
 
-            Connection.Open();
+            OpenConnection();
             SQLiteCommand.ExecuteNonQuery();
-            Connection.Close();
+            CloseConnection();
         }
 
         public static void InsertGroup(Group group)
@@ -464,9 +488,9 @@ namespace Server.Helpers
 
             SQLiteCommand.Parameters.AddWithValue("@Name", group.Name);
 
-            Connection.Open();
+            OpenConnection();
             SQLiteCommand.ExecuteNonQuery();
-            Connection.Close();
+            CloseConnection();
         }
 
         #endregion
@@ -486,9 +510,9 @@ namespace Server.Helpers
 
             SQLiteCommand.Parameters.AddWithValue("@Id", id);
 
-            Connection.Open();
+            OpenConnection();
             SQLiteCommand.ExecuteNonQuery();
-            Connection.Close();
+            CloseConnection();
         }
 
         public static void DeleteThemeById(int id)
@@ -502,9 +526,9 @@ namespace Server.Helpers
 
             SQLiteCommand.Parameters.AddWithValue("@Id", id);
 
-            Connection.Open();
+            OpenConnection();
             SQLiteCommand.ExecuteNonQuery();
-            Connection.Close();
+            CloseConnection();
         }
 
         public static void DeleteQuestionById(int id)
@@ -517,9 +541,9 @@ namespace Server.Helpers
 
             SQLiteCommand.Parameters.AddWithValue("@Id", id);
 
-            Connection.Open();
+            OpenConnection();
             SQLiteCommand.ExecuteNonQuery();
-            Connection.Close();
+            CloseConnection();
         }
 
         public static void DeleteGroup(Group group)
@@ -532,9 +556,24 @@ namespace Server.Helpers
 
             SQLiteCommand.Parameters.AddWithValue("@Id", group.Id);
 
-            Connection.Open();
+            OpenConnection();
             SQLiteCommand.ExecuteNonQuery();
-            Connection.Close();
+            CloseConnection();
+        }
+
+        public static void DeleteJournalByID(int id)
+        {
+            SQLiteCommand SQLiteCommand = new SQLiteCommand()
+            {
+                CommandText = $"DELETE FROM journals WHERE id=@Id",
+                Connection = Connection,
+            };
+
+            SQLiteCommand.Parameters.AddWithValue("@Id", id);
+
+            OpenConnection();
+            SQLiteCommand.ExecuteNonQuery();
+            CloseConnection();
         }
 
         #endregion
@@ -548,9 +587,9 @@ namespace Server.Helpers
             SQLiteCommand.Parameters.AddWithValue("@Name", subject.Name);
             SQLiteCommand.Parameters.AddWithValue("@Id_subject", subject.Id);
 
-            Connection.Open();
+            OpenConnection();
             SQLiteCommand.ExecuteNonQuery();
-            Connection.Close();
+            CloseConnection();
         }
 
         public static void UpdateTheme(Theme theme)
@@ -561,9 +600,9 @@ namespace Server.Helpers
             SQLiteCommand.Parameters.AddWithValue("@Name", theme.Name);
             SQLiteCommand.Parameters.AddWithValue("@Id", theme.Id);
 
-            Connection.Open();
+            OpenConnection();
             SQLiteCommand.ExecuteNonQuery();
-            Connection.Close();
+            CloseConnection();
         }
 
         public static void UpdateQuestion(Question question)
@@ -579,9 +618,9 @@ namespace Server.Helpers
             SQLiteCommand.Parameters.AddWithValue("@Type", question.Type);
             SQLiteCommand.Parameters.AddWithValue("@Id", question.Id);
 
-            Connection.Open();
+            OpenConnection();
             SQLiteCommand.ExecuteNonQuery();
-            Connection.Close();
+            CloseConnection();
 
             UpdateOptions(question.Options);
         }
@@ -598,9 +637,9 @@ namespace Server.Helpers
                 SQLiteCommand.Parameters.AddWithValue("@IsRight", Convert.ToInt32(option.isRight));
                 SQLiteCommand.Parameters.AddWithValue("@Id", option.id);
 
-                Connection.Open();
+                OpenConnection();
                 SQLiteCommand.ExecuteNonQuery();
-                Connection.Close();
+                CloseConnection();
             }
         }
 
@@ -614,9 +653,9 @@ namespace Server.Helpers
             SQLiteCommand.Parameters.AddWithValue("@Name", group.Name);
             SQLiteCommand.Parameters.AddWithValue("@id", group.Id);
 
-            Connection.Open();
+            OpenConnection();
             SQLiteCommand.ExecuteNonQuery();
-            Connection.Close();
+            CloseConnection();
             
         }
 
@@ -628,16 +667,24 @@ namespace Server.Helpers
 
             SQLiteCommand com = new SQLiteCommand("", Connection);
 
-            com.CommandText = "SELECT id, surname As Фамилия, name As Имя, id_subject As Предмет, id_theme As Тема, mark As Оценка FROM journals;";
+            com.CommandText = "SELECT " +
+                    "id, " +
+                    "surname As Фамилия, " +
+                    "name As Имя, " +
+                    "(SELECT subject FROM subjects WHERE subjects.id = id_subject) As Предмет, " +
+                    "(SELECT theme FROM themes WHERE themes.id = id_theme) As Тема, " +
+                    "mark As Оценка, " +
+                    "(SELECT name FROM groups WHERE groups.id = id_group) As Группа " +
+                "FROM journals;";
 
             SQLiteDataAdapter DAdapter = new SQLiteDataAdapter(com);
 
-            Connection.Open();
+            OpenConnection();
 
             com.ExecuteNonQuery();
             DAdapter.Fill(DTable);
 
-            Connection.Close();
+            CloseConnection();
 
             return DTable;
         }
@@ -654,12 +701,12 @@ namespace Server.Helpers
 
             SQLiteDataAdapter dataAdapter = new SQLiteDataAdapter(command);
 
-            Connection.Open();
+            OpenConnection();
 
             command.ExecuteNonQuery();
             dataAdapter.Fill(dataTable);
 
-            Connection.Close();
+            CloseConnection();
 
             return dataTable;
         }

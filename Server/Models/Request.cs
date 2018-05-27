@@ -37,11 +37,13 @@ namespace Server.Models
             {
                 case "connect":
                     {
+                        // TODO: Переделать
                         ClientHandler.addClient(client);
                         return JsonConvert.SerializeObject("OK", Formatting.Indented);
                     }
                 case "disconnect": 
                     {
+                        // TODO: Переделать
                         ClientHandler.removeClient(client);   
                         return JsonConvert.SerializeObject("OK", Formatting.Indented);;
                     }
@@ -128,7 +130,16 @@ namespace Server.Models
                     }
                 case "getGroups":
                     {
-                        return "";
+                        List<Group> groups = DatabaseHelper.GetGroups();
+                        ClientHandler.updateClient(client);
+
+                        Response response = new Response()
+                        {
+                            response = request,
+                            body = JsonConvert.SerializeObject(groups, Formatting.Indented),
+                        };
+
+                        return JsonConvert.SerializeObject(response, Formatting.Indented);
                     }
                 case "answer":
                     {

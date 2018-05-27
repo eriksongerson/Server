@@ -31,6 +31,7 @@ namespace Server.Helpers
 
                     item.Client.name = client.name;
                     item.Client.surname = client.surname;
+                    item.Client.group = client.group;
                     return;
 
                 }

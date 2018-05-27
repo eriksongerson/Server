@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Forms;
 
 using Server.Helpers;
 
-namespace Server
+namespace Server.Forms
 {
     public partial class Journal : Form
     {
@@ -14,26 +13,33 @@ namespace Server
             InitializeComponent();
         }
 
-        private void Journal_Load(object sender, EventArgs e)
+        private void updateData()
         {
             dataGridView1.DataSource = DatabaseHelper.SelectJournalsAdapter();
             dataGridView1.Columns[0].Visible = false;
-            dataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font(FontFamily.GenericSansSerif, 14, FontStyle.Regular);
+            //dataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font(FontFamily.GenericSansSerif, 14, FontStyle.Regular);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Journal_Load(object sender, EventArgs e)
+        {
+            updateData();
+        }
+
+        private void backButton_Click(object sender, EventArgs e)
         {
             this.Hide();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void deleteButton_Click(object sender, EventArgs e)
         {
-            //int ID = Convert.ToInt32(dataGridView1.SelectedCells[0].Value.ToString());
+            int id = Convert.ToInt32(dataGridView1.SelectedCells[0].Value.ToString());
+            DatabaseHelper.DeleteJournalByID(id);
+            updateData();
+        }
 
-            //DatabaseHelper.DeleteQuery("", "journals", "id=" + ID);
-
-            //dataGridView1.DataSource = DatabaseHelper.SelectAdapter();
-            //dataGridView1.Columns[0].Visible = false;
+        private void createReportButton_Click(object sender, EventArgs e)
+        {
+            new ReportForm().ShowDialog();
         }
     }
 }
