@@ -4,6 +4,7 @@ using System.Net.Sockets;
 
 using Server.Models;
 using Newtonsoft.Json;
+using System.IO;
 
 namespace Server.Helpers
 {
@@ -56,7 +57,7 @@ namespace Server.Helpers
                 buffer = Encoding.Unicode.GetBytes(message);
                 networkStream.Write(buffer, 0, buffer.Length);
             }
-            catch (NullReferenceException)
+            catch (NullReferenceException)// TODO: | IOException)
             {
                 Response response = new Response()
                     {

@@ -37,15 +37,23 @@ namespace Server.Models
             {
                 case "connect":
                     {
-                        // TODO: Переделать
                         ClientHandler.addClient(client);
-                        return JsonConvert.SerializeObject("OK", Formatting.Indented);
+                        Response response = new Response()
+                        {
+                            response = request,
+                            body = JsonConvert.SerializeObject("OK", Formatting.Indented),
+                        };
+                        return JsonConvert.SerializeObject(response, Formatting.Indented);
                     }
                 case "disconnect": 
                     {
-                        // TODO: Переделать
-                        ClientHandler.removeClient(client);   
-                        return JsonConvert.SerializeObject("OK", Formatting.Indented);;
+                        ClientHandler.removeClient(client);
+                        Response response = new Response()
+                        {
+                            response = request,
+                            body = JsonConvert.SerializeObject("OK", Formatting.Indented),
+                        };
+                        return JsonConvert.SerializeObject(response, Formatting.Indented);;
                     }
                 case "getSubjects": 
                     {
@@ -157,7 +165,7 @@ namespace Server.Models
                 case "done":
                     {
                         DisciplineWithMark disciplineWithMark = JsonConvert.DeserializeObject<DisciplineWithMark>(body);
-                        ClientHandler.removeClient(client);
+                        //ClientHandler.removeClient(client);
 
                         Journal journal = new Journal()
                         {

@@ -7,11 +7,15 @@ using Server.Models;
 
 namespace Server.Helpers
 {
+    /*
+     * Класс DatabaseHelper предоставляет набор функций для доступа к базе данных
+     */
     public static class DatabaseHelper
     {
+        // Соединение:
         private static SQLiteConnection connection = new SQLiteConnection("Data Source='DataBase.db'");
-
-        public static SQLiteConnection Connection
+        // Поле класса для доступа к соединению:
+        public static SQLiteConnection Connection   
         {
             get
             {
@@ -19,21 +23,25 @@ namespace Server.Helpers
             }
         }
 
-        static Mutex mutex = new Mutex();
+        static Mutex mutex = new Mutex(); // Мьютекс - объект для синхронизации потоков
+        // Функция открытия соединения:
         private static void OpenConnection()
         {
-            mutex.WaitOne();
+            mutex.WaitOne();        // Мютекс пропускает первый поток и 
+                                    // останавливает все остальные потоки до тех пор, 
+                                    // пока ему не будет дана команда на пропуск следующего потока. 
+                                    // Это как очередь
 
-            Connection.Open();
+            Connection.Open();      // Открываем соединение
         }
-
+        // Функция закрытия соединения
         private static void CloseConnection()
         {
-            Connection.Close();
+            Connection.Close();     // Закрываем соединение
 
-            mutex.ReleaseMutex();
+            mutex.ReleaseMutex();   // Даём мьютексу знать, что можно пропускать следующий поток
         }
-
+        // Функция конвертирования строки в число
         private static int ToInt(string line)
         {
             return Convert.ToInt32(line);
@@ -42,28 +50,29 @@ namespace Server.Helpers
         #region Select
 
         #region SelectSubject
-
+        // Функция выбирает из таблицы "subjects" базы данных все записи. Возвращает список предметов.
         public static List<Subject> GetSubjects()
         {
+            // Список предметов, который будем возвращать
             List<Subject> subjects = new List<Subject>();
-            
+            // Запрос:
             SQLiteCommand SQLiteCommand = new SQLiteCommand("SELECT id, subject FROM subjects", Connection);
-
+            // Открываем соединение:
             OpenConnection();
-
+            // Выбираем из базы данных данные и формируем из них объекты Предметов
             using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
             {
                 while (dataReader.Read())
                 {
-                    Subject subject = new Subject();
-                    subject.Id = ToInt(dataReader[0].ToString());
-                    subject.Name = dataReader[1].ToString();
-                    subjects.Add(subject);
+                    Subject subject = new Subject();                // Создаём новый пустой предмет
+                    subject.Id = ToInt(dataReader[0].ToString());   // Выдаём ему id
+                    subject.Name = dataReader[1].ToString();        // Выдаём ему название
+                    subjects.Add(subject);                          // Сохраняем в массив предметов
                 }
             }
-
+            // Закрываем соединение:
             CloseConnection();
-
+            // Возвращаем список Предметов
             return subjects;
         }
 

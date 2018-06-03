@@ -6,7 +6,6 @@ namespace Server.Helpers
 {
     public static class ClientHandler
     {
-
         public static CustomList<Testing> testings = new CustomList<Testing>();
 
         public static void addClient(Client client)
@@ -28,7 +27,6 @@ namespace Server.Helpers
             {
                 if(item.Client.ip.Equals(client.ip) && item.Client.pc.Equals(client.pc))
                 {
-
                     item.Client.name = client.name;
                     item.Client.surname = client.surname;
                     item.Client.group = client.group;
@@ -36,7 +34,6 @@ namespace Server.Helpers
 
                 }
             }
-            addClient(client);
         }
     
         public static void addAnswer(Client client, Answer answer)
