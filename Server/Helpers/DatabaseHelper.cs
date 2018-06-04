@@ -13,7 +13,7 @@ namespace Server.Helpers
     public static class DatabaseHelper
     {
         // Соединение:
-        private static SQLiteConnection connection = new SQLiteConnection("Data Source='DataBase.db'");
+        private static readonly SQLiteConnection connection = new SQLiteConnection("Data Source='DataBase.db'");
         // Поле класса для доступа к соединению:
         public static SQLiteConnection Connection   
         {
@@ -41,11 +41,6 @@ namespace Server.Helpers
 
             mutex.ReleaseMutex();   // Даём мьютексу знать, что можно пропускать следующий поток
         }
-        // Функция конвертирования строки в число
-        private static int ToInt(string line)
-        {
-            return Convert.ToInt32(line);
-        }
 
         #region Select
 
@@ -64,9 +59,11 @@ namespace Server.Helpers
             {
                 while (dataReader.Read())
                 {
-                    Subject subject = new Subject();                // Создаём новый пустой предмет
-                    subject.Id = ToInt(dataReader[0].ToString());   // Выдаём ему id
-                    subject.Name = dataReader[1].ToString();        // Выдаём ему название
+                    Subject subject = new Subject
+                    {
+                        Id = Convert.ToInt32(dataReader[0].ToString()),   // Выдаём ему id
+                        Name = dataReader[1].ToString()        // Выдаём ему название
+                    };                // Создаём новый пустой предмет
                     subjects.Add(subject);                          // Сохраняем в массив предметов
                 }
             }
@@ -76,7 +73,7 @@ namespace Server.Helpers
             return subjects;
         }
 
-        public static Subject GetSubjectById(string id)
+        public static Subject GetSubjectById(int id)
         {
             Subject subject = new Subject();
 
@@ -90,7 +87,7 @@ namespace Server.Helpers
             {
                 while (dataReader.Read())
                 {
-                    subject.Id = ToInt(dataReader[0].ToString());
+                    subject.Id = Convert.ToInt32(dataReader[0].ToString());
                     subject.Name = dataReader[1].ToString();
                 }
             }
@@ -114,7 +111,7 @@ namespace Server.Helpers
             {
                 while (dataReader.Read())
                 {
-                    subject.Id = ToInt(dataReader[0].ToString());
+                    subject.Id = Convert.ToInt32(dataReader[0].ToString());
                     subject.Name = dataReader[1].ToString();
                 }
             }
@@ -142,10 +139,12 @@ namespace Server.Helpers
             {
                 while (dataReader.Read())
                 {
-                    Theme theme = new Theme();
-                    theme.Id = ToInt(dataReader[0].ToString());
-                    theme.SubjectId = ToInt(dataReader[1].ToString());
-                    theme.Name = dataReader[2].ToString();
+                    Theme theme = new Theme
+                    {
+                        Id = Convert.ToInt32(dataReader[0].ToString()),
+                        SubjectId = Convert.ToInt32(dataReader[1].ToString()),
+                        Name = dataReader[2].ToString()
+                    };
                     themes.Add(theme);
                 }
             }
@@ -155,7 +154,7 @@ namespace Server.Helpers
             return themes;
         }
 
-        public static Theme GetThemeById(string id)
+        public static Theme GetThemeById(int id)
         {
             Theme theme = new Theme();
 
@@ -169,8 +168,8 @@ namespace Server.Helpers
             {
                 while (dataReader.Read())
                 {
-                    theme.Id = ToInt(dataReader[0].ToString());
-                    theme.SubjectId = ToInt(dataReader[1].ToString());
+                    theme.Id = Convert.ToInt32(dataReader[0].ToString());
+                    theme.SubjectId = Convert.ToInt32(dataReader[1].ToString());
                     theme.Name = dataReader[2].ToString();
                 }
             }
@@ -194,8 +193,8 @@ namespace Server.Helpers
             {
                 while (dataReader.Read())
                 {
-                    theme.Id = ToInt(dataReader[0].ToString());
-                    theme.SubjectId = ToInt(dataReader[1].ToString());
+                    theme.Id = Convert.ToInt32(dataReader[0].ToString());
+                    theme.SubjectId = Convert.ToInt32(dataReader[1].ToString());
                     theme.Name = dataReader[2].ToString();
                 }
             }
@@ -224,12 +223,14 @@ namespace Server.Helpers
             {
                 while (dataReader.Read())
                 {
-                    Question question = new Question();
-                    question.Id = ToInt(dataReader[0].ToString());
-                    question.Id_subject = ToInt(dataReader[1].ToString());
-                    question.Id_theme = ToInt(dataReader[2].ToString());
-                    question.Name = dataReader[3].ToString();
-                    question.Type = (Models.Type) ToInt(dataReader[4].ToString());
+                    Question question = new Question
+                    {
+                        Id = Convert.ToInt32(dataReader[0].ToString()),
+                        Id_subject = Convert.ToInt32(dataReader[1].ToString()),
+                        Id_theme = Convert.ToInt32(dataReader[2].ToString()),
+                        Name = dataReader[3].ToString(),
+                        Type = (Models.Type)Convert.ToInt32(dataReader[4].ToString())
+                    };
                     questions.Add(question);
                 }
             }
@@ -256,12 +257,14 @@ namespace Server.Helpers
             {
                 while (dataReader.Read())
                 {
-                    Question question = new Question();
-                    question.Id = ToInt(dataReader[0].ToString());
-                    question.Id_subject = ToInt(dataReader[1].ToString());
-                    question.Id_theme = ToInt(dataReader[2].ToString());
-                    question.Name = dataReader[3].ToString();
-                    question.Type = (Models.Type) ToInt(dataReader[4].ToString());
+                    Question question = new Question
+                    {
+                        Id = Convert.ToInt32(dataReader[0].ToString()),
+                        Id_subject = Convert.ToInt32(dataReader[1].ToString()),
+                        Id_theme = Convert.ToInt32(dataReader[2].ToString()),
+                        Name = dataReader[3].ToString(),
+                        Type = (Models.Type)Convert.ToInt32(dataReader[4].ToString())
+                    };
                     questions.Add(question);
                 }
             }
@@ -290,11 +293,11 @@ namespace Server.Helpers
             {
                 while (dataReader.Read())
                 {
-                    question.Id = ToInt(dataReader[0].ToString());
-                    question.Id_subject = ToInt(dataReader[1].ToString());
-                    question.Id_theme = ToInt(dataReader[2].ToString());
+                    question.Id = Convert.ToInt32(dataReader[0].ToString());
+                    question.Id_subject = Convert.ToInt32(dataReader[1].ToString());
+                    question.Id_theme = Convert.ToInt32(dataReader[2].ToString());
                     question.Name = dataReader[3].ToString();
-                    question.Type = (Models.Type) ToInt(dataReader[4].ToString());
+                    question.Type = (Models.Type) Convert.ToInt32(dataReader[4].ToString());
                 }
             }
 
@@ -319,11 +322,11 @@ namespace Server.Helpers
             {
                 while (dataReader.Read())
                 {
-                    question.Id = ToInt(dataReader[0].ToString());
-                    question.Id_subject = ToInt(dataReader[1].ToString());
-                    question.Id_theme = ToInt(dataReader[2].ToString());
+                    question.Id = Convert.ToInt32(dataReader[0].ToString());
+                    question.Id_subject = Convert.ToInt32(dataReader[1].ToString());
+                    question.Id_theme = Convert.ToInt32(dataReader[2].ToString());
                     question.Name = dataReader[3].ToString();
-                    question.Type = (Models.Type) ToInt(dataReader[4].ToString());
+                    question.Type = (Models.Type) Convert.ToInt32(dataReader[4].ToString());
                 }
             }
 
@@ -347,11 +350,13 @@ namespace Server.Helpers
             {
                 while (dataReader.Read())
                 {
-                    Option option = new Option();
-                    option.id = ToInt(dataReader[0].ToString());
-                    option.id_question = ToInt(dataReader[1].ToString());
-                    option.option = dataReader[2].ToString();
-                    option.isRight = Convert.ToBoolean(dataReader[3]);
+                    Option option = new Option
+                    {
+                        id = Convert.ToInt32(dataReader[0].ToString()),
+                        id_question = Convert.ToInt32(dataReader[1].ToString()),
+                        option = dataReader[2].ToString(),
+                        isRight = Convert.ToBoolean(dataReader[3])
+                    };
                     options.Add(option);
                 }
             }
@@ -379,7 +384,7 @@ namespace Server.Helpers
                 {
                     Group group = new Group()
                     {
-                        Id = ToInt(dataReader[0].ToString()),
+                        Id = Convert.ToInt32(dataReader[0].ToString()),
                         Name = dataReader[1].ToString(),
                     };
                     groups.Add(group);
@@ -390,6 +395,110 @@ namespace Server.Helpers
 
             return groups;
         }
+
+        public static Group GetGroupById(int id)
+        {
+            Group group = new Group();
+
+            SQLiteCommand SQLiteCommand = new SQLiteCommand("SELECT id, name FROM groups WHERE id=@Id", Connection);
+
+            SQLiteCommand.Parameters.AddWithValue("@Id", id);
+
+            OpenConnection();
+
+            using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
+            {
+                while (dataReader.Read())
+                {
+                    group = new Group()
+                    {
+                        Id = Convert.ToInt32(dataReader[0].ToString()),
+                        Name = dataReader[1].ToString(),
+                    };
+                }
+            }
+
+            CloseConnection();
+
+            return group;
+        }
+
+        #endregion
+
+        #region SelectJournals
+
+        public static List<Journal> GetJournals()
+        {
+            List<Journal> journals = new List<Journal>();
+
+            SQLiteCommand SQLiteCommand = new SQLiteCommand("SELECT " +                                                                         
+                    "surname, " +                                                            
+                    "name, " +                                                                   
+                    "mark " +                                                               
+                "FROM journals;", Connection);
+
+            OpenConnection();
+
+            using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
+            {
+                while (dataReader.Read())
+                {
+                    Journal journal = new Journal()
+                    {
+                        client = new Client()
+                        {
+                            surname = dataReader[0].ToString(),
+                            name = dataReader[1].ToString(),
+                        },
+                        mark = Convert.ToInt32(dataReader[2].ToString()),
+                    };
+                    journals.Add(journal);
+                }
+            }
+
+            CloseConnection();
+
+            return journals;
+        }
+
+        public static List<Journal> GetJournalsByGroupId(Theme theme, Group group)
+        {
+            List<Journal> journals = new List<Journal>();
+
+            SQLiteCommand SQLiteCommand = new SQLiteCommand("SELECT " +
+                    "surname, " +
+                    "name, " +
+                    "mark " +
+                "FROM journals WHERE id_theme = @ThemeId AND id_group = @GroupId", Connection);
+
+            SQLiteCommand.Parameters.AddWithValue("@ThemeId", theme.Id);
+            SQLiteCommand.Parameters.AddWithValue("@GroupId", group.Id);
+
+            OpenConnection();
+
+            using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
+            {
+                while (dataReader.Read())
+                {
+                    Journal journal = new Journal()
+                    {
+                        client = new Client()
+                        {
+                            surname = dataReader[0].ToString(),
+                            name = dataReader[1].ToString(),
+                        },
+                        mark = Convert.ToInt32(dataReader[2].ToString()),
+                    };
+                    journals.Add(journal);
+                }
+            }
+
+            CloseConnection();
+
+            return journals;
+        }
+
+        
 
         #endregion
 
@@ -446,7 +555,7 @@ namespace Server.Helpers
             {
                 while (dataReader.Read())
                 {
-                    lastInsertedId = ToInt(dataReader[0].ToString());
+                    lastInsertedId = Convert.ToInt32(dataReader[0].ToString());
                 }
             }
 
@@ -674,9 +783,9 @@ namespace Server.Helpers
         {
             DataTable DTable = new DataTable();
 
-            SQLiteCommand com = new SQLiteCommand("", Connection);
-
-            com.CommandText = "SELECT " +
+            SQLiteCommand com = new SQLiteCommand()
+            {
+                CommandText = "SELECT " +
                     "id, " +
                     "surname As Фамилия, " +
                     "name As Имя, " +
@@ -684,7 +793,9 @@ namespace Server.Helpers
                     "(SELECT theme FROM themes WHERE themes.id = id_theme) As Тема, " +
                     "mark As Оценка, " +
                     "(SELECT name FROM groups WHERE groups.id = id_group) As Группа " +
-                "FROM journals;";
+                "FROM journals;",
+                Connection = Connection,
+            };
 
             SQLiteDataAdapter DAdapter = new SQLiteDataAdapter(com);
 

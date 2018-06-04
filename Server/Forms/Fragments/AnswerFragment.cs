@@ -67,12 +67,15 @@ namespace Server.Forms.Fragments
 
             this.Size = new Size(40, 50);
 
-            if(answer == null)
+            this.Margin = new Padding(0);
+
+            if (answer == null)
             {
                 Status = AnswerStatus.wait;
                 return;
             }
 
+            // TODO: Переработать
             switch (answer.question.Type)
             {
                 case Type.single:

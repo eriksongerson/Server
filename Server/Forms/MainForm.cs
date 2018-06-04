@@ -78,7 +78,6 @@ namespace Server.Forms
             journal.Show();
         }
 
-        bool check = false;
         private void connectedLabel_Click(object sender, EventArgs e)
         {
             if(SocketHelper.Status)

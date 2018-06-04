@@ -24,7 +24,7 @@ namespace Server
 
         string Line = "";
 
-        string Id_q = ""; // TODO: Переделать
+        //string Id_q = ""; // TODO: Переделать
 
         Question CurrentQuestion;
 

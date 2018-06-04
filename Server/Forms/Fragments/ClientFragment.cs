@@ -14,6 +14,7 @@ namespace Server.Forms.Fragments
 
         public ClientFragment()
         {
+            this.testing = null;
             InitializeComponent();
         }
 
@@ -29,52 +30,66 @@ namespace Server.Forms.Fragments
             nameLabel = new Label();
             thingsFlowLayoutPanel = new FlowLayoutPanel();
 
-            this.Size = new Size(882, 50);
+            this.Controls.Add(this.thingsFlowLayoutPanel);
+            this.Controls.Add(this.nameLabel);
+            this.Controls.Add(this.surnameLabel);
             this.Margin = new Padding(0);
+            this.Size = new Size(882, 50);
+            this.TabIndex = 0;
 
-            surnameLabel.Height = 30;
-            surnameLabel.Width = 215;
-            nameLabel.Height = 20;
-            nameLabel.Width = 215;
-            thingsFlowLayoutPanel.Height = 50;
-            thingsFlowLayoutPanel.Width = 682;
+            this.surnameLabel.Location = new Point(0, 0);
+            this.surnameLabel.Margin = new Padding(0);
+            this.surnameLabel.Size = new Size(215, 30);
+            this.surnameLabel.TabIndex = 0;
+            this.surnameLabel.TextAlign = ContentAlignment.MiddleCenter;
 
-            this.Controls.Add(surnameLabel);
-            this.Controls.Add(nameLabel);
-            this.Controls.Add(thingsFlowLayoutPanel);
+            this.nameLabel.Location = new Point(0, 30);
+            this.nameLabel.Margin = new Padding(0);
+            this.nameLabel.Size = new Size(215, 20);
+            this.nameLabel.TabIndex = 1;
+            this.nameLabel.TextAlign = ContentAlignment.MiddleCenter;
 
-            surnameLabel.Location = new Point(0, 0);
-            nameLabel.Location = new Point(0, 30);
-
-            thingsFlowLayoutPanel.AutoScroll = true;
-            thingsFlowLayoutPanel.Location = new Point(682, 50);
-            thingsFlowLayoutPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            thingsFlowLayoutPanel.WrapContents = false;
-
-            surnameLabel.TextAlign = nameLabel.TextAlign = ContentAlignment.MiddleCenter;
+            this.thingsFlowLayoutPanel.AutoScroll = true;
+            this.thingsFlowLayoutPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            this.thingsFlowLayoutPanel.Location = new Point(215, 0);
+            this.thingsFlowLayoutPanel.Margin = new Padding(0);
+            this.thingsFlowLayoutPanel.Size = new Size(666, 50);
+            this.thingsFlowLayoutPanel.TabIndex = 2;
+            this.thingsFlowLayoutPanel.WrapContents = false;
             
-            if (this.testing.Client.name != null && this.testing.Client.surname != null)
+            if(testing.CountOfQuestions > 14)
             {
-                surnameLabel.Text = this.testing.Client.surname;
-                nameLabel.Text = this.testing.Client.name;
-            }
-            else
-            {
-                surnameLabel.Text = this.testing.Client.pc;
-                nameLabel.Text = "";
+                this.Height = 70;
+                thingsFlowLayoutPanel.Height = 70;
             }
 
-            thingsFlowLayoutPanel.Controls.Clear();
-            foreach (var item in testing.Answers)
+            if(testing != null)
             {
-                AnswerFragment answerFragment = new AnswerFragment(item);
-                thingsFlowLayoutPanel.Controls.Add(answerFragment);
-            }
-            for (int i = 0; i < testing.CountOfQuestions - testing.Answers.Count; i++){
-                AnswerFragment answerFragment = new AnswerFragment();
-                thingsFlowLayoutPanel.Controls.Add(answerFragment);
+                if (this.testing.Client.name != null && this.testing.Client.surname != null)
+                {
+                    surnameLabel.Text = this.testing.Client.surname;
+                    nameLabel.Text = this.testing.Client.name;
+                }
+                else
+                {
+                    surnameLabel.Text = this.testing.Client.pc;
+                    nameLabel.Text = "";
+                }
+
+                thingsFlowLayoutPanel.Controls.Clear();
+                foreach (var item in testing.Answers)
+                {
+                    AnswerFragment answerFragment = new AnswerFragment(item);
+                    thingsFlowLayoutPanel.Controls.Add(answerFragment);
+                }
+                for (int i = 0; i < testing.CountOfQuestions - testing.Answers.Count; i++)
+                {
+                    AnswerFragment answerFragment = new AnswerFragment();
+                    thingsFlowLayoutPanel.Controls.Add(answerFragment);
+                }
             }
 
+            this.ResumeLayout(false);
         }
     }
 }

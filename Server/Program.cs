@@ -4,7 +4,8 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-using  Server.Forms;
+using Server.Forms;
+using Server.Helpers;
 
 namespace Server
 {
@@ -31,6 +32,11 @@ namespace Server
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
+
+            if (SocketHelper.Status)
+            {
+                SocketHelper.ChangeStatus();
+            }
         }
     }
 }
