@@ -614,7 +614,6 @@ namespace Server.Helpers
         #endregion
 
         #region Delete
-        //TODO: Есть вариант по-другому удалять предметы, добавив поле isActive(bool)
 
         public static void DeleteSubjectById(int id)
         {

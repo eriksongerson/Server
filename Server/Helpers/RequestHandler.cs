@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Text;
 using System.Net.Sockets;
+using System.IO;
 
 using Server.Models;
 using Newtonsoft.Json;
-using System.IO;
 
 namespace Server.Helpers
 {
@@ -57,18 +57,20 @@ namespace Server.Helpers
                 buffer = Encoding.Unicode.GetBytes(message);
                 networkStream.Write(buffer, 0, buffer.Length);
             }
-            catch (NullReferenceException)// TODO: | IOException)
+            catch (Exception ex)
             {
-                Response response = new Response()
-                    {
-                        response = "problem",
-                        body = JsonConvert.SerializeObject(null, Formatting.Indented),
-                    };
-                string message = JsonConvert.SerializeObject(response, Formatting.Indented);
+                if(ex is NullReferenceException || ex is IOException)
+                {
+                    Response response = new Response()
+                        {
+                            response = "problem",
+                            body = JsonConvert.SerializeObject(null, Formatting.Indented),
+                        };
+                    string message = JsonConvert.SerializeObject(response, Formatting.Indented);
                 
-                buffer = Encoding.Unicode.GetBytes(message);
-                networkStream.Write(buffer, 0, buffer.Length);
-                
+                    buffer = Encoding.Unicode.GetBytes(message);
+                    networkStream.Write(buffer, 0, buffer.Length);
+                }
             }
             //catch (Exception ex)
             //{

@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using System.Linq;
-using OfficeOpenXml;
 
 using Server.Helpers;
 using Server.Models;
-using Server.Properties;
+
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Server.Forms
 {
@@ -47,25 +46,7 @@ namespace Server.Forms
                             subjectsComboBox.Items.Add(item);
                         }
 
-                        break;
-                    }
-                case 1:
-                    {
-
-                        break;
-                    }
-                case 2:
-                    {
-
-                        break;
-                    }
-                case 3:
-                    {
-
-                        break;
-                    }
-                case 4:
-                    {
+                        this.Height = 552; // TODO: высота больше чем положено
 
                         break;
                     }
@@ -82,95 +63,112 @@ namespace Server.Forms
                 themesComboBox.Items.Add(item);
             }
             if(themesComboBox.Items.Count != 0) themesComboBox.Enabled = true;
+
+            CheckFully();
+        }
+
+        private void CheckFully()
+        {
+            if(groupsComboBox.SelectedIndex != -1 && subjectsComboBox.SelectedIndex != -1 && themesComboBox.SelectedIndex != -1)
+            {
+                saveButton.Enabled = true;
+            }
+            else
+            {
+                saveButton.Enabled = false;
+            }
         }
 
         private void ThemesComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            saveButton.Enabled = true;
-            watchButton.Enabled = true;
-            printButton.Enabled = true;
+            CheckFully();
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
             CreateNewReport();
-            MessageBox.Show("Отчёт сохранён");
             saveButton.Enabled = false;
-        }
-
-        private void WatchButton_Click(object sender, EventArgs e)
-        {
-            
         }
 
         private void CreateNewReport()
         {
-            Stream stream = new MemoryStream(Resources.Report);
+            string pathToTemplate = Path.Combine(Directory.GetCurrentDirectory(), "Templates\\Report.xlsx");
+            var excel = new Excel.Application();
 
-            ExcelPackage excelPackage = new ExcelPackage(stream);
+            Excel.Workbooks workbooks = excel.Workbooks;
 
-            ExcelWorksheet excelWorksheet = excelPackage.Workbook.Worksheets.First();
+            Excel.Workbook workbook = workbooks.Open(pathToTemplate);
 
-            excelPackage.Workbook.Names["TestName"].Value = (themesComboBox.SelectedItem as Theme).Name;
-            excelPackage.Workbook.Names["GroupName"].Value = (groupsComboBox.SelectedItem as Group).Name;
+            var worksheet = workbook.Worksheets[1];
 
-            int row = 10;
-            double Average = 0;
+            worksheet.Cells[5, "C"] = (themesComboBox.SelectedItem as Theme).Name;
+            worksheet.Cells[7, "C"] = (groupsComboBox.SelectedItem as Group).Name;
 
             var selectedTheme = themesComboBox.SelectedItem as Theme;
             var selectedGroup = groupsComboBox.SelectedItem as Group;
             List<Models.Journal> journals = DatabaseHelper.GetJournalsByGroupId(selectedTheme, selectedGroup);
 
+            int row = 10;
+            double Average = 0;
+
             for (int i = 0; i < journals.Count; i++, row++)
             {
-                excelWorksheet.Cells[row, 1].Value = i + 1;
-                excelWorksheet.Cells[row, 1].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin);
+                worksheet.Cells[row, "A"].Value = i + 1;
+                worksheet.Cells[row, "A"].Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+                worksheet.Cells[row, "A"].Borders.Weight = 2d;
 
-                excelWorksheet.Cells[row, 2].Value = journals[i].client.surname;
-                excelWorksheet.Cells[row, 2].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin);
+                worksheet.Cells[row, "B"].Value = journals[i].client.surname;
+                worksheet.Cells[row, "B"].Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+                worksheet.Cells[row, "B"].Borders.Weight = 2d;
 
-                excelWorksheet.Cells[row, 3].Value = journals[i].client.name;
-                excelWorksheet.Cells[row, 3].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin);
+                worksheet.Cells[row, "C"].Value = journals[i].client.name;
+                worksheet.Cells[row, "C"].Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+                worksheet.Cells[row, "C"].Borders.Weight = 2d;
 
-                excelWorksheet.Cells[row, 4].Value = journals[i].mark;
-                excelWorksheet.Cells[row, 4].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thin);
+                worksheet.Cells[row, "D"].Value = journals[i].mark;
+                worksheet.Cells[row, "D"].Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+                worksheet.Cells[row, "D"].Borders.Weight = 2d;
 
                 Average += journals[i].mark;
             }
 
-            Average /= journals.Count;
+            var startCell = worksheet.Cells[10, "A"];
+            var endCell = worksheet.Cells[row - 1, "D"];
 
-            excelWorksheet.Cells[row, 3].Value = "Средний балл";
-            excelWorksheet.Cells[row, 3].Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-            excelWorksheet.Cells[row, 4].Value = Average;
+            worksheet.Range[startCell, endCell].BorderAround(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlMedium);
+
+            worksheet.Cells[row, "C"].Value = "Средний балл";
+            worksheet.Cells[row, "D"].Value = Average;
+            worksheet.Range[worksheet.Cells[row, "C"], worksheet.Cells[row, "D"]].Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+            worksheet.Range[worksheet.Cells[row, "C"], worksheet.Cells[row, "D"]].Borders.Weight = 2d;
+            worksheet.Range[worksheet.Cells[row, "C"], worksheet.Cells[row, "D"]].BorderAround(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlMedium);
 
             row += 2;
-            excelWorksheet.Cells[row, 3].Value = "Дата";
-            excelWorksheet.Cells[row, 4].Value = $"{DateTime.Now.ToString("dd/MM/yyyy")}";
+            worksheet.Cells[row, "C"].Value = "Дата";
+            worksheet.Cells[row, "D"].Value = $"{DateTime.Now.ToString("dd/MM/yyyy")}";
 
-            excelWorksheet.Cells[10, 1, row - 3, 4].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thick);
-            excelWorksheet.Cells[row - 2, 3, row - 2, 4].Style.Border.BorderAround(OfficeOpenXml.Style.ExcelBorderStyle.Thick);
-
-            excelWorksheet.Cells[10, 1, row, 4].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
-            excelWorksheet.Cells[10, 1, row, 4].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
-
-            excelWorksheet.Cells[10, 1, excelWorksheet.Dimension.End.Row, excelWorksheet.Dimension.End.Column].Style.Font.SetFromFont(new Font("Times New Roman", 12));
-
-            if (!Directory.Exists("Отчёты"))
-            {
-                Directory.CreateDirectory("Отчёты");
-            }
+            endCell = worksheet.Cells[row, "D"];
+            
+            worksheet.Range[startCell, endCell].Font.Name = "Times New Roman";
+            worksheet.Range[startCell, endCell].Font.Size = 12;
+            worksheet.Range[startCell, endCell].Style.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+            worksheet.Range[startCell, endCell].Style.VerticalAlignment = Excel.XlVAlign.xlVAlignCenter;
 
             string addition = reportTypeComboBox.SelectedItem.ToString();
 
-            try
+            if (!Directory.Exists("Reports"))
             {
-                excelPackage.SaveAs(new FileInfo($"Отчёты/Отчёт_{addition}_{DateTime.Now.ToString("dd_MM_yyyy_HH_mm_ss")}.xlsx"));
+                Directory.CreateDirectory("Reports");
             }
-            catch (InvalidOperationException)
-            {
-                MessageBox.Show("Невозможно созранить файл");
-            }
+            
+            workbook.SaveAs(Path.Combine(Directory.GetCurrentDirectory(), $"Reports\\Report_{addition}_{DateTime.Now.ToString("dd_MM_yyyy_HH_mm_ss")}.xlsx"));
+
+            excel.Visible = true;
+        }
+
+        private void groupsComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CheckFully();
         }
     }
 }

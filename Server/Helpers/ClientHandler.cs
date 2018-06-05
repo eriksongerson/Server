@@ -18,6 +18,13 @@ namespace Server.Helpers
                 Theme = null,
                 CountOfQuestions = 0,
             };
+            foreach (var item in testings)
+            {
+                if (item.Client.ip.Equals(client.ip) && item.Client.pc.Equals(client.pc))
+                {
+                    return;
+                }
+            }
             testings.Add(testing);
         }
 

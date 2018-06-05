@@ -57,5 +57,49 @@ namespace Server.Models
                 catch { }
             }).Start();
         }
+
+        public bool isAlive()
+        {
+            try 
+            { 
+                int port = 32769;
+
+                TcpClient tcpClient = null;
+
+                tcpClient = new TcpClient(ip, port);
+
+                NetworkStream networkStream = tcpClient.GetStream();
+
+                Request request = new Request()
+                {
+                    client = null,
+                    request = "isAlive",
+                    body = null,
+                };
+
+                string message = JsonConvert.SerializeObject(request, Formatting.Indented);
+
+                byte[] data = Encoding.Unicode.GetBytes(message);
+                networkStream.Write(data, 0, data.Length);
+
+                data = new byte[1_048_576];
+                StringBuilder builder = new StringBuilder();
+                int bytes = 0;
+                do
+                {
+                    bytes = networkStream.Read(data, 0, data.Length);
+                    builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
+                }
+                while (networkStream.DataAvailable);
+
+                tcpClient.Close();
+
+                return true;
+            }
+            catch (SocketException)
+            {
+                return false;
+            }
+        }
     }
 }

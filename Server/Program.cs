@@ -18,9 +18,8 @@ namespace Server
         static void Main()
         {
             string guid = Marshal.GetTypeLibGuidForAssembly(Assembly.GetExecutingAssembly()).ToString();
-            
-            bool existed;
-            Mutex mutexObj = new Mutex(true, guid, out existed);
+
+            Mutex mutexObj = new Mutex(true, guid, out bool existed);
 
             if (!existed)
             {

@@ -55,15 +55,21 @@ namespace Server.Forms.Fragments
             this.thingsFlowLayoutPanel.Margin = new Padding(0);
             this.thingsFlowLayoutPanel.Size = new Size(666, 50);
             this.thingsFlowLayoutPanel.TabIndex = 2;
-            this.thingsFlowLayoutPanel.WrapContents = false;
+            //this.thingsFlowLayoutPanel.WrapContents = false;
             
-            if(testing.CountOfQuestions > 14)
+            double additionHeight = (double)this.testing.CountOfQuestions / 14;
+            for (int i = 0; i < additionHeight; i++)
             {
-                this.Height = 70;
-                thingsFlowLayoutPanel.Height = 70;
+                this.Height += 50;
+                this.thingsFlowLayoutPanel.Height += 50;
+            }
+            if(additionHeight % 10 != 0)
+            {
+                this.Height += 50;
+                this.thingsFlowLayoutPanel.Height += 50;
             }
 
-            if(testing != null)
+            if (testing != null)
             {
                 if (this.testing.Client.name != null && this.testing.Client.surname != null)
                 {
@@ -76,16 +82,19 @@ namespace Server.Forms.Fragments
                     nameLabel.Text = "";
                 }
 
+                int currentQuestionNumber = 1;
                 thingsFlowLayoutPanel.Controls.Clear();
                 foreach (var item in testing.Answers)
                 {
-                    AnswerFragment answerFragment = new AnswerFragment(item);
+                    AnswerFragment answerFragment = new AnswerFragment(item, currentQuestionNumber);
                     thingsFlowLayoutPanel.Controls.Add(answerFragment);
+                    currentQuestionNumber++;
                 }
                 for (int i = 0; i < testing.CountOfQuestions - testing.Answers.Count; i++)
                 {
-                    AnswerFragment answerFragment = new AnswerFragment();
+                    AnswerFragment answerFragment = new AnswerFragment(currentQuestionNumber);
                     thingsFlowLayoutPanel.Controls.Add(answerFragment);
+                    currentQuestionNumber++;
                 }
             }
 

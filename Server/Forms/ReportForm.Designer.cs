@@ -35,9 +35,7 @@
             this.byGroupReportGroupBox = new System.Windows.Forms.GroupBox();
             this.subjectsComboBox = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.printButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
-            this.watchButton = new System.Windows.Forms.Button();
             this.themesComboBox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.groupsComboBox = new System.Windows.Forms.ComboBox();
@@ -69,9 +67,7 @@
             this.reportTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.reportTypeComboBox.FormattingEnabled = true;
             this.reportTypeComboBox.Items.AddRange(new object[] {
-            "По группе",
-            "Ведомость за что-то",
-            "Ещё какой-то отчёт"});
+            "По группе"});
             this.reportTypeComboBox.Location = new System.Drawing.Point(16, 42);
             this.reportTypeComboBox.Name = "reportTypeComboBox";
             this.reportTypeComboBox.Size = new System.Drawing.Size(508, 28);
@@ -82,9 +78,7 @@
             // 
             this.byGroupReportGroupBox.Controls.Add(this.subjectsComboBox);
             this.byGroupReportGroupBox.Controls.Add(this.label4);
-            this.byGroupReportGroupBox.Controls.Add(this.printButton);
             this.byGroupReportGroupBox.Controls.Add(this.saveButton);
-            this.byGroupReportGroupBox.Controls.Add(this.watchButton);
             this.byGroupReportGroupBox.Controls.Add(this.themesComboBox);
             this.byGroupReportGroupBox.Controls.Add(this.label3);
             this.byGroupReportGroupBox.Controls.Add(this.groupsComboBox);
@@ -94,6 +88,7 @@
             this.byGroupReportGroupBox.Size = new System.Drawing.Size(528, 270);
             this.byGroupReportGroupBox.TabIndex = 2;
             this.byGroupReportGroupBox.TabStop = false;
+            this.byGroupReportGroupBox.Visible = false;
             // 
             // subjectsComboBox
             // 
@@ -116,37 +111,16 @@
             this.label4.Text = "Предмет:";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // printButton
-            // 
-            this.printButton.Enabled = false;
-            this.printButton.Location = new System.Drawing.Point(361, 225);
-            this.printButton.Name = "printButton";
-            this.printButton.Size = new System.Drawing.Size(159, 30);
-            this.printButton.TabIndex = 6;
-            this.printButton.Text = "Печать";
-            this.printButton.UseVisualStyleBackColor = true;
-            // 
             // saveButton
             // 
             this.saveButton.Enabled = false;
             this.saveButton.Location = new System.Drawing.Point(11, 225);
             this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(159, 30);
+            this.saveButton.Size = new System.Drawing.Size(509, 30);
             this.saveButton.TabIndex = 5;
-            this.saveButton.Text = "Сохранить";
+            this.saveButton.Text = "Сформировать отчёт";
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.SaveButton_Click);
-            // 
-            // watchButton
-            // 
-            this.watchButton.Enabled = false;
-            this.watchButton.Location = new System.Drawing.Point(187, 225);
-            this.watchButton.Name = "watchButton";
-            this.watchButton.Size = new System.Drawing.Size(159, 30);
-            this.watchButton.TabIndex = 4;
-            this.watchButton.Text = "Просмотр";
-            this.watchButton.UseVisualStyleBackColor = true;
-            this.watchButton.Click += new System.EventHandler(this.WatchButton_Click);
             // 
             // themesComboBox
             // 
@@ -180,6 +154,7 @@
             this.groupsComboBox.Size = new System.Drawing.Size(509, 28);
             this.groupsComboBox.TabIndex = 1;
             this.groupsComboBox.ValueMember = "id";
+            this.groupsComboBox.SelectedIndexChanged += new System.EventHandler(this.groupsComboBox_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -194,14 +169,19 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(536, 358);
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ClientSize = new System.Drawing.Size(536, 354);
             this.Controls.Add(this.byGroupReportGroupBox);
             this.Controls.Add(this.reportTypeComboBox);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ReportForm";
-            this.Text = "ReportForm";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Формирование отчётов";
             this.Load += new System.EventHandler(this.ReportForm_Load);
             this.byGroupReportGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -218,9 +198,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox groupsComboBox;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button printButton;
         private System.Windows.Forms.Button saveButton;
-        private System.Windows.Forms.Button watchButton;
         private System.Windows.Forms.ComboBox subjectsComboBox;
         private System.Windows.Forms.Label label4;
     }
