@@ -20,6 +20,8 @@ namespace Server
             InitializeComponent();
         }
 
+
+
         // TODO: Переписать
         //private void UpdateSubjects(bool isAdd, bool isEdit, bool isDelete)
         //{

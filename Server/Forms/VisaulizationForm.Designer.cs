@@ -77,9 +77,10 @@
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "VisaulizationForm";
+            this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "VisaulizationForm";
+            this.Text = "Подключенные клиенты";
             this.Load += new System.EventHandler(this.VisaulizationForm_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);

@@ -170,7 +170,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(536, 354);
+            this.ClientSize = new System.Drawing.Size(536, 83);
             this.Controls.Add(this.byGroupReportGroupBox);
             this.Controls.Add(this.reportTypeComboBox);
             this.Controls.Add(this.label1);

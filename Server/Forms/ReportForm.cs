@@ -46,7 +46,7 @@ namespace Server.Forms
                             subjectsComboBox.Items.Add(item);
                         }
 
-                        this.Height = 552; // TODO: высота больше чем положено
+                        this.Height = 400; // TODO: высота больше чем положено
 
                         break;
                     }

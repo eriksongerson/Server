@@ -66,7 +66,7 @@ namespace Server.Helpers
                         }
                         catch (SocketException)
                         {
-                            // TODO: не оставлять пустым
+                            continue;
                         }
                     }
                 }
@@ -81,6 +81,26 @@ namespace Server.Helpers
                 processingOfListening.Start();
             }
             autoResetEvent.Set();
+            new Thread(() => 
+            {
+                Thread.CurrentThread.IsBackground = true;
+                while (Status)
+                {
+                    var testings = ClientHandler.testings;
+                    if(testings.Count != 0)
+                    {
+                        foreach (var item in testings.ToArray())
+                        {
+                            if (!item.Client.isAlive())
+                            {
+                                item.Client.Disconnect();
+                                ClientHandler.removeClient(item.Client);
+                            }
+                        }
+                    }
+                    Thread.Sleep(500);
+                }
+            }).Start();
         }
 
         public static void StopListener()

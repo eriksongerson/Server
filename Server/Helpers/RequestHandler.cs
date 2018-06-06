@@ -47,12 +47,7 @@ namespace Server.Helpers
                 
                 if (message == null || message.Length == 0)
                 {
-                    Response response = new Response()
-                    {
-                        response = "problem",
-                        body = JsonConvert.SerializeObject(null, Formatting.Indented),
-                    };
-                    message = JsonConvert.SerializeObject(response, Formatting.Indented);
+                    throw new NullReferenceException();
                 }
                 buffer = Encoding.Unicode.GetBytes(message);
                 networkStream.Write(buffer, 0, buffer.Length);
@@ -72,10 +67,6 @@ namespace Server.Helpers
                     networkStream.Write(buffer, 0, buffer.Length);
                 }
             }
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //}
             finally
             {
                 networkStream.Close();

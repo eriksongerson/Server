@@ -2,6 +2,7 @@
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using System.IO;
 
 using Server.Helpers;
 
@@ -41,8 +42,7 @@ namespace Server.Models
                     byte[] data = Encoding.Unicode.GetBytes(message);
                     networkStream.Write(data, 0, data.Length);
 
-                    // получаем ответ
-                    data = new byte[1_048_576]; // буфер для получаемых данных (1МБ)
+                    data = new byte[1_048_576];
                     StringBuilder builder = new StringBuilder();
                     int bytes = 0;
                     do
@@ -54,7 +54,10 @@ namespace Server.Models
 
                     tcpClient.Close();
                 }
-                catch { }
+                catch(SocketException) 
+                { 
+                    return;    
+                }
             }).Start();
         }
 
@@ -97,6 +100,10 @@ namespace Server.Models
                 return true;
             }
             catch (SocketException)
+            {
+                return false;
+            }
+            catch (IOException)
             {
                 return false;
             }
