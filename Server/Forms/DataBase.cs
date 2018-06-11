@@ -10,9 +10,6 @@ namespace Server
     public partial class DataBase : Form
     {  
         string Line = "";
-
-        //string Id_q = ""; // TODO: Переделать
-
         Question CurrentQuestion;
 
         public DataBase()
@@ -20,207 +17,350 @@ namespace Server
             InitializeComponent();
         }
 
-
-
-        // TODO: Переписать
-        //private void UpdateSubjects(bool isAdd, bool isEdit, bool isDelete)
-        //{
-        //    List<Subject> subjects = DatabaseHelper.GetSubjects();
-           
-        //    if(isAdd == true)
-        //    {
-        //        comboBox1.Items.Clear();
-        //        comboBox2.Items.Clear();
-        //    }
-        //    if(isEdit == true)
-        //    {
-        //        comboBox4.Items.Clear();
-        //        comboBox5.Items.Clear();
-        //        comboBox7.Items.Clear();
-        //    }
-        //    if(isDelete == true)
-        //    {
-        //        comboBox10.Items.Clear();
-        //        comboBox11.Items.Clear();
-        //        comboBox13.Items.Clear();
-        //    }
-
-        //    foreach (var subject in subjects)
-        //    {
-        //        if (isAdd == true)
-        //        {
-        //            comboBox1.Items.Add(subject.Name);
-        //            comboBox2.Items.Add(subject.Name);
-        //        }
-        //        if (isEdit == true)
-        //        {
-        //            comboBox4.Items.Add(subject.Name);
-        //            comboBox5.Items.Add(subject.Name);
-        //            comboBox7.Items.Add(subject.Name);
-        //        }
-        //        if (isDelete == true)
-        //        {
-        //            comboBox10.Items.Add(subject.Name);
-        //            comboBox11.Items.Add(subject.Name);
-        //            comboBox13.Items.Add(subject.Name);
-        //        }
-        //    }
-        //}
-
-        private void UpdateThemes(string Subject, ComboBox comboBox)
-        {
-            Subject subject = DatabaseHelper.GetSubjectByName(Subject);
-
-            try
-            {
-                List<Theme> themes = DatabaseHelper.GetThemes(subject.Id);
-
-                comboBox.Text = "";
-                comboBox.Items.Clear();
-
-                foreach (var theme in themes)
-                {
-                    comboBox.Items.Add(theme.Name);
-                }
-                comboBox.Enabled = true;
-            }
-            catch (SelectQueryException)
-            {
-                comboBox.Enabled = false;
-                comboBox.Text = "Нет тем, связанных с данным предметом.";
-            }
-        }
-
-        private void UpdateQuestions(string Theme, ComboBox comboBox)
-        {
-            Theme theme = DatabaseHelper.GetThemeByName(Theme);
-
-            try
-            {
-                List<Question> questions = DatabaseHelper.GetQuestionsByTestAndSubjectId(theme.SubjectId, theme.Id);
-
-                comboBox.Text = "";
-                comboBox.Items.Clear();
-
-                foreach (var question in questions)
-                {
-                    comboBox.Items.Add(question.Name);
-                }
-                comboBox.Enabled = true;
-            }
-            catch (SelectQueryException)
-            {
-                comboBox.Enabled = false;
-                comboBox.Text = "Нет вопросов, связанных с данной темой.";
-            }
-        }
-
-        private void UpdateViews()
-        {
-            List<Subject> subjects = DatabaseHelper.GetSubjects();
-
-            comboBox1.Items.Clear();
-            comboBox2.Items.Clear();
-            comboBox4.Items.Clear();
-            comboBox5.Items.Clear();
-            comboBox7.Items.Clear();
-            foreach (Subject subject in subjects)
-            {
-                comboBox1.Items.Add(subject);
-                comboBox2.Items.Add(subject);
-                comboBox4.Items.Add(subject);
-                comboBox5.Items.Add(subject);
-                comboBox7.Items.Add(subject);
-            }
-        }
-
         private void DataBase_Load(object sender, EventArgs e)
         {
-            //TabControl1.Height = 594;
-            //groupBox3.Height = 349;
-            //this.Height = 729;
-
             UpdateViews();
         }
 
         private void tabControl1_Selected(object sender, TabControlEventArgs e)
         {
-            if(TabControl1.SelectedTab.Name == "AddTab")
-            {
-                //TabControl1.Height = 594;
-                //groupBox3.Height = 349;
-                //this.Height = 729;
+            UpdateViews();
+        }
 
-                UpdateViews();
+        private void UpdateViews()
+        {
+            ClearAddTab();
+            ClearEditTab();
+            ClearDeleteTab();
+
+            UpdateSubjects();
+        }
+
+        private void UpdateSubjects()
+        {
+            addThemeSubjectComboBox.Items.Clear();
+            addQuestionSubjectComboBox.Items.Clear();
+            editSubjectComboBox.Items.Clear();
+            editThemeSubjectComboBox.Items.Clear();
+            editQuestionSubjectComboBox.Items.Clear();
+            deleteSubjectComboBox.Items.Clear();
+            deleteThemeSubjectComboBox.Items.Clear();
+            deleteQuestionSubjectComboBox.Items.Clear();
+
+            List<Subject> subjects = DatabaseHelper.GetSubjects();
+            if(subjects.Count != 0)
+            {
+                foreach (Subject subject in subjects)
+                {
+                    addThemeSubjectComboBox.Items.Add(subject);
+                    addQuestionSubjectComboBox.Items.Add(subject);
+                    editSubjectComboBox.Items.Add(subject);
+                    editThemeSubjectComboBox.Items.Add(subject);
+                    editQuestionSubjectComboBox.Items.Add(subject);
+                    deleteSubjectComboBox.Items.Add(subject);
+                    deleteThemeSubjectComboBox.Items.Add(subject);
+                    deleteQuestionSubjectComboBox.Items.Add(subject);
+                }
             }
-            if (TabControl1.SelectedTab.Name == "EditTab")
+            else
             {
-                //TabControl1.Height = 396;
-                //groupBox6.Height = 154;
-                //this.Height = 460;
-
-                UpdateViews();
-            }
-            if (TabControl1.SelectedTab.Name == "DeleteTab")
-            {
-                //TabControl1.Height = 396;
-                //groupBox9.Height = 154;
-                //this.Height = 460;
-
-                UpdateViews();
+                addThemeSubjectComboBox.Text = "В базе данных нет ни одного предмета";
+                addThemeSubjectComboBox.Enabled = false;
+                addQuestionSubjectComboBox.Text = "В базе данных нет ни одного предмета";
+                addQuestionSubjectComboBox.Enabled = false;
+                editSubjectComboBox.Text = "В базе данных нет ни одного предмета";
+                editSubjectComboBox.Enabled = false;
+                editThemeSubjectComboBox.Text = "В базе данных нет ни одного предмета";
+                editThemeSubjectComboBox.Enabled = false;
+                editQuestionSubjectComboBox.Text = "В базе данных нет ни одного предмета";
+                editQuestionSubjectComboBox.Enabled = false;
+                deleteSubjectComboBox.Text = "В базе данных нет ни одного предмета";
+                deleteSubjectComboBox.Enabled = false;
+                deleteThemeSubjectComboBox.Text = "В базе данных нет ни одного предмета";
+                deleteThemeSubjectComboBox.Enabled = false;
+                deleteQuestionSubjectComboBox.Text = "В базе данных нет ни одного предмета";
+                deleteQuestionSubjectComboBox.Enabled = false;
             }
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void UpdateThemes(Subject subject, ComboBox comboBox)
         {
-            textBox2.Enabled = true;
-            button2.Enabled = true;
+            List<Theme> themes = DatabaseHelper.GetThemes(subject.Id);
+
+            comboBox.SelectedIndex = -1;
+            comboBox.Items.Clear();
+
+            if (themes.Count != 0)
+            {
+                foreach (var theme in themes)
+                {
+                    comboBox.Items.Add(theme);
+                }
+                comboBox.Enabled = true;
+            }
+            else
+            {
+                comboBox.Text = "Нет тем, связанных с выбранным предметом";
+                comboBox.Enabled = false;
+            }
+        }
+
+        private void UpdateQuestions(Theme theme, ComboBox comboBox)
+        {
+            List<Question> questions = DatabaseHelper.GetQuestionsByTestAndSubjectId(theme.SubjectId, theme.Id);
+
+            comboBox.Text = "";
+            comboBox.Items.Clear();
+
+            if (questions.Count != 0)
+            {
+                foreach (var question in questions)
+                {
+                    comboBox.Items.Add(question);
+                }
+                comboBox.Enabled = true;
+            }
+            else
+            {
+                comboBox.Text = "Нет вопросов, связанных с выбранной темой";
+                comboBox.Enabled = false;
+            }
+        }
+
+        private void ClearAddTab()
+        {
+            ClearAddSubject();
+            ClearAddTheme();
+            ClearAddQuestion();
+
+            addQuestionThemeComboBox.SelectedIndex = -1;
+            addQuestionThemeComboBox.Enabled = false;
+        }
+
+        private void ClearAddSubject()
+        {
+            addSubjectTextBox.Text = "";
+            UpdateSubjects();
+        }
+
+        private void ClearAddTheme()
+        {
+            addThemeTextBox.Text = "";
+            addThemeTextBox.Enabled = false;
+            addThemeButton.Enabled = false;
+
+            UpdateSubjects();
+        }
+
+        private void ClearAddQuestion()
+        {
+            addQuestionTextBox.Text = "";
+            //addQuestionTextBox.Enabled = false;
+            addFillingTextBox.Text = "";
+            //addFillingTextBox.Enabled = false;
+
+            addSingleChoiceFirstOptionTextBox.Text = "";
+            //addSingleChoiceFirstOptionTextBox.Enabled = false;
+            addSingleChoiceSecondOptionTextBox.Text = "";
+            //addSingleChoiceSecondOptionTextBox.Enabled = false;
+            addSingleChoiceThirdOptionTextBox.Text = "";
+            //addSingleChoiceThirdOptionTextBox.Enabled = false;
+            addSingleChoiceFourthOptionTextBox.Text = "";
+            //addSingleChoiceFourthOptionTextBox.Enabled = false;
+
+            addMultipleChoiceFirstOptionTextBox.Text = "";
+            //addMultipleChoiceFirstOptionTextBox.Enabled = false;
+            addMultipleChoiceSecondOptionTextBox.Text = "";
+            //addMultipleChoiceSecondOptionTextBox.Enabled = false;
+            addMultipleChoiceThirdOptionTextBox.Text = "";
+            //addMultipleChoiceThirdOptionTextBox.Enabled = false;
+            addMultipleChoiceFourthOptionTextBox.Text = "";
+            //addMultipleChoiceFourthOptionTextBox.Enabled = false;
+
+            addSingleChoiceFirstOptionRadioButton.Checked = false;
+            //addSingleChoiceFirstOptionRadioButton.Enabled = false;
+            addSingleChoiceSecondOptionRadioButton.Checked = false;
+            //addSingleChoiceSecondOptionRadioButton.Enabled = false;
+            addSingleChoiceThirdOptionRadioButton.Checked = false;
+            //addSingleChoiceThirdOptionRadioButton.Enabled = false;
+            addSingleChoiceFourthOptionRadioButton.Checked = false;
+            //addSingleChoiceFourthOptionRadioButton.Enabled = false;
+
+            addMultipleChioceFirstOptionCheckBox.Checked = false;
+            //addMultipleChioceFirstOptionCheckBox.Enabled = false;
+            addMultipleChioceSecondOptionCheckBox.Checked = false;
+            //addMultipleChioceSecondOptionCheckBox.Enabled = false;
+            addMultipleChioceThirdOptionCheckBox.Checked = false;
+            //addMultipleChioceThirdOptionCheckBox.Enabled = false;
+            addMultipleChioceFourthOptionCheckBox.Checked = false;
+            //addMultipleChioceFourthOptionCheckBox.Enabled = false;
+
+            addTypeComboBox.SelectedIndex = 0;
+            //addTypeComboBox.Enabled = false;
+        }
+
+        private void ClearEditTab()
+        {
+            editThemeComboBox.Items.Clear();
+            editThemeComboBox.Enabled = false;
+            editQuestionThemeComboBox.Items.Clear();
+            editQuestionThemeComboBox.Enabled = false;
+            editQuestionThemeComboBox.Items.Clear();
+            editQuestionThemeComboBox.Enabled = false;
+            editQuestionComboBox.Items.Clear();
+            editQuestionComboBox.Enabled = false;
+
+            
+            
+            editThemeTextBox.Text = "";
+            editQuestionTextBox.Text = "";
+            editThemeButton.Enabled = false;
+            editQuestionThemeComboBox.Enabled = false;
+            
+            editFillingTextBox.Text = "";
+            editFillingTextBox.Enabled = false;
+            
+            editSingleChoiceFirstOptionTextBox.Text = "";
+            editSingleChoiceFirstOptionTextBox.Enabled = false;
+            editSingleChoiceSecondOptionTextBox.Text = "";
+            editSingleChoiceSecondOptionTextBox.Enabled = false;
+            editSingleChoiceThirdOptionTextBox.Text = "";
+            editSingleChoiceThirdOptionTextBox.Enabled = false;
+            editSingleChoiceFourthOptionTextBox.Text = "";
+            editSingleChoiceFourthOptionTextBox.Enabled = false;
+            
+            editMultipleChoiceFirstOptionTextBox.Text = "";
+            editMultipleChoiceFirstOptionTextBox.Enabled = false;
+            editMultipleChoiceSecondOptionTextBox.Text = "";
+            editMultipleChoiceSecondOptionTextBox.Enabled = false;
+            editMultipleChoiceThirdOptionTextBox.Text = "";
+            editMultipleChoiceThirdOptionTextBox.Enabled = false;
+            editMultipleChoiceFourthOptionTextBox.Text = "";
+            editMultipleChoiceFourthOptionTextBox.Enabled = false;
+            
+            editSingleChoiceFirstOptionRadioButton.Checked = false;
+            editSingleChoiceFirstOptionRadioButton.Enabled = false;
+            editSingleChoiceSecondOptionRadioButton.Checked = false;
+            editSingleChoiceSecondOptionRadioButton.Enabled = false;
+            editSingleChoiceThirdOptionRadioButton.Checked = false;
+            editSingleChoiceThirdOptionRadioButton.Enabled = false;
+            editSingleChoiceFourthOptionRadioButton.Checked = false;
+            editSingleChoiceFourthOptionRadioButton.Enabled = false;
+            
+            editMultipleChoiceFirstOptionCheckBox.Checked = false;
+            editMultipleChoiceFirstOptionCheckBox.Enabled = false;
+            editMultipleChoiceSecondOptionCheckBox.Checked = false;
+            editMultipleChoiceSecondOptionCheckBox.Enabled = false;
+            editMultipleChoiceThirdOptionCheckBox.Checked = false;
+            editMultipleChoiceThirdOptionCheckBox.Enabled = false;
+            editMultipleChoiceFourthOptionCheckBox.Checked = false;
+            editMultipleChoiceFourthOptionCheckBox.Enabled = false;
+            
+            editTypeComboBox.SelectedIndex = -1;
+            editTypeComboBox.Enabled = false;
+
+            UpdateSubjects();
+        }
+
+        private void ClearDeleteTab()
+        {
+            deleteThemeComboBox.Items.Clear();
+            deleteThemeComboBox.Enabled = false;
+            deleteQuestionThemeComboBox.Items.Clear();
+            deleteQuestionThemeComboBox.Enabled = false;
+            deleteQuestionComboBox.Items.Clear();
+            deleteQuestionComboBox.Enabled = false;
+            
+            deleteThemeSubjectComboBox.SelectedIndex = -1;
+            deleteThemeComboBox.SelectedIndex = -1;
+            deleteThemeComboBox.Enabled = false;
+            deleteQuestionSubjectComboBox.SelectedIndex = -1;
+            deleteQuestionThemeComboBox.SelectedIndex = -1;
+            deleteQuestionThemeComboBox.Enabled = false;
+            deleteQuestionComboBox.SelectedIndex = -1;
+            deleteQuestionComboBox.Enabled = false;
+
+            UpdateSubjects();
+        }
+
+        private void AddThemeClear()
+        {
+            addThemeTextBox.Enabled = true;
+            addThemeTextBox.Text = "";
+            addThemeButton.Enabled = true;
+            isAddClearButtonVisible();
+        }
+
+        private void ClearEditSubject()
+        {
+            editSubjectTextBox.Text = "";
+            UpdateSubjects();
+        }
+
+        private void ClearEditTheme()
+        {
+
+        }
+
+        private void ClearEditQuestion()
+        {
+
+        }
+        
+        private void ClearDeleteSubject()
+        {
+            UpdateSubjects();
+        }
+
+        private void ClearDeleteTheme()
+        {
+            
+        }
+
+        private void ClearDeleteQuestion()
+        {
+
+        }
+
+        private void addThemeSubjectComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            addThemeTextBox.Enabled = true;
+            addThemeTextBox.Text = "";
+            addThemeButton.Enabled = true;
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            try
-            {
-                UpdateThemes(comboBox2.Text, comboBox3);
-            }
-            catch(SelectQueryException)
-            {
-                comboBox3.Text = "Нет тем, связанных с данным предметом.";
-            }
+            UpdateThemes(addQuestionSubjectComboBox.SelectedItem as Subject, addQuestionThemeComboBox);
         }
 
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
-            comboBox3.Enabled = true;
-            textBox3.Enabled = true;
-            addSingleChoiceFirstOptionTextBox.Enabled = true;
-            addSingleChoiceSecondOptionTextBox.Enabled = true;
-            addSingleChoiceThirdOptionTextBox.Enabled = true;
-            addSingleChoiceFourthOptionTextBox.Enabled = true;
-            addSingleChoiceFirstOptionRadioButton.Enabled = true;
-            addSingleChoiceSecondOptionRadioButton.Enabled = true;
-            addSingleChoiceThirdOptionRadioButton.Enabled = true;
-            addSingleChoiceFourthOptionRadioButton.Enabled = true;
-            button3.Enabled = true;
-            addTypeComboBox.Enabled = true;
+            addQuestionThemeComboBox.Enabled = addQuestionTextBox.Enabled = 
+                addSingleChoiceFirstOptionTextBox.Enabled = addSingleChoiceSecondOptionTextBox.Enabled = 
+                addSingleChoiceThirdOptionTextBox.Enabled = addSingleChoiceFourthOptionTextBox.Enabled = 
+                addSingleChoiceFirstOptionRadioButton.Enabled = addSingleChoiceSecondOptionRadioButton.Enabled = 
+                addSingleChoiceThirdOptionRadioButton.Enabled = addSingleChoiceFourthOptionRadioButton.Enabled = 
+                addMultipleChioceFirstOptionCheckBox.Enabled = addMultipleChioceSecondOptionCheckBox.Enabled = 
+                addMultipleChioceThirdOptionCheckBox.Enabled = addMultipleChioceFourthOptionCheckBox.Enabled = 
+                addMultipleChoiceFirstOptionTextBox.Enabled = addMultipleChoiceSecondOptionTextBox.Enabled = 
+                addMultipleChoiceThirdOptionTextBox.Enabled = addMultipleChoiceFourthOptionTextBox.Enabled = 
+                addFillingTextBox.Enabled = addQuestionButton.Enabled = 
+                addTypeComboBox.Enabled = addQuestionThemeComboBox.SelectedIndex != -1;
             addTypeComboBox.SelectedIndex = 0;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void addSubjectButton_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text != "")
+            if (addSubjectTextBox.Text != "")
             {
-
                 Subject subject = new Subject()
                 {
-                    Name = textBox1.Text,
+                    Name = addSubjectTextBox.Text,
                 };
                 DatabaseHelper.InsertSubject(subject);
 
-                UpdateViews();
-
-                textBox1.Enabled = false;
-                button1.Enabled = false;
+                ClearAddSubject();
             }
             else
             {
@@ -230,20 +370,19 @@ namespace Server
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (textBox2.Text != "")
+            if (addThemeTextBox.Text != "")
             {
-                Subject subject = DatabaseHelper.GetSubjectByName(comboBox1.Text);
+                Subject subject = addThemeSubjectComboBox.SelectedItem as Subject;
 
                 Theme theme = new Theme()
                 {
                     SubjectId = subject.Id,
-                    Name = textBox2.Text,
+                    Name = addThemeTextBox.Text,
                 };
 
                 DatabaseHelper.InsertTheme(theme);
 
-                textBox2.Enabled = false;
-                button2.Enabled = false;
+                ClearAddTheme();
             }
             else
             {
@@ -253,16 +392,16 @@ namespace Server
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            comboBox1.Text = "Предмет";
-            comboBox2.Text = "Предмет";
-            comboBox3.Text = "Тема";
-            comboBox3.Enabled = false;
-            button1.Enabled = true;
+            addThemeSubjectComboBox.Text = "Предмет";
+            addQuestionSubjectComboBox.Text = "Предмет";
+            addQuestionThemeComboBox.Text = "Тема";
+            addQuestionThemeComboBox.Enabled = false;
+            addSubjectButton.Enabled = true;
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            button2.Enabled = true;
+            addThemeButton.Enabled = true;
         }
 
         private List<Option> ConfigureAddOptions()
@@ -394,13 +533,13 @@ namespace Server
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if (textBox3.Text != "" && CheckFilledOptions())
+            if (addQuestionTextBox.Text != "" && CheckFilledOptions())
             {
-                string questionName = textBox3.Text;
+                string questionName = addQuestionTextBox.Text;
                 
                 List<Option> options = ConfigureAddOptions();
                 
-                Theme theme = DatabaseHelper.GetThemeByName(comboBox3.Text);
+                Theme theme = addQuestionThemeComboBox.SelectedItem as Theme;
 
                 Models.Type type = (Models.Type)addTypeComboBox.SelectedIndex + 1; // Тип вопроса
 
@@ -415,18 +554,7 @@ namespace Server
 
                 DatabaseHelper.InsertQuestion(question);
 
-                comboBox3.Enabled = true;
-                textBox3.Enabled = false;
-                addSingleChoiceFirstOptionTextBox.Enabled = false;
-                addSingleChoiceSecondOptionTextBox.Enabled = false;
-                addSingleChoiceThirdOptionTextBox.Enabled = false;
-                addSingleChoiceFourthOptionTextBox.Enabled = false;
-                addSingleChoiceFirstOptionRadioButton.Enabled = false;
-                addSingleChoiceSecondOptionRadioButton.Enabled = false;
-                addSingleChoiceThirdOptionRadioButton.Enabled = false;
-                addSingleChoiceFourthOptionRadioButton.Enabled = false;
-                button3.Enabled = false;
-                addTypeComboBox.Enabled = false;
+                ClearAddQuestion();
             }
             else
             {
@@ -434,158 +562,142 @@ namespace Server
             }
         }
 
-        private void textBox3_TextChanged(object sender, EventArgs e)
+        private void deleteSubjectButton_Click(object sender, EventArgs e)
         {
-            comboBox3.Enabled = true;
-            textBox3.Enabled = true;
-            addSingleChoiceFirstOptionTextBox.Enabled = true;
-            addSingleChoiceSecondOptionTextBox.Enabled = true;
-            addSingleChoiceThirdOptionTextBox.Enabled = true;
-            addSingleChoiceFourthOptionTextBox.Enabled = true;
-            addSingleChoiceFirstOptionRadioButton.Enabled = true;
-            addSingleChoiceSecondOptionRadioButton.Enabled = true;
-            addSingleChoiceThirdOptionRadioButton.Enabled = true;
-            addSingleChoiceFourthOptionRadioButton.Enabled = true;
-            button3.Enabled = true;
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            Subject subject = DatabaseHelper.GetSubjectByName(comboBox10.Text);
+            Subject subject = deleteSubjectComboBox.SelectedItem as Subject;
             
             DatabaseHelper.DeleteSubjectById(subject.Id);
-            comboBox10.Text = "";
+            deleteSubjectComboBox.Text = "";
             UpdateViews();
         }
 
-        private void comboBox11_SelectedIndexChanged(object sender, EventArgs e)
+        private void deleteThemeSubjectComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateThemes(comboBox11.Text, comboBox12);
+            UpdateThemes(deleteThemeSubjectComboBox.SelectedItem as Subject, deleteThemeComboBox);
+            deleteThemeComboBox.Enabled = deleteThemeSubjectComboBox.SelectedIndex != -1;
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void deleteThemeButton_Click(object sender, EventArgs e)
         {
-            Theme theme = DatabaseHelper.GetThemeByName(comboBox12.Text);
+            Theme theme = deleteThemeComboBox.SelectedItem as Theme;
 
             DatabaseHelper.DeleteThemeById(theme.Id);
-            UpdateThemes(comboBox11.Text, comboBox12);
-            comboBox12.Text = "";
+            UpdateThemes(deleteThemeSubjectComboBox.SelectedItem as Subject, deleteThemeComboBox);
+            deleteThemeComboBox.Text = "";
         }
 
-        private void comboBox13_SelectedIndexChanged(object sender, EventArgs e)
+        private void deleteQuestionSubjectComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateThemes(comboBox13.Text, comboBox14);
+            UpdateThemes(deleteQuestionSubjectComboBox.SelectedItem as Subject, deleteQuestionThemeComboBox);
         }
 
-        private void comboBox14_SelectedIndexChanged(object sender, EventArgs e)
+        private void deleteQuestionThemeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateQuestions(comboBox14.Text, comboBox15);
+            UpdateQuestions(deleteQuestionThemeComboBox.SelectedItem as Theme, deleteQuestionComboBox);
         }
 
-        private void button7_Click(object sender, EventArgs e)
+        private void deleteQuestionButton_Click(object sender, EventArgs e)
         {
 
-            Question question = DatabaseHelper.GetQuestionByName(comboBox15.Text);
+            Question question = deleteQuestionComboBox.SelectedItem as Question;
             DatabaseHelper.DeleteQuestionById(question.Id);
 
-            UpdateQuestions(comboBox14.Text, comboBox15);
+            UpdateQuestions(deleteQuestionThemeComboBox.SelectedItem as Theme, deleteQuestionComboBox);
         }
 
-        private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
+        private void editSubjectComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Line = comboBox4.Text;
-            comboBox4.Visible = false;
-            groupBox4.Controls.Add(textBoxS);
-            textBoxS.Text = Line;
-            textBoxS.Visible = true;
-            textBoxS.Location = comboBox4.Location;
-            button8.Enabled = true;
-            button9.Enabled = true;
+            Line = editSubjectComboBox.Text;
+            editSubjectComboBox.Visible = false;
+            groupBox4.Controls.Add(editSubjectTextBox);
+            editSubjectTextBox.Text = Line;
+            editSubjectTextBox.Visible = true;
+            editSubjectTextBox.Location = editSubjectComboBox.Location;
+            editSubjectButton.Enabled = true;
+            editSubjectClearButton.Enabled = true;
         }
 
-        private void button8_Click(object sender, EventArgs e)
+        private void editSubjectButton_Click(object sender, EventArgs e)
         {
-
-            Subject subject = DatabaseHelper.GetSubjectByName(Line);
-            subject.Name = textBoxS.Text;
+            Subject subject = editSubjectComboBox.SelectedItem as Subject;
+            subject.Name = editSubjectTextBox.Text;
             DatabaseHelper.UpdateSubject(subject);
 
-            textBoxS.Text = "";
-            comboBox4.Visible = true;
-            comboBox4.Text = "";
-            comboBox4.SelectedText = "";
-            groupBox4.Controls.Remove(textBoxS);
-            textBoxS.Visible = false;
-            button8.Enabled = false;
-            button9.Enabled = false;
-            UpdateViews();
+            editSubjectTextBox.Text = "";
+            editSubjectComboBox.Visible = true;
+            editSubjectComboBox.Text = "";
+            editSubjectComboBox.SelectedText = "";
+            groupBox4.Controls.Remove(editSubjectTextBox);
+            editSubjectTextBox.Visible = false;
+            editSubjectButton.Enabled = false;
+            editSubjectClearButton.Enabled = false;
+
+            ClearEditSubject();
         }
 
-        private void button9_Click(object sender, EventArgs e)
+        private void editSubjectClearButton_Click(object sender, EventArgs e)
         {
-            textBoxS.Text = "";
-            comboBox4.Visible = true;
-            groupBox4.Controls.Remove(textBoxS);
-            textBoxS.Visible = false;
-            button8.Enabled = false;
-            button9.Enabled = false;
+            editSubjectTextBox.Text = "";
+            editSubjectComboBox.Visible = true;
+            groupBox4.Controls.Remove(editSubjectTextBox);
+            editSubjectTextBox.Visible = false;
+            editSubjectButton.Enabled = false;
+            editSubjectClearButton.Enabled = false;
             UpdateViews();
         }
 
         private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateThemes(comboBox5.Text, comboBox6);
+            UpdateThemes(editThemeSubjectComboBox.SelectedItem as Subject, editThemeComboBox);
         }
 
         private void comboBox6_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Line = comboBox6.Text;
-            comboBox6.Visible = false;
-            groupBox5.Controls.Add(textBoxT);
-            textBoxT.Visible = true;
-            textBoxT.Text = Line;
-            textBoxT.Location = comboBox6.Location;
-            button10.Enabled = true;
-            button11.Enabled = true;
+            editThemeComboBox.Visible = false;
+            groupBox5.Controls.Add(editThemeTextBox);
+            editThemeTextBox.Visible = true;
+            editThemeTextBox.Text = (editThemeComboBox.SelectedItem as Theme)?.Name;
+            editThemeTextBox.Location = editThemeComboBox.Location;
+            editThemeButton.Enabled = true;
+            editThemeClearButton.Enabled = true;
         }
 
         private void button10_Click(object sender, EventArgs e)
         {
-            Theme theme = DatabaseHelper.GetThemeByName(Line);
-            theme.Name = textBoxT.Text;
+            Theme theme = editThemeComboBox.SelectedItem as Theme;
+            theme.Name = editThemeTextBox.Text;
             DatabaseHelper.UpdateTheme(theme);
-            textBoxT.Text = "";
-            comboBox6.Visible = true;
-            comboBox6.Text = "";
-            comboBox6.SelectedText = "";
-            groupBox5.Controls.Remove(textBoxT);
-            textBoxT.Visible = false;
-            button10.Enabled = false;
-            button11.Enabled = false;
-            UpdateThemes(comboBox5.Text, comboBox6);
+            editThemeTextBox.Text = "";
+            editThemeComboBox.Visible = true;
+            editThemeComboBox.Text = "";
+            editThemeComboBox.SelectedText = "";
+            groupBox5.Controls.Remove(editThemeTextBox);
+            editThemeTextBox.Visible = false;
+            editThemeButton.Enabled = false;
+            editThemeClearButton.Enabled = false;
+            UpdateThemes(editThemeSubjectComboBox.SelectedItem as Subject, editThemeComboBox);
         }
 
         private void button11_Click(object sender, EventArgs e)
         {
-            textBoxT.Text = "";
-            comboBox6.Visible = true;
-            comboBox6.Text = "";
-            comboBox6.SelectedText = "";
-            groupBox5.Controls.Remove(textBoxT);
-            textBoxT.Visible = false;
-            button10.Enabled = false;
-            button11.Enabled = false;
-            UpdateThemes(comboBox5.Text, comboBox6);
+            editThemeTextBox.Text = "";
+            editThemeComboBox.Visible = true;
+            editThemeComboBox.SelectedText = "";
+            groupBox5.Controls.Remove(editThemeTextBox);
+            editThemeTextBox.Visible = false;
+            editThemeButton.Enabled = false;
+            editThemeClearButton.Enabled = false;
+            UpdateThemes(editThemeSubjectComboBox.SelectedItem as Subject, editThemeComboBox);
         }
 
         private void comboBox7_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateThemes(comboBox7.Text, comboBox8);
+            UpdateThemes(editQuestionSubjectComboBox.SelectedItem as Subject, editQuestionThemeComboBox);
         }
 
         private void comboBox8_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateQuestions(comboBox8.Text, comboBox9);
+            UpdateQuestions(editQuestionThemeComboBox.SelectedItem as Theme, editQuestionComboBox);
         }
 
         private void ConfigureEditOptions(Models.Type type, List<Option> options)
@@ -641,22 +753,21 @@ namespace Server
 
         private void comboBox9_SelectedIndexChanged(object sender, EventArgs e)
         {
-            button12.Visible = true;
-            button4.Visible = true;
+            editQuestionButton.Visible = true;
+            editQuestionClearButton.Visible = true;
 
-            Line = comboBox9.Text;
-            comboBox9.Visible = false;
-            groupBox6.Controls.Add(textBoxQ);
-            textBoxQ.Visible = true;
-            textBoxQ.Text = Line;
-            textBoxQ.Location = comboBox9.Location;
-            button12.Enabled = true;
-            button4.Enabled = true;
+            editQuestionComboBox.Visible = false;
+            groupBox6.Controls.Add(editQuestionTextBox);
+            editQuestionTextBox.Visible = true;
+            editQuestionTextBox.Text = (editQuestionComboBox.SelectedItem as Question).Name;
+            editQuestionTextBox.Location = editQuestionComboBox.Location;
+            editQuestionButton.Enabled = true;
+            editQuestionClearButton.Enabled = true;
             editTypeComboBox.Enabled = true;
 
-            CurrentQuestion = DatabaseHelper.GetQuestionByName(Line);
+            CurrentQuestion = editQuestionComboBox.SelectedItem as Question;
 
-            textBoxQ.Text = CurrentQuestion.Name;
+            editQuestionTextBox.Text = CurrentQuestion.Name;
 
             switch (CurrentQuestion.Type)
             {
@@ -718,39 +829,39 @@ namespace Server
 
         private void button12_Click(object sender, EventArgs e)
         {
-            CurrentQuestion.Name = textBoxQ.Text;
+            CurrentQuestion.Name = editQuestionTextBox.Text;
             CurrentQuestion.Options = GettingEditOptions(CurrentQuestion.Type);
 
             DatabaseHelper.UpdateQuestion(CurrentQuestion);
            
-            textBoxQ.Text = "";
-            comboBox9.Visible = true;
-            comboBox9.Text = "";
-            comboBox9.SelectedText = "";
-            groupBox6.Controls.Remove(textBoxQ);
-            textBoxQ.Visible = false;
-            button12.Enabled = false;
-            button4.Enabled = false;
-            UpdateQuestions(comboBox8.Text, comboBox9);
+            editQuestionTextBox.Text = "";
+            editQuestionComboBox.Visible = true;
+            editQuestionComboBox.Text = "";
+            editQuestionComboBox.SelectedText = "";
+            groupBox6.Controls.Remove(editQuestionTextBox);
+            editQuestionTextBox.Visible = false;
+            editQuestionButton.Enabled = false;
+            editQuestionClearButton.Enabled = false;
+            UpdateQuestions(editQuestionThemeComboBox.SelectedItem as Theme, editQuestionComboBox);
 
-            button12.Visible = false;
-            button4.Visible = false;
+            editQuestionButton.Visible = false;
+            editQuestionClearButton.Visible = false;
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            textBoxQ.Text = "";
-            comboBox9.Visible = true;
-            comboBox9.Text = "";
-            comboBox9.SelectedText = "";
-            groupBox6.Controls.Remove(textBoxQ);
-            textBoxQ.Visible = false;
-            button12.Enabled = false;
-            button4.Enabled = false;
-            UpdateQuestions(comboBox8.Text, comboBox9);
+            editQuestionTextBox.Text = "";
+            editQuestionComboBox.Visible = true;
+            editQuestionComboBox.Text = "";
+            editQuestionComboBox.SelectedText = "";
+            groupBox6.Controls.Remove(editQuestionTextBox);
+            editQuestionTextBox.Visible = false;
+            editQuestionButton.Enabled = false;
+            editQuestionClearButton.Enabled = false;
+            UpdateQuestions(editQuestionThemeComboBox.SelectedItem as Theme, editQuestionComboBox);
 
-            button12.Visible = false;
-            button4.Visible = false;
+            editQuestionButton.Visible = false;
+            editQuestionClearButton.Visible = false;
         }
 
         private void comboBox1_KeyPress(object sender, KeyPressEventArgs e)
@@ -828,6 +939,47 @@ namespace Server
                         return;
                     }
             }
+        }
+
+        private void deleteSubjectComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            deleteSubjectButton.Enabled = deleteSubjectComboBox.SelectedIndex != -1;
+        }
+
+        private void clearAddQuestionButton_Click(object sender, EventArgs e)
+        {
+            ClearAddQuestion();
+        }
+
+        private void isAddClearButtonVisible()
+        {
+            switch (addTypeComboBox.SelectedIndex)
+            {
+                case 0:
+                    bool singleChoiceFill = addSingleChoiceFirstOptionTextBox.Text != "" ||
+                                                    addSingleChoiceSecondOptionTextBox.Text != "" ||
+                                                    addSingleChoiceThirdOptionTextBox.Text != "" ||
+                                                    addSingleChoiceFourthOptionTextBox.Text != "";
+                    clearAddQuestionButton.Enabled = singleChoiceFill;
+                    break;
+                case 1:
+                    bool multipleChoiceFill = addMultipleChoiceFirstOptionTextBox.Text != "" ||
+                                            addMultipleChoiceSecondOptionTextBox.Text != "" ||
+                                            addMultipleChoiceThirdOptionTextBox.Text != "" ||
+                                            addMultipleChoiceFourthOptionTextBox.Text != "";
+                    clearAddQuestionButton.Enabled = multipleChoiceFill;
+                    break;
+                case 2:
+                    bool fillingChoiceFill = addFillingTextBox.Text != "";
+                    clearAddQuestionButton.Enabled = fillingChoiceFill;
+                    break;
+            }
+            clearAddQuestionButton.Enabled = clearAddQuestionButton.Enabled || addQuestionTextBox.Text != "";
+        }
+
+        private void CheckFilling(object sender, EventArgs e)
+        {
+            isAddClearButtonVisible();
         }
     }
 }

@@ -41,5 +41,10 @@ namespace Server.Forms
         {
             new ReportForm().ShowDialog();
         }
+
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            deleteButton.Enabled = dataGridView1.SelectedRows.Count != 0;
+        }
     }
 }

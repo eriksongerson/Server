@@ -2,11 +2,10 @@
 
 namespace Server.Models
 {
+    //Объект ответа
     public class Answer
-    {
-        
-        public Question question;
-        public List<Option> choosen;
-
+    {   
+        public Question question; // содержит сам вопрос
+        public List<Option> choosen; // и выбранные варианты ответа студентом
     }
 }

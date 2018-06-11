@@ -28,9 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.TabControl1 = new System.Windows.Forms.TabControl();
-            this.AddTab = new System.Windows.Forms.TabPage();
+            this.TabControl = new System.Windows.Forms.TabControl();
+            this.addTab = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.clearAddQuestionButton = new System.Windows.Forms.Button();
             this.addMultipleChoiceGroupBox = new System.Windows.Forms.GroupBox();
             this.addMultipleChoiceFourthOptionTextBox = new System.Windows.Forms.TextBox();
             this.addMultipleChoiceThirdOptionTextBox = new System.Windows.Forms.TextBox();
@@ -54,21 +55,21 @@
             this.addFillingTextBox = new System.Windows.Forms.TextBox();
             this.addTypeComboBox = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
+            this.addQuestionButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.addQuestionTextBox = new System.Windows.Forms.TextBox();
+            this.addQuestionThemeComboBox = new System.Windows.Forms.ComboBox();
+            this.addQuestionSubjectComboBox = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.addThemeButton = new System.Windows.Forms.Button();
+            this.addThemeTextBox = new System.Windows.Forms.TextBox();
+            this.addThemeSubjectComboBox = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.EditTab = new System.Windows.Forms.TabPage();
+            this.addSubjectButton = new System.Windows.Forms.Button();
+            this.addSubjectTextBox = new System.Windows.Forms.TextBox();
+            this.editTab = new System.Windows.Forms.TabPage();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.textBoxQ = new System.Windows.Forms.TextBox();
+            this.editQuestionTextBox = new System.Windows.Forms.TextBox();
             this.editFillingGroupBox = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
             this.editFillingTextBox = new System.Windows.Forms.TextBox();
@@ -92,100 +93,112 @@
             this.editMultipleChoiceFirstOptionCheckBox = new System.Windows.Forms.CheckBox();
             this.editTypeComboBox = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBoxS = new System.Windows.Forms.TextBox();
-            this.textBoxT = new System.Windows.Forms.TextBox();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
-            this.comboBox9 = new System.Windows.Forms.ComboBox();
-            this.comboBox8 = new System.Windows.Forms.ComboBox();
-            this.comboBox7 = new System.Windows.Forms.ComboBox();
+            this.editSubjectTextBox = new System.Windows.Forms.TextBox();
+            this.editThemeTextBox = new System.Windows.Forms.TextBox();
+            this.editQuestionClearButton = new System.Windows.Forms.Button();
+            this.editQuestionButton = new System.Windows.Forms.Button();
+            this.editQuestionComboBox = new System.Windows.Forms.ComboBox();
+            this.editQuestionThemeComboBox = new System.Windows.Forms.ComboBox();
+            this.editQuestionSubjectComboBox = new System.Windows.Forms.ComboBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.button11 = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
-            this.comboBox6 = new System.Windows.Forms.ComboBox();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
+            this.editThemeClearButton = new System.Windows.Forms.Button();
+            this.editThemeButton = new System.Windows.Forms.Button();
+            this.editThemeComboBox = new System.Windows.Forms.ComboBox();
+            this.editThemeSubjectComboBox = new System.Windows.Forms.ComboBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.button9 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
-            this.DeleteTab = new System.Windows.Forms.TabPage();
+            this.editSubjectClearButton = new System.Windows.Forms.Button();
+            this.editSubjectButton = new System.Windows.Forms.Button();
+            this.editSubjectComboBox = new System.Windows.Forms.ComboBox();
+            this.deleteTab = new System.Windows.Forms.TabPage();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
-            this.button7 = new System.Windows.Forms.Button();
-            this.comboBox15 = new System.Windows.Forms.ComboBox();
-            this.comboBox14 = new System.Windows.Forms.ComboBox();
-            this.comboBox13 = new System.Windows.Forms.ComboBox();
+            this.deleteQuestionButton = new System.Windows.Forms.Button();
+            this.deleteQuestionComboBox = new System.Windows.Forms.ComboBox();
+            this.deleteQuestionThemeComboBox = new System.Windows.Forms.ComboBox();
+            this.deleteQuestionSubjectComboBox = new System.Windows.Forms.ComboBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.button6 = new System.Windows.Forms.Button();
-            this.comboBox12 = new System.Windows.Forms.ComboBox();
-            this.comboBox11 = new System.Windows.Forms.ComboBox();
+            this.deleteThemeButton = new System.Windows.Forms.Button();
+            this.deleteThemeComboBox = new System.Windows.Forms.ComboBox();
+            this.deleteThemeSubjectComboBox = new System.Windows.Forms.ComboBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.button5 = new System.Windows.Forms.Button();
-            this.comboBox10 = new System.Windows.Forms.ComboBox();
-            this.TabControl1.SuspendLayout();
-            this.AddTab.SuspendLayout();
+            this.deleteSubjectButton = new System.Windows.Forms.Button();
+            this.deleteSubjectComboBox = new System.Windows.Forms.ComboBox();
+            this.TabControl.SuspendLayout();
+            this.addTab.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.addMultipleChoiceGroupBox.SuspendLayout();
             this.addSingleChoiceGroupBox.SuspendLayout();
             this.fillingGroupBox.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.EditTab.SuspendLayout();
+            this.editTab.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.editFillingGroupBox.SuspendLayout();
             this.editSingleGroupBox.SuspendLayout();
             this.editMultipleGroupBox.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            this.DeleteTab.SuspendLayout();
+            this.deleteTab.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
-            // TabControl1
+            // TabControl
             // 
-            this.TabControl1.Controls.Add(this.AddTab);
-            this.TabControl1.Controls.Add(this.EditTab);
-            this.TabControl1.Controls.Add(this.DeleteTab);
-            this.TabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.TabControl1.Location = new System.Drawing.Point(12, 12);
-            this.TabControl1.Name = "TabControl1";
-            this.TabControl1.SelectedIndex = 0;
-            this.TabControl1.Size = new System.Drawing.Size(822, 675);
-            this.TabControl1.TabIndex = 0;
-            this.TabControl1.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControl1_Selected);
+            this.TabControl.Controls.Add(this.addTab);
+            this.TabControl.Controls.Add(this.editTab);
+            this.TabControl.Controls.Add(this.deleteTab);
+            this.TabControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.TabControl.Location = new System.Drawing.Point(12, 12);
+            this.TabControl.Name = "TabControl";
+            this.TabControl.SelectedIndex = 0;
+            this.TabControl.Size = new System.Drawing.Size(822, 675);
+            this.TabControl.TabIndex = 0;
+            this.TabControl.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControl1_Selected);
             // 
-            // AddTab
+            // addTab
             // 
-            this.AddTab.Controls.Add(this.groupBox3);
-            this.AddTab.Controls.Add(this.groupBox2);
-            this.AddTab.Controls.Add(this.groupBox1);
-            this.AddTab.Location = new System.Drawing.Point(4, 29);
-            this.AddTab.Name = "AddTab";
-            this.AddTab.Padding = new System.Windows.Forms.Padding(3);
-            this.AddTab.Size = new System.Drawing.Size(814, 642);
-            this.AddTab.TabIndex = 0;
-            this.AddTab.Text = "Добавление";
-            this.AddTab.UseVisualStyleBackColor = true;
+            this.addTab.Controls.Add(this.groupBox3);
+            this.addTab.Controls.Add(this.groupBox2);
+            this.addTab.Controls.Add(this.groupBox1);
+            this.addTab.Location = new System.Drawing.Point(4, 29);
+            this.addTab.Name = "addTab";
+            this.addTab.Padding = new System.Windows.Forms.Padding(3);
+            this.addTab.Size = new System.Drawing.Size(814, 642);
+            this.addTab.TabIndex = 0;
+            this.addTab.Text = "Добавление";
+            this.addTab.UseVisualStyleBackColor = true;
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.clearAddQuestionButton);
             this.groupBox3.Controls.Add(this.addMultipleChoiceGroupBox);
             this.groupBox3.Controls.Add(this.addSingleChoiceGroupBox);
             this.groupBox3.Controls.Add(this.fillingGroupBox);
             this.groupBox3.Controls.Add(this.addTypeComboBox);
             this.groupBox3.Controls.Add(this.label2);
-            this.groupBox3.Controls.Add(this.button3);
+            this.groupBox3.Controls.Add(this.addQuestionButton);
             this.groupBox3.Controls.Add(this.label1);
-            this.groupBox3.Controls.Add(this.textBox3);
-            this.groupBox3.Controls.Add(this.comboBox3);
-            this.groupBox3.Controls.Add(this.comboBox2);
+            this.groupBox3.Controls.Add(this.addQuestionTextBox);
+            this.groupBox3.Controls.Add(this.addQuestionThemeComboBox);
+            this.groupBox3.Controls.Add(this.addQuestionSubjectComboBox);
             this.groupBox3.Location = new System.Drawing.Point(6, 200);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(802, 433);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Добавить вопрос";
+            // 
+            // clearAddQuestionButton
+            // 
+            this.clearAddQuestionButton.Enabled = false;
+            this.clearAddQuestionButton.Location = new System.Drawing.Point(488, 390);
+            this.clearAddQuestionButton.Name = "clearAddQuestionButton";
+            this.clearAddQuestionButton.Size = new System.Drawing.Size(151, 33);
+            this.clearAddQuestionButton.TabIndex = 42;
+            this.clearAddQuestionButton.Text = "Очистить";
+            this.clearAddQuestionButton.UseVisualStyleBackColor = true;
+            this.clearAddQuestionButton.Click += new System.EventHandler(this.clearAddQuestionButton_Click);
             // 
             // addMultipleChoiceGroupBox
             // 
@@ -212,6 +225,7 @@
             this.addMultipleChoiceFourthOptionTextBox.Name = "addMultipleChoiceFourthOptionTextBox";
             this.addMultipleChoiceFourthOptionTextBox.Size = new System.Drawing.Size(597, 29);
             this.addMultipleChoiceFourthOptionTextBox.TabIndex = 7;
+            this.addMultipleChoiceFourthOptionTextBox.TextChanged += new System.EventHandler(this.CheckFilling);
             // 
             // addMultipleChoiceThirdOptionTextBox
             // 
@@ -220,6 +234,7 @@
             this.addMultipleChoiceThirdOptionTextBox.Name = "addMultipleChoiceThirdOptionTextBox";
             this.addMultipleChoiceThirdOptionTextBox.Size = new System.Drawing.Size(597, 29);
             this.addMultipleChoiceThirdOptionTextBox.TabIndex = 6;
+            this.addMultipleChoiceThirdOptionTextBox.TextChanged += new System.EventHandler(this.CheckFilling);
             // 
             // addMultipleChoiceSecondOptionTextBox
             // 
@@ -228,6 +243,7 @@
             this.addMultipleChoiceSecondOptionTextBox.Name = "addMultipleChoiceSecondOptionTextBox";
             this.addMultipleChoiceSecondOptionTextBox.Size = new System.Drawing.Size(597, 29);
             this.addMultipleChoiceSecondOptionTextBox.TabIndex = 5;
+            this.addMultipleChoiceSecondOptionTextBox.TextChanged += new System.EventHandler(this.CheckFilling);
             // 
             // addMultipleChoiceFirstOptionTextBox
             // 
@@ -236,6 +252,7 @@
             this.addMultipleChoiceFirstOptionTextBox.Name = "addMultipleChoiceFirstOptionTextBox";
             this.addMultipleChoiceFirstOptionTextBox.Size = new System.Drawing.Size(597, 29);
             this.addMultipleChoiceFirstOptionTextBox.TabIndex = 4;
+            this.addMultipleChoiceFirstOptionTextBox.TextChanged += new System.EventHandler(this.CheckFilling);
             // 
             // addMultipleChioceFourthOptionCheckBox
             // 
@@ -329,6 +346,7 @@
             this.addSingleChoiceFirstOptionTextBox.Name = "addSingleChoiceFirstOptionTextBox";
             this.addSingleChoiceFirstOptionTextBox.Size = new System.Drawing.Size(597, 29);
             this.addSingleChoiceFirstOptionTextBox.TabIndex = 5;
+            this.addSingleChoiceFirstOptionTextBox.TextChanged += new System.EventHandler(this.CheckFilling);
             // 
             // addSingleChoiceSecondOptionRadioButton
             // 
@@ -348,6 +366,7 @@
             this.addSingleChoiceSecondOptionTextBox.Name = "addSingleChoiceSecondOptionTextBox";
             this.addSingleChoiceSecondOptionTextBox.Size = new System.Drawing.Size(597, 29);
             this.addSingleChoiceSecondOptionTextBox.TabIndex = 7;
+            this.addSingleChoiceSecondOptionTextBox.TextChanged += new System.EventHandler(this.CheckFilling);
             // 
             // addSingleChoiceThirdOptionTextBox
             // 
@@ -357,6 +376,7 @@
             this.addSingleChoiceThirdOptionTextBox.Name = "addSingleChoiceThirdOptionTextBox";
             this.addSingleChoiceThirdOptionTextBox.Size = new System.Drawing.Size(597, 29);
             this.addSingleChoiceThirdOptionTextBox.TabIndex = 9;
+            this.addSingleChoiceThirdOptionTextBox.TextChanged += new System.EventHandler(this.CheckFilling);
             // 
             // addSingleChoiceFourthOptionTextBox
             // 
@@ -366,6 +386,7 @@
             this.addSingleChoiceFourthOptionTextBox.Name = "addSingleChoiceFourthOptionTextBox";
             this.addSingleChoiceFourthOptionTextBox.Size = new System.Drawing.Size(597, 29);
             this.addSingleChoiceFourthOptionTextBox.TabIndex = 11;
+            this.addSingleChoiceFourthOptionTextBox.TextChanged += new System.EventHandler(this.CheckFilling);
             // 
             // fillingGroupBox
             // 
@@ -394,6 +415,7 @@
             this.addFillingTextBox.Name = "addFillingTextBox";
             this.addFillingTextBox.Size = new System.Drawing.Size(774, 29);
             this.addFillingTextBox.TabIndex = 0;
+            this.addFillingTextBox.TextChanged += new System.EventHandler(this.CheckFilling);
             // 
             // addTypeComboBox
             // 
@@ -419,16 +441,16 @@
             this.label2.Text = "Тип вопроса:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // button3
+            // addQuestionButton
             // 
-            this.button3.Enabled = false;
-            this.button3.Location = new System.Drawing.Point(645, 390);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(151, 33);
-            this.button3.TabIndex = 12;
-            this.button3.Text = "Добавить";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.addQuestionButton.Enabled = false;
+            this.addQuestionButton.Location = new System.Drawing.Point(645, 390);
+            this.addQuestionButton.Name = "addQuestionButton";
+            this.addQuestionButton.Size = new System.Drawing.Size(151, 33);
+            this.addQuestionButton.TabIndex = 12;
+            this.addQuestionButton.Text = "Добавить";
+            this.addQuestionButton.UseVisualStyleBackColor = true;
+            this.addQuestionButton.Click += new System.EventHandler(this.button3_Click);
             // 
             // label1
             // 
@@ -439,51 +461,51 @@
             this.label1.Text = "Вопрос";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // textBox3
+            // addQuestionTextBox
             // 
-            this.textBox3.Enabled = false;
-            this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.textBox3.Location = new System.Drawing.Point(106, 101);
-            this.textBox3.Multiline = true;
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(690, 55);
-            this.textBox3.TabIndex = 2;
-            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
+            this.addQuestionTextBox.Enabled = false;
+            this.addQuestionTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.addQuestionTextBox.Location = new System.Drawing.Point(106, 101);
+            this.addQuestionTextBox.Multiline = true;
+            this.addQuestionTextBox.Name = "addQuestionTextBox";
+            this.addQuestionTextBox.Size = new System.Drawing.Size(690, 55);
+            this.addQuestionTextBox.TabIndex = 2;
+            this.addQuestionTextBox.TextChanged += new System.EventHandler(this.CheckFilling);
             // 
-            // comboBox3
+            // addQuestionThemeComboBox
             // 
-            this.comboBox3.DisplayMember = "name";
-            this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox3.Enabled = false;
-            this.comboBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(6, 63);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(790, 32);
-            this.comboBox3.TabIndex = 1;
-            this.comboBox3.ValueMember = "id";
-            this.comboBox3.SelectedIndexChanged += new System.EventHandler(this.comboBox3_SelectedIndexChanged);
-            this.comboBox3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBox3_KeyPress);
+            this.addQuestionThemeComboBox.DisplayMember = "name";
+            this.addQuestionThemeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.addQuestionThemeComboBox.Enabled = false;
+            this.addQuestionThemeComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.addQuestionThemeComboBox.FormattingEnabled = true;
+            this.addQuestionThemeComboBox.Location = new System.Drawing.Point(6, 63);
+            this.addQuestionThemeComboBox.Name = "addQuestionThemeComboBox";
+            this.addQuestionThemeComboBox.Size = new System.Drawing.Size(790, 32);
+            this.addQuestionThemeComboBox.TabIndex = 1;
+            this.addQuestionThemeComboBox.ValueMember = "id";
+            this.addQuestionThemeComboBox.SelectedIndexChanged += new System.EventHandler(this.comboBox3_SelectedIndexChanged);
+            this.addQuestionThemeComboBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBox3_KeyPress);
             // 
-            // comboBox2
+            // addQuestionSubjectComboBox
             // 
-            this.comboBox2.DisplayMember = "name";
-            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(6, 25);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(790, 32);
-            this.comboBox2.TabIndex = 0;
-            this.comboBox2.ValueMember = "id";
-            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
-            this.comboBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBox2_KeyPress);
+            this.addQuestionSubjectComboBox.DisplayMember = "name";
+            this.addQuestionSubjectComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.addQuestionSubjectComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.addQuestionSubjectComboBox.FormattingEnabled = true;
+            this.addQuestionSubjectComboBox.Location = new System.Drawing.Point(6, 25);
+            this.addQuestionSubjectComboBox.Name = "addQuestionSubjectComboBox";
+            this.addQuestionSubjectComboBox.Size = new System.Drawing.Size(790, 32);
+            this.addQuestionSubjectComboBox.TabIndex = 0;
+            this.addQuestionSubjectComboBox.ValueMember = "id";
+            this.addQuestionSubjectComboBox.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
+            this.addQuestionSubjectComboBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBox2_KeyPress);
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.button2);
-            this.groupBox2.Controls.Add(this.textBox2);
-            this.groupBox2.Controls.Add(this.comboBox1);
+            this.groupBox2.Controls.Add(this.addThemeButton);
+            this.groupBox2.Controls.Add(this.addThemeTextBox);
+            this.groupBox2.Controls.Add(this.addThemeSubjectComboBox);
             this.groupBox2.Location = new System.Drawing.Point(6, 78);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(802, 116);
@@ -491,47 +513,47 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Добавить тему";
             // 
-            // button2
+            // addThemeButton
             // 
-            this.button2.Enabled = false;
-            this.button2.Location = new System.Drawing.Point(645, 63);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(151, 33);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "Добавить";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.addThemeButton.Enabled = false;
+            this.addThemeButton.Location = new System.Drawing.Point(645, 63);
+            this.addThemeButton.Name = "addThemeButton";
+            this.addThemeButton.Size = new System.Drawing.Size(151, 33);
+            this.addThemeButton.TabIndex = 2;
+            this.addThemeButton.Text = "Добавить";
+            this.addThemeButton.UseVisualStyleBackColor = true;
+            this.addThemeButton.Click += new System.EventHandler(this.button2_Click);
             // 
-            // textBox2
+            // addThemeTextBox
             // 
-            this.textBox2.Enabled = false;
-            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.textBox2.Location = new System.Drawing.Point(6, 63);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(633, 33);
-            this.textBox2.TabIndex = 1;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            this.addThemeTextBox.Enabled = false;
+            this.addThemeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.addThemeTextBox.Location = new System.Drawing.Point(6, 63);
+            this.addThemeTextBox.Multiline = true;
+            this.addThemeTextBox.Name = "addThemeTextBox";
+            this.addThemeTextBox.Size = new System.Drawing.Size(633, 33);
+            this.addThemeTextBox.TabIndex = 1;
+            this.addThemeTextBox.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
-            // comboBox1
+            // addThemeSubjectComboBox
             // 
-            this.comboBox1.DisplayMember = "name";
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(6, 25);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(790, 32);
-            this.comboBox1.TabIndex = 0;
-            this.comboBox1.Tag = "";
-            this.comboBox1.ValueMember = "id";
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            this.comboBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBox1_KeyPress);
+            this.addThemeSubjectComboBox.DisplayMember = "name";
+            this.addThemeSubjectComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.addThemeSubjectComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.addThemeSubjectComboBox.FormattingEnabled = true;
+            this.addThemeSubjectComboBox.Location = new System.Drawing.Point(6, 25);
+            this.addThemeSubjectComboBox.Name = "addThemeSubjectComboBox";
+            this.addThemeSubjectComboBox.Size = new System.Drawing.Size(790, 32);
+            this.addThemeSubjectComboBox.TabIndex = 0;
+            this.addThemeSubjectComboBox.Tag = "";
+            this.addThemeSubjectComboBox.ValueMember = "id";
+            this.addThemeSubjectComboBox.SelectedIndexChanged += new System.EventHandler(this.addThemeSubjectComboBox_SelectedIndexChanged);
+            this.addThemeSubjectComboBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBox1_KeyPress);
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.addSubjectButton);
+            this.groupBox1.Controls.Add(this.addSubjectTextBox);
             this.groupBox1.Location = new System.Drawing.Point(6, 6);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(802, 66);
@@ -539,55 +561,55 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Добавить предмет";
             // 
-            // button1
+            // addSubjectButton
             // 
-            this.button1.Location = new System.Drawing.Point(645, 25);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(151, 33);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Добавить";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.addSubjectButton.Location = new System.Drawing.Point(645, 25);
+            this.addSubjectButton.Name = "addSubjectButton";
+            this.addSubjectButton.Size = new System.Drawing.Size(151, 33);
+            this.addSubjectButton.TabIndex = 1;
+            this.addSubjectButton.Text = "Добавить";
+            this.addSubjectButton.UseVisualStyleBackColor = true;
+            this.addSubjectButton.Click += new System.EventHandler(this.addSubjectButton_Click);
             // 
-            // textBox1
+            // addSubjectTextBox
             // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.textBox1.Location = new System.Drawing.Point(6, 25);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(633, 33);
-            this.textBox1.TabIndex = 0;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.addSubjectTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.addSubjectTextBox.Location = new System.Drawing.Point(6, 25);
+            this.addSubjectTextBox.Multiline = true;
+            this.addSubjectTextBox.Name = "addSubjectTextBox";
+            this.addSubjectTextBox.Size = new System.Drawing.Size(633, 33);
+            this.addSubjectTextBox.TabIndex = 0;
+            this.addSubjectTextBox.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
-            // EditTab
+            // editTab
             // 
-            this.EditTab.Controls.Add(this.groupBox6);
-            this.EditTab.Controls.Add(this.groupBox5);
-            this.EditTab.Controls.Add(this.groupBox4);
-            this.EditTab.Location = new System.Drawing.Point(4, 29);
-            this.EditTab.Name = "EditTab";
-            this.EditTab.Padding = new System.Windows.Forms.Padding(3);
-            this.EditTab.Size = new System.Drawing.Size(814, 642);
-            this.EditTab.TabIndex = 1;
-            this.EditTab.Text = "Редактирование";
-            this.EditTab.UseVisualStyleBackColor = true;
+            this.editTab.Controls.Add(this.groupBox6);
+            this.editTab.Controls.Add(this.groupBox5);
+            this.editTab.Controls.Add(this.groupBox4);
+            this.editTab.Location = new System.Drawing.Point(4, 29);
+            this.editTab.Name = "editTab";
+            this.editTab.Padding = new System.Windows.Forms.Padding(3);
+            this.editTab.Size = new System.Drawing.Size(814, 642);
+            this.editTab.TabIndex = 1;
+            this.editTab.Text = "Редактирование";
+            this.editTab.UseVisualStyleBackColor = true;
             // 
             // groupBox6
             // 
             this.groupBox6.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.groupBox6.Controls.Add(this.textBoxQ);
+            this.groupBox6.Controls.Add(this.editQuestionTextBox);
             this.groupBox6.Controls.Add(this.editFillingGroupBox);
             this.groupBox6.Controls.Add(this.editSingleGroupBox);
             this.groupBox6.Controls.Add(this.editMultipleGroupBox);
             this.groupBox6.Controls.Add(this.editTypeComboBox);
             this.groupBox6.Controls.Add(this.label4);
-            this.groupBox6.Controls.Add(this.textBoxS);
-            this.groupBox6.Controls.Add(this.textBoxT);
-            this.groupBox6.Controls.Add(this.button4);
-            this.groupBox6.Controls.Add(this.button12);
-            this.groupBox6.Controls.Add(this.comboBox9);
-            this.groupBox6.Controls.Add(this.comboBox8);
-            this.groupBox6.Controls.Add(this.comboBox7);
+            this.groupBox6.Controls.Add(this.editSubjectTextBox);
+            this.groupBox6.Controls.Add(this.editThemeTextBox);
+            this.groupBox6.Controls.Add(this.editQuestionClearButton);
+            this.groupBox6.Controls.Add(this.editQuestionButton);
+            this.groupBox6.Controls.Add(this.editQuestionComboBox);
+            this.groupBox6.Controls.Add(this.editQuestionThemeComboBox);
+            this.groupBox6.Controls.Add(this.editQuestionSubjectComboBox);
             this.groupBox6.Location = new System.Drawing.Point(6, 200);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(802, 436);
@@ -595,15 +617,15 @@
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Вопрос";
             // 
-            // textBoxQ
+            // editQuestionTextBox
             // 
-            this.textBoxQ.AcceptsReturn = true;
-            this.textBoxQ.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.textBoxQ.Location = new System.Drawing.Point(280, 413);
-            this.textBoxQ.Multiline = true;
-            this.textBoxQ.Name = "textBoxQ";
-            this.textBoxQ.Size = new System.Drawing.Size(790, 33);
-            this.textBoxQ.TabIndex = 45;
+            this.editQuestionTextBox.AcceptsReturn = true;
+            this.editQuestionTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.editQuestionTextBox.Location = new System.Drawing.Point(280, 413);
+            this.editQuestionTextBox.Multiline = true;
+            this.editQuestionTextBox.Name = "editQuestionTextBox";
+            this.editQuestionTextBox.Size = new System.Drawing.Size(790, 33);
+            this.editQuestionTextBox.TabIndex = 45;
             // 
             // editFillingGroupBox
             // 
@@ -837,91 +859,95 @@
             this.label4.Text = "Тип вопроса:";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // textBoxS
+            // editSubjectTextBox
             // 
-            this.textBoxS.AcceptsReturn = true;
-            this.textBoxS.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.textBoxS.Location = new System.Drawing.Point(6, 413);
-            this.textBoxS.Multiline = true;
-            this.textBoxS.Name = "textBoxS";
-            this.textBoxS.Size = new System.Drawing.Size(594, 33);
-            this.textBoxS.TabIndex = 3;
-            this.textBoxS.Visible = false;
+            this.editSubjectTextBox.AcceptsReturn = true;
+            this.editSubjectTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.editSubjectTextBox.Location = new System.Drawing.Point(6, 413);
+            this.editSubjectTextBox.Multiline = true;
+            this.editSubjectTextBox.Name = "editSubjectTextBox";
+            this.editSubjectTextBox.Size = new System.Drawing.Size(594, 33);
+            this.editSubjectTextBox.TabIndex = 3;
+            this.editSubjectTextBox.Visible = false;
             // 
-            // textBoxT
+            // editThemeTextBox
             // 
-            this.textBoxT.AcceptsReturn = true;
-            this.textBoxT.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.textBoxT.Location = new System.Drawing.Point(236, 413);
-            this.textBoxT.Multiline = true;
-            this.textBoxT.Name = "textBoxT";
-            this.textBoxT.Size = new System.Drawing.Size(594, 33);
-            this.textBoxT.TabIndex = 4;
-            this.textBoxT.Visible = false;
+            this.editThemeTextBox.AcceptsReturn = true;
+            this.editThemeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.editThemeTextBox.Location = new System.Drawing.Point(236, 413);
+            this.editThemeTextBox.Multiline = true;
+            this.editThemeTextBox.Name = "editThemeTextBox";
+            this.editThemeTextBox.Size = new System.Drawing.Size(594, 33);
+            this.editThemeTextBox.TabIndex = 4;
+            this.editThemeTextBox.Visible = false;
             // 
-            // button4
+            // editQuestionClearButton
             // 
-            this.button4.Enabled = false;
-            this.button4.Location = new System.Drawing.Point(763, 374);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(33, 33);
-            this.button4.TabIndex = 13;
-            this.button4.Text = "Х";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.editQuestionClearButton.Enabled = false;
+            this.editQuestionClearButton.Location = new System.Drawing.Point(763, 374);
+            this.editQuestionClearButton.Name = "editQuestionClearButton";
+            this.editQuestionClearButton.Size = new System.Drawing.Size(33, 33);
+            this.editQuestionClearButton.TabIndex = 13;
+            this.editQuestionClearButton.Text = "Х";
+            this.editQuestionClearButton.UseVisualStyleBackColor = true;
+            this.editQuestionClearButton.Click += new System.EventHandler(this.button4_Click);
             // 
-            // button12
+            // editQuestionButton
             // 
-            this.button12.Enabled = false;
-            this.button12.Location = new System.Drawing.Point(606, 374);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(151, 33);
-            this.button12.TabIndex = 12;
-            this.button12.Text = "Изменить";
-            this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.button12_Click);
+            this.editQuestionButton.Enabled = false;
+            this.editQuestionButton.Location = new System.Drawing.Point(606, 374);
+            this.editQuestionButton.Name = "editQuestionButton";
+            this.editQuestionButton.Size = new System.Drawing.Size(151, 33);
+            this.editQuestionButton.TabIndex = 12;
+            this.editQuestionButton.Text = "Изменить";
+            this.editQuestionButton.UseVisualStyleBackColor = true;
+            this.editQuestionButton.Click += new System.EventHandler(this.button12_Click);
             // 
-            // comboBox9
+            // editQuestionComboBox
             // 
-            this.comboBox9.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox9.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.comboBox9.FormattingEnabled = true;
-            this.comboBox9.Location = new System.Drawing.Point(6, 101);
-            this.comboBox9.Name = "comboBox9";
-            this.comboBox9.Size = new System.Drawing.Size(790, 32);
-            this.comboBox9.TabIndex = 2;
-            this.comboBox9.SelectedIndexChanged += new System.EventHandler(this.comboBox9_SelectedIndexChanged);
+            this.editQuestionComboBox.DisplayMember = "name";
+            this.editQuestionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.editQuestionComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.editQuestionComboBox.FormattingEnabled = true;
+            this.editQuestionComboBox.Location = new System.Drawing.Point(6, 101);
+            this.editQuestionComboBox.Name = "editQuestionComboBox";
+            this.editQuestionComboBox.Size = new System.Drawing.Size(790, 32);
+            this.editQuestionComboBox.TabIndex = 2;
+            this.editQuestionComboBox.ValueMember = "id";
+            this.editQuestionComboBox.SelectedIndexChanged += new System.EventHandler(this.comboBox9_SelectedIndexChanged);
             // 
-            // comboBox8
+            // editQuestionThemeComboBox
             // 
-            this.comboBox8.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox8.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.comboBox8.FormattingEnabled = true;
-            this.comboBox8.Location = new System.Drawing.Point(6, 63);
-            this.comboBox8.Name = "comboBox8";
-            this.comboBox8.Size = new System.Drawing.Size(790, 32);
-            this.comboBox8.TabIndex = 1;
-            this.comboBox8.SelectedIndexChanged += new System.EventHandler(this.comboBox8_SelectedIndexChanged);
+            this.editQuestionThemeComboBox.DisplayMember = "name";
+            this.editQuestionThemeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.editQuestionThemeComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.editQuestionThemeComboBox.FormattingEnabled = true;
+            this.editQuestionThemeComboBox.Location = new System.Drawing.Point(6, 63);
+            this.editQuestionThemeComboBox.Name = "editQuestionThemeComboBox";
+            this.editQuestionThemeComboBox.Size = new System.Drawing.Size(790, 32);
+            this.editQuestionThemeComboBox.TabIndex = 1;
+            this.editQuestionThemeComboBox.ValueMember = "id";
+            this.editQuestionThemeComboBox.SelectedIndexChanged += new System.EventHandler(this.comboBox8_SelectedIndexChanged);
             // 
-            // comboBox7
+            // editQuestionSubjectComboBox
             // 
-            this.comboBox7.DisplayMember = "name";
-            this.comboBox7.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.comboBox7.FormattingEnabled = true;
-            this.comboBox7.Location = new System.Drawing.Point(6, 25);
-            this.comboBox7.Name = "comboBox7";
-            this.comboBox7.Size = new System.Drawing.Size(790, 32);
-            this.comboBox7.TabIndex = 0;
-            this.comboBox7.ValueMember = "id";
-            this.comboBox7.SelectedIndexChanged += new System.EventHandler(this.comboBox7_SelectedIndexChanged);
+            this.editQuestionSubjectComboBox.DisplayMember = "name";
+            this.editQuestionSubjectComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.editQuestionSubjectComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.editQuestionSubjectComboBox.FormattingEnabled = true;
+            this.editQuestionSubjectComboBox.Location = new System.Drawing.Point(6, 25);
+            this.editQuestionSubjectComboBox.Name = "editQuestionSubjectComboBox";
+            this.editQuestionSubjectComboBox.Size = new System.Drawing.Size(790, 32);
+            this.editQuestionSubjectComboBox.TabIndex = 0;
+            this.editQuestionSubjectComboBox.ValueMember = "id";
+            this.editQuestionSubjectComboBox.SelectedIndexChanged += new System.EventHandler(this.comboBox7_SelectedIndexChanged);
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.button11);
-            this.groupBox5.Controls.Add(this.button10);
-            this.groupBox5.Controls.Add(this.comboBox6);
-            this.groupBox5.Controls.Add(this.comboBox5);
+            this.groupBox5.Controls.Add(this.editThemeClearButton);
+            this.groupBox5.Controls.Add(this.editThemeButton);
+            this.groupBox5.Controls.Add(this.editThemeComboBox);
+            this.groupBox5.Controls.Add(this.editThemeSubjectComboBox);
             this.groupBox5.Location = new System.Drawing.Point(6, 78);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(802, 116);
@@ -929,57 +955,59 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Тема";
             // 
-            // button11
+            // editThemeClearButton
             // 
-            this.button11.Enabled = false;
-            this.button11.Location = new System.Drawing.Point(763, 62);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(33, 33);
-            this.button11.TabIndex = 3;
-            this.button11.Text = "Х";
-            this.button11.UseVisualStyleBackColor = true;
-            this.button11.Click += new System.EventHandler(this.button11_Click);
+            this.editThemeClearButton.Enabled = false;
+            this.editThemeClearButton.Location = new System.Drawing.Point(763, 62);
+            this.editThemeClearButton.Name = "editThemeClearButton";
+            this.editThemeClearButton.Size = new System.Drawing.Size(33, 33);
+            this.editThemeClearButton.TabIndex = 3;
+            this.editThemeClearButton.Text = "Х";
+            this.editThemeClearButton.UseVisualStyleBackColor = true;
+            this.editThemeClearButton.Click += new System.EventHandler(this.button11_Click);
             // 
-            // button10
+            // editThemeButton
             // 
-            this.button10.Enabled = false;
-            this.button10.Location = new System.Drawing.Point(606, 62);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(151, 33);
-            this.button10.TabIndex = 2;
-            this.button10.Text = "Изменить";
-            this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
+            this.editThemeButton.Enabled = false;
+            this.editThemeButton.Location = new System.Drawing.Point(606, 62);
+            this.editThemeButton.Name = "editThemeButton";
+            this.editThemeButton.Size = new System.Drawing.Size(151, 33);
+            this.editThemeButton.TabIndex = 2;
+            this.editThemeButton.Text = "Изменить";
+            this.editThemeButton.UseVisualStyleBackColor = true;
+            this.editThemeButton.Click += new System.EventHandler(this.button10_Click);
             // 
-            // comboBox6
+            // editThemeComboBox
             // 
-            this.comboBox6.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.comboBox6.FormattingEnabled = true;
-            this.comboBox6.Location = new System.Drawing.Point(6, 63);
-            this.comboBox6.Name = "comboBox6";
-            this.comboBox6.Size = new System.Drawing.Size(594, 32);
-            this.comboBox6.TabIndex = 1;
-            this.comboBox6.SelectedIndexChanged += new System.EventHandler(this.comboBox6_SelectedIndexChanged);
+            this.editThemeComboBox.DisplayMember = "name";
+            this.editThemeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.editThemeComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.editThemeComboBox.FormattingEnabled = true;
+            this.editThemeComboBox.Location = new System.Drawing.Point(6, 63);
+            this.editThemeComboBox.Name = "editThemeComboBox";
+            this.editThemeComboBox.Size = new System.Drawing.Size(594, 32);
+            this.editThemeComboBox.TabIndex = 1;
+            this.editThemeComboBox.ValueMember = "id";
+            this.editThemeComboBox.SelectedIndexChanged += new System.EventHandler(this.comboBox6_SelectedIndexChanged);
             // 
-            // comboBox5
+            // editThemeSubjectComboBox
             // 
-            this.comboBox5.DisplayMember = "name";
-            this.comboBox5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Location = new System.Drawing.Point(6, 25);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(790, 32);
-            this.comboBox5.TabIndex = 0;
-            this.comboBox5.ValueMember = "id";
-            this.comboBox5.SelectedIndexChanged += new System.EventHandler(this.comboBox5_SelectedIndexChanged);
+            this.editThemeSubjectComboBox.DisplayMember = "name";
+            this.editThemeSubjectComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.editThemeSubjectComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.editThemeSubjectComboBox.FormattingEnabled = true;
+            this.editThemeSubjectComboBox.Location = new System.Drawing.Point(6, 25);
+            this.editThemeSubjectComboBox.Name = "editThemeSubjectComboBox";
+            this.editThemeSubjectComboBox.Size = new System.Drawing.Size(790, 32);
+            this.editThemeSubjectComboBox.TabIndex = 0;
+            this.editThemeSubjectComboBox.ValueMember = "id";
+            this.editThemeSubjectComboBox.SelectedIndexChanged += new System.EventHandler(this.comboBox5_SelectedIndexChanged);
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.button9);
-            this.groupBox4.Controls.Add(this.button8);
-            this.groupBox4.Controls.Add(this.comboBox4);
+            this.groupBox4.Controls.Add(this.editSubjectClearButton);
+            this.groupBox4.Controls.Add(this.editSubjectButton);
+            this.groupBox4.Controls.Add(this.editSubjectComboBox);
             this.groupBox4.Location = new System.Drawing.Point(6, 6);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(802, 66);
@@ -987,60 +1015,60 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Предмет";
             // 
-            // button9
+            // editSubjectClearButton
             // 
-            this.button9.Enabled = false;
-            this.button9.Location = new System.Drawing.Point(763, 24);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(33, 33);
-            this.button9.TabIndex = 2;
-            this.button9.Text = "Х";
-            this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
+            this.editSubjectClearButton.Enabled = false;
+            this.editSubjectClearButton.Location = new System.Drawing.Point(763, 24);
+            this.editSubjectClearButton.Name = "editSubjectClearButton";
+            this.editSubjectClearButton.Size = new System.Drawing.Size(33, 33);
+            this.editSubjectClearButton.TabIndex = 2;
+            this.editSubjectClearButton.Text = "Х";
+            this.editSubjectClearButton.UseVisualStyleBackColor = true;
+            this.editSubjectClearButton.Click += new System.EventHandler(this.editSubjectClearButton_Click);
             // 
-            // button8
+            // editSubjectButton
             // 
-            this.button8.Enabled = false;
-            this.button8.Location = new System.Drawing.Point(606, 25);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(151, 32);
-            this.button8.TabIndex = 1;
-            this.button8.Text = "Изменить";
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
+            this.editSubjectButton.Enabled = false;
+            this.editSubjectButton.Location = new System.Drawing.Point(606, 25);
+            this.editSubjectButton.Name = "editSubjectButton";
+            this.editSubjectButton.Size = new System.Drawing.Size(151, 32);
+            this.editSubjectButton.TabIndex = 1;
+            this.editSubjectButton.Text = "Изменить";
+            this.editSubjectButton.UseVisualStyleBackColor = true;
+            this.editSubjectButton.Click += new System.EventHandler(this.editSubjectButton_Click);
             // 
-            // comboBox4
+            // editSubjectComboBox
             // 
-            this.comboBox4.DisplayMember = "name";
-            this.comboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(6, 25);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(594, 32);
-            this.comboBox4.TabIndex = 0;
-            this.comboBox4.ValueMember = "id";
-            this.comboBox4.SelectedIndexChanged += new System.EventHandler(this.comboBox4_SelectedIndexChanged);
+            this.editSubjectComboBox.DisplayMember = "name";
+            this.editSubjectComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.editSubjectComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.editSubjectComboBox.FormattingEnabled = true;
+            this.editSubjectComboBox.Location = new System.Drawing.Point(6, 25);
+            this.editSubjectComboBox.Name = "editSubjectComboBox";
+            this.editSubjectComboBox.Size = new System.Drawing.Size(594, 32);
+            this.editSubjectComboBox.TabIndex = 0;
+            this.editSubjectComboBox.ValueMember = "id";
+            this.editSubjectComboBox.SelectedIndexChanged += new System.EventHandler(this.editSubjectComboBox_SelectedIndexChanged);
             // 
-            // DeleteTab
+            // deleteTab
             // 
-            this.DeleteTab.Controls.Add(this.groupBox9);
-            this.DeleteTab.Controls.Add(this.groupBox8);
-            this.DeleteTab.Controls.Add(this.groupBox7);
-            this.DeleteTab.Location = new System.Drawing.Point(4, 29);
-            this.DeleteTab.Name = "DeleteTab";
-            this.DeleteTab.Padding = new System.Windows.Forms.Padding(3);
-            this.DeleteTab.Size = new System.Drawing.Size(814, 642);
-            this.DeleteTab.TabIndex = 2;
-            this.DeleteTab.Text = "Удаление";
-            this.DeleteTab.UseVisualStyleBackColor = true;
+            this.deleteTab.Controls.Add(this.groupBox9);
+            this.deleteTab.Controls.Add(this.groupBox8);
+            this.deleteTab.Controls.Add(this.groupBox7);
+            this.deleteTab.Location = new System.Drawing.Point(4, 29);
+            this.deleteTab.Name = "deleteTab";
+            this.deleteTab.Padding = new System.Windows.Forms.Padding(3);
+            this.deleteTab.Size = new System.Drawing.Size(814, 642);
+            this.deleteTab.TabIndex = 2;
+            this.deleteTab.Text = "Удаление";
+            this.deleteTab.UseVisualStyleBackColor = true;
             // 
             // groupBox9
             // 
-            this.groupBox9.Controls.Add(this.button7);
-            this.groupBox9.Controls.Add(this.comboBox15);
-            this.groupBox9.Controls.Add(this.comboBox14);
-            this.groupBox9.Controls.Add(this.comboBox13);
+            this.groupBox9.Controls.Add(this.deleteQuestionButton);
+            this.groupBox9.Controls.Add(this.deleteQuestionComboBox);
+            this.groupBox9.Controls.Add(this.deleteQuestionThemeComboBox);
+            this.groupBox9.Controls.Add(this.deleteQuestionSubjectComboBox);
             this.groupBox9.Location = new System.Drawing.Point(6, 200);
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Size = new System.Drawing.Size(802, 154);
@@ -1048,50 +1076,59 @@
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Вопрос";
             // 
-            // button7
+            // deleteQuestionButton
             // 
-            this.button7.Location = new System.Drawing.Point(645, 100);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(151, 33);
-            this.button7.TabIndex = 3;
-            this.button7.Text = "Удалить";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
+            this.deleteQuestionButton.Location = new System.Drawing.Point(645, 100);
+            this.deleteQuestionButton.Name = "deleteQuestionButton";
+            this.deleteQuestionButton.Size = new System.Drawing.Size(151, 33);
+            this.deleteQuestionButton.TabIndex = 3;
+            this.deleteQuestionButton.Text = "Удалить";
+            this.deleteQuestionButton.UseVisualStyleBackColor = true;
+            this.deleteQuestionButton.Click += new System.EventHandler(this.deleteQuestionButton_Click);
             // 
-            // comboBox15
+            // deleteQuestionComboBox
             // 
-            this.comboBox15.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.comboBox15.FormattingEnabled = true;
-            this.comboBox15.Location = new System.Drawing.Point(6, 101);
-            this.comboBox15.Name = "comboBox15";
-            this.comboBox15.Size = new System.Drawing.Size(633, 32);
-            this.comboBox15.TabIndex = 2;
+            this.deleteQuestionComboBox.DisplayMember = "name";
+            this.deleteQuestionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.deleteQuestionComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.deleteQuestionComboBox.FormattingEnabled = true;
+            this.deleteQuestionComboBox.Location = new System.Drawing.Point(6, 101);
+            this.deleteQuestionComboBox.Name = "deleteQuestionComboBox";
+            this.deleteQuestionComboBox.Size = new System.Drawing.Size(633, 32);
+            this.deleteQuestionComboBox.TabIndex = 2;
+            this.deleteQuestionComboBox.ValueMember = "id";
             // 
-            // comboBox14
+            // deleteQuestionThemeComboBox
             // 
-            this.comboBox14.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.comboBox14.FormattingEnabled = true;
-            this.comboBox14.Location = new System.Drawing.Point(6, 63);
-            this.comboBox14.Name = "comboBox14";
-            this.comboBox14.Size = new System.Drawing.Size(790, 32);
-            this.comboBox14.TabIndex = 1;
-            this.comboBox14.SelectedIndexChanged += new System.EventHandler(this.comboBox14_SelectedIndexChanged);
+            this.deleteQuestionThemeComboBox.DisplayMember = "name";
+            this.deleteQuestionThemeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.deleteQuestionThemeComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.deleteQuestionThemeComboBox.FormattingEnabled = true;
+            this.deleteQuestionThemeComboBox.Location = new System.Drawing.Point(6, 63);
+            this.deleteQuestionThemeComboBox.Name = "deleteQuestionThemeComboBox";
+            this.deleteQuestionThemeComboBox.Size = new System.Drawing.Size(790, 32);
+            this.deleteQuestionThemeComboBox.TabIndex = 1;
+            this.deleteQuestionThemeComboBox.ValueMember = "id";
+            this.deleteQuestionThemeComboBox.SelectedIndexChanged += new System.EventHandler(this.deleteQuestionThemeComboBox_SelectedIndexChanged);
             // 
-            // comboBox13
+            // deleteQuestionSubjectComboBox
             // 
-            this.comboBox13.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.comboBox13.FormattingEnabled = true;
-            this.comboBox13.Location = new System.Drawing.Point(6, 25);
-            this.comboBox13.Name = "comboBox13";
-            this.comboBox13.Size = new System.Drawing.Size(790, 32);
-            this.comboBox13.TabIndex = 0;
-            this.comboBox13.SelectedIndexChanged += new System.EventHandler(this.comboBox13_SelectedIndexChanged);
+            this.deleteQuestionSubjectComboBox.DisplayMember = "name";
+            this.deleteQuestionSubjectComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.deleteQuestionSubjectComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.deleteQuestionSubjectComboBox.FormattingEnabled = true;
+            this.deleteQuestionSubjectComboBox.Location = new System.Drawing.Point(6, 25);
+            this.deleteQuestionSubjectComboBox.Name = "deleteQuestionSubjectComboBox";
+            this.deleteQuestionSubjectComboBox.Size = new System.Drawing.Size(790, 32);
+            this.deleteQuestionSubjectComboBox.TabIndex = 0;
+            this.deleteQuestionSubjectComboBox.ValueMember = "id";
+            this.deleteQuestionSubjectComboBox.SelectedIndexChanged += new System.EventHandler(this.deleteQuestionSubjectComboBox_SelectedIndexChanged);
             // 
             // groupBox8
             // 
-            this.groupBox8.Controls.Add(this.button6);
-            this.groupBox8.Controls.Add(this.comboBox12);
-            this.groupBox8.Controls.Add(this.comboBox11);
+            this.groupBox8.Controls.Add(this.deleteThemeButton);
+            this.groupBox8.Controls.Add(this.deleteThemeComboBox);
+            this.groupBox8.Controls.Add(this.deleteThemeSubjectComboBox);
             this.groupBox8.Location = new System.Drawing.Point(6, 78);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(802, 116);
@@ -1099,39 +1136,45 @@
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Тема";
             // 
-            // button6
+            // deleteThemeButton
             // 
-            this.button6.Location = new System.Drawing.Point(645, 62);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(151, 33);
-            this.button6.TabIndex = 2;
-            this.button6.Text = "Удалить";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.deleteThemeButton.Location = new System.Drawing.Point(645, 62);
+            this.deleteThemeButton.Name = "deleteThemeButton";
+            this.deleteThemeButton.Size = new System.Drawing.Size(151, 33);
+            this.deleteThemeButton.TabIndex = 2;
+            this.deleteThemeButton.Text = "Удалить";
+            this.deleteThemeButton.UseVisualStyleBackColor = true;
+            this.deleteThemeButton.Click += new System.EventHandler(this.deleteThemeButton_Click);
             // 
-            // comboBox12
+            // deleteThemeComboBox
             // 
-            this.comboBox12.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.comboBox12.FormattingEnabled = true;
-            this.comboBox12.Location = new System.Drawing.Point(6, 63);
-            this.comboBox12.Name = "comboBox12";
-            this.comboBox12.Size = new System.Drawing.Size(633, 32);
-            this.comboBox12.TabIndex = 1;
+            this.deleteThemeComboBox.DisplayMember = "name";
+            this.deleteThemeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.deleteThemeComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.deleteThemeComboBox.FormattingEnabled = true;
+            this.deleteThemeComboBox.Location = new System.Drawing.Point(6, 63);
+            this.deleteThemeComboBox.Name = "deleteThemeComboBox";
+            this.deleteThemeComboBox.Size = new System.Drawing.Size(633, 32);
+            this.deleteThemeComboBox.TabIndex = 1;
+            this.deleteThemeComboBox.ValueMember = "id";
             // 
-            // comboBox11
+            // deleteThemeSubjectComboBox
             // 
-            this.comboBox11.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.comboBox11.FormattingEnabled = true;
-            this.comboBox11.Location = new System.Drawing.Point(6, 25);
-            this.comboBox11.Name = "comboBox11";
-            this.comboBox11.Size = new System.Drawing.Size(790, 32);
-            this.comboBox11.TabIndex = 0;
-            this.comboBox11.SelectedIndexChanged += new System.EventHandler(this.comboBox11_SelectedIndexChanged);
+            this.deleteThemeSubjectComboBox.DisplayMember = "name";
+            this.deleteThemeSubjectComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.deleteThemeSubjectComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.deleteThemeSubjectComboBox.FormattingEnabled = true;
+            this.deleteThemeSubjectComboBox.Location = new System.Drawing.Point(6, 25);
+            this.deleteThemeSubjectComboBox.Name = "deleteThemeSubjectComboBox";
+            this.deleteThemeSubjectComboBox.Size = new System.Drawing.Size(790, 32);
+            this.deleteThemeSubjectComboBox.TabIndex = 0;
+            this.deleteThemeSubjectComboBox.ValueMember = "id";
+            this.deleteThemeSubjectComboBox.SelectedIndexChanged += new System.EventHandler(this.deleteThemeSubjectComboBox_SelectedIndexChanged);
             // 
             // groupBox7
             // 
-            this.groupBox7.Controls.Add(this.button5);
-            this.groupBox7.Controls.Add(this.comboBox10);
+            this.groupBox7.Controls.Add(this.deleteSubjectButton);
+            this.groupBox7.Controls.Add(this.deleteSubjectComboBox);
             this.groupBox7.Location = new System.Drawing.Point(6, 6);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(802, 66);
@@ -1139,24 +1182,28 @@
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Предмет";
             // 
-            // button5
+            // deleteSubjectButton
             // 
-            this.button5.Location = new System.Drawing.Point(645, 24);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(151, 33);
-            this.button5.TabIndex = 1;
-            this.button5.Text = "Удалить";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.deleteSubjectButton.Location = new System.Drawing.Point(645, 24);
+            this.deleteSubjectButton.Name = "deleteSubjectButton";
+            this.deleteSubjectButton.Size = new System.Drawing.Size(151, 33);
+            this.deleteSubjectButton.TabIndex = 1;
+            this.deleteSubjectButton.Text = "Удалить";
+            this.deleteSubjectButton.UseVisualStyleBackColor = true;
+            this.deleteSubjectButton.Click += new System.EventHandler(this.deleteSubjectButton_Click);
             // 
-            // comboBox10
+            // deleteSubjectComboBox
             // 
-            this.comboBox10.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.comboBox10.FormattingEnabled = true;
-            this.comboBox10.Location = new System.Drawing.Point(6, 25);
-            this.comboBox10.Name = "comboBox10";
-            this.comboBox10.Size = new System.Drawing.Size(633, 32);
-            this.comboBox10.TabIndex = 0;
+            this.deleteSubjectComboBox.DisplayMember = "name";
+            this.deleteSubjectComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.deleteSubjectComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.deleteSubjectComboBox.FormattingEnabled = true;
+            this.deleteSubjectComboBox.Location = new System.Drawing.Point(6, 25);
+            this.deleteSubjectComboBox.Name = "deleteSubjectComboBox";
+            this.deleteSubjectComboBox.Size = new System.Drawing.Size(633, 32);
+            this.deleteSubjectComboBox.TabIndex = 0;
+            this.deleteSubjectComboBox.ValueMember = "id";
+            this.deleteSubjectComboBox.SelectedIndexChanged += new System.EventHandler(this.deleteSubjectComboBox_SelectedIndexChanged);
             // 
             // DataBase
             // 
@@ -1164,14 +1211,15 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(839, 692);
-            this.Controls.Add(this.TabControl1);
+            this.Controls.Add(this.TabControl);
+            this.MaximizeBox = false;
             this.Name = "DataBase";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "DataBase";
+            this.Text = "Редактирование тестов";
             this.Load += new System.EventHandler(this.DataBase_Load);
-            this.TabControl1.ResumeLayout(false);
-            this.AddTab.ResumeLayout(false);
+            this.TabControl.ResumeLayout(false);
+            this.addTab.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.addMultipleChoiceGroupBox.ResumeLayout(false);
@@ -1184,7 +1232,7 @@
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.EditTab.ResumeLayout(false);
+            this.editTab.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             this.editFillingGroupBox.ResumeLayout(false);
@@ -1195,7 +1243,7 @@
             this.editMultipleGroupBox.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
-            this.DeleteTab.ResumeLayout(false);
+            this.deleteTab.ResumeLayout(false);
             this.groupBox9.ResumeLayout(false);
             this.groupBox8.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
@@ -1205,56 +1253,56 @@
 
         #endregion
 
-        private System.Windows.Forms.TabControl TabControl1;
-        private System.Windows.Forms.TabPage AddTab;
+        private System.Windows.Forms.TabControl TabControl;
+        private System.Windows.Forms.TabPage addTab;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button addQuestionButton;
         private System.Windows.Forms.TextBox addSingleChoiceFourthOptionTextBox;
         private System.Windows.Forms.TextBox addSingleChoiceThirdOptionTextBox;
         private System.Windows.Forms.TextBox addSingleChoiceSecondOptionTextBox;
         private System.Windows.Forms.TextBox addSingleChoiceFirstOptionTextBox;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.ComboBox comboBox3;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.TextBox addQuestionTextBox;
+        private System.Windows.Forms.ComboBox addQuestionThemeComboBox;
+        private System.Windows.Forms.ComboBox addQuestionSubjectComboBox;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Button addThemeButton;
+        private System.Windows.Forms.TextBox addThemeTextBox;
+        private System.Windows.Forms.ComboBox addThemeSubjectComboBox;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TabPage EditTab;
+        private System.Windows.Forms.Button addSubjectButton;
+        private System.Windows.Forms.TextBox addSubjectTextBox;
+        private System.Windows.Forms.TabPage editTab;
         private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.ComboBox comboBox9;
-        private System.Windows.Forms.ComboBox comboBox8;
-        private System.Windows.Forms.ComboBox comboBox7;
+        private System.Windows.Forms.ComboBox editQuestionComboBox;
+        private System.Windows.Forms.ComboBox editQuestionThemeComboBox;
+        private System.Windows.Forms.ComboBox editQuestionSubjectComboBox;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.ComboBox comboBox6;
-        private System.Windows.Forms.ComboBox comboBox5;
+        private System.Windows.Forms.ComboBox editThemeComboBox;
+        private System.Windows.Forms.ComboBox editThemeSubjectComboBox;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.ComboBox comboBox4;
-        private System.Windows.Forms.TabPage DeleteTab;
+        private System.Windows.Forms.ComboBox editSubjectComboBox;
+        private System.Windows.Forms.TabPage deleteTab;
         private System.Windows.Forms.GroupBox groupBox9;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.ComboBox comboBox15;
-        private System.Windows.Forms.ComboBox comboBox14;
-        private System.Windows.Forms.ComboBox comboBox13;
+        private System.Windows.Forms.Button deleteQuestionButton;
+        private System.Windows.Forms.ComboBox deleteQuestionComboBox;
+        private System.Windows.Forms.ComboBox deleteQuestionThemeComboBox;
+        private System.Windows.Forms.ComboBox deleteQuestionSubjectComboBox;
         private System.Windows.Forms.GroupBox groupBox8;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.ComboBox comboBox12;
-        private System.Windows.Forms.ComboBox comboBox11;
+        private System.Windows.Forms.Button deleteThemeButton;
+        private System.Windows.Forms.ComboBox deleteThemeComboBox;
+        private System.Windows.Forms.ComboBox deleteThemeSubjectComboBox;
         private System.Windows.Forms.GroupBox groupBox7;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.ComboBox comboBox10;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button12;
-        private System.Windows.Forms.Button button11;
-        private System.Windows.Forms.Button button10;
-        private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.TextBox textBoxS;
-        private System.Windows.Forms.TextBox textBoxT;
+        private System.Windows.Forms.Button deleteSubjectButton;
+        private System.Windows.Forms.ComboBox deleteSubjectComboBox;
+        private System.Windows.Forms.Button editQuestionClearButton;
+        private System.Windows.Forms.Button editQuestionButton;
+        private System.Windows.Forms.Button editThemeClearButton;
+        private System.Windows.Forms.Button editThemeButton;
+        private System.Windows.Forms.Button editSubjectClearButton;
+        private System.Windows.Forms.Button editSubjectButton;
+        private System.Windows.Forms.TextBox editSubjectTextBox;
+        private System.Windows.Forms.TextBox editThemeTextBox;
         private System.Windows.Forms.ComboBox addTypeComboBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox addSingleChoiceGroupBox;
@@ -1285,7 +1333,7 @@
         private System.Windows.Forms.CheckBox editMultipleChoiceFirstOptionCheckBox;
         private System.Windows.Forms.ComboBox editTypeComboBox;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBoxQ;
+        private System.Windows.Forms.TextBox editQuestionTextBox;
         private System.Windows.Forms.GroupBox editFillingGroupBox;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox editFillingTextBox;
@@ -1298,5 +1346,6 @@
         private System.Windows.Forms.TextBox editSingleChoiceSecondOptionTextBox;
         private System.Windows.Forms.TextBox editSingleChoiceThirdOptionTextBox;
         private System.Windows.Forms.TextBox editSingleChoiceFourthOptionTextBox;
+        private System.Windows.Forms.Button clearAddQuestionButton;
     }
 }

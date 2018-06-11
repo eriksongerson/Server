@@ -6,84 +6,81 @@ using Server.Helpers;
 
 namespace Server.Forms
 {
+    // Главная форма. Управляет состоянием сервера и взаимодействует со всеми остальными формами
     public partial class MainForm : Form
     {
+        // Конструктор формы
         public MainForm()
         {
             InitializeComponent();
         }
-
-        private void запуститьСерверToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ChangeStatus();
-        }
-
-        private void остановитьСерверToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ChangeStatus();
-        }
-
+        // Кнопка изменения статуса системы
         private void button1_Click(object sender, EventArgs e)
         {
             ChangeStatus();
         }
-
+        // Функция изменения состояния сервера
         private void ChangeStatus()
         {
-            SocketHelper.ChangeStatus();
-            if (SocketHelper.Status)
+            SocketHelper.ChangeStatus(); // Изменяет состояние
+            if (SocketHelper.Status) // Узнаёт, запущен ли сервер
             {
+                // Если запущен, меняет надписи на кнопках
                 statusLabel.Text = "Сервер запущен";
                 button1.Text = "Остановить сервер";
+                // И запускает новый поток
                 new Thread(() =>
                 {
                     Thread.CurrentThread.IsBackground = true;
                     while (SocketHelper.Status)
                     {
+                        // Который отображает количество подключенных клиентов
                         connectedLabel.BeginInvoke((MethodInvoker)(() => {
                             connectedLabel.Text = $"Подключено {ClientHandler.testings.Count} студентов";
                         }));
+                        // И делает это раз в секунду
                         Thread.Sleep(1000);
                     }
                 }).Start();
             }
             else
             {
+                // Если сервер не запущен, меняет надписи на соответствующие
                 statusLabel.Text = "Сервер отключен";
                 button1.Text = "Запустить сервер";
                 connectedLabel.Text = "";
             }
         }
-
+        // Функция перехода на форму работы с тестами
         private void databaseButton_Click(object sender, EventArgs e)
         {
             DataBase dataBaseForm = new DataBase();
             dataBaseForm.Show();
         }
-
+        // Событие выхода с формы
         private void Main_Leave(object sender, EventArgs e)
         {
-            SocketHelper.StopListener();
-            Application.Exit();
+            SocketHelper.StopListener(); // Останавливает сервер
+            Application.Exit(); 
         }
-
+        // Событие загрузки формы
         private void Main_Load(object sender, EventArgs e)
         {
-            label4.Text = SocketHelper.GetListenerIP();
+            label4.Text = SocketHelper.GetListenerIP(); // Показываем IP-адрес сервера
         }    
-
+        // Кнопка перехода на форму журналов
         private void button3_Click(object sender, EventArgs e)
         {
             Journal journal = new Journal();
             journal.Show();
         }
-
+        // Событие перехода на форму отображения состояния тестирования
         private void connectedLabel_Click(object sender, EventArgs e)
         {
             if(SocketHelper.Status)
                 new VisaulizationForm().ShowDialog();
         }
-
+        // Кнопка перехода на форму работы с группами
         private void groupsButton_Click(object sender, EventArgs e)
         {
             new GroupsForm().ShowDialog();

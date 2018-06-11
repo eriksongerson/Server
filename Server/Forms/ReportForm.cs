@@ -46,7 +46,7 @@ namespace Server.Forms
                             subjectsComboBox.Items.Add(item);
                         }
 
-                        this.Height = 400; // TODO: высота больше чем положено
+                        this.Height = 400; 
 
                         break;
                     }
@@ -138,7 +138,7 @@ namespace Server.Forms
             worksheet.Range[startCell, endCell].BorderAround(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlMedium);
 
             worksheet.Cells[row, "C"].Value = "Средний балл";
-            worksheet.Cells[row, "D"].Value = Average;
+            worksheet.Cells[row, "D"].Value = Average / journals.Count;
             worksheet.Range[worksheet.Cells[row, "C"], worksheet.Cells[row, "D"]].Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
             worksheet.Range[worksheet.Cells[row, "C"], worksheet.Cells[row, "D"]].Borders.Weight = 2d;
             worksheet.Range[worksheet.Cells[row, "C"], worksheet.Cells[row, "D"]].BorderAround(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlMedium);

@@ -2,15 +2,16 @@
 
 namespace Server.Models
 {
+    // Класс вопроса
     public class Question
     {
-        int id;
-        int id_subject;
-        int id_theme;
-        string name;
-        List<Option> options;
-        Type type = Type.single;
-
+        int id; // id вопроса
+        int id_subject; // id предмета
+        int id_theme; // id темы
+        string name; // Сам вопрос
+        List<Option> options; // Список вариантов ответа
+        Type type = Type.single; // Тип вопроса
+        // свойства для полей объекта
         public int Id
         {
             set { this.id = value; }
@@ -41,17 +42,7 @@ namespace Server.Models
             set { this.type = value; }
             get { return this.type; }
         }
-
+        // Конструктор
         public Question() { }
-        public Question(int id, int id_subject, int id_theme, string name, List<Option> options, Type type)
-        {
-            this.id = id;
-            this.id_subject = id_subject;
-            this.id_theme = id_theme;
-            this.name = name;
-            this.options = options;
-            this.type = type;
-        }
-
     }
 }

@@ -45,7 +45,6 @@ namespace Server.Forms.Fragments
         Answer answer;
         // Номер вопроса
         int number = 0;
-
         Label statusLabel;
         // Два конструктора элемента:
         public AnswerFragment(int number): base()
@@ -60,7 +59,7 @@ namespace Server.Forms.Fragments
             this.answer = answer;
             Init();
         }
-
+        // Функция конфигурации элемента управления
         private void Init()
         {
             // Конфигурация фрагмента:
@@ -122,9 +121,7 @@ namespace Server.Forms.Fragments
             }
             return rightOptions; // и затем возвращается
         }
-
     }
-
     // Этот класс необходим для проверки идентичности двух списков List<Option>
     class OptionComparer : IEqualityComparer<Option>
     {
@@ -155,7 +152,5 @@ namespace Server.Forms.Fragments
             // Складываются все хэши.
             return hashOptionId ^ hashOptionIdQuestion ^ hashOptionIsRight ^ hashOptionOption;
         }
-
     }
-
 }

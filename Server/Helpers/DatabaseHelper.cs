@@ -12,8 +12,20 @@ namespace Server.Helpers
      */
     public static class DatabaseHelper
     {
+        // Функция, настраивающая пароль на базу данных
+        public static void ConfigureConnection()
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(@"Data Source='DataBase.db';"))
+            {
+                conn.Open();
+                conn.ChangePassword("Admin");
+                conn.Close();
+                connection = new SQLiteConnection(@"Data Source='DataBase.db'; Password='Admin';");
+            }
+        }
         // Соединение:
-        private static readonly SQLiteConnection connection = new SQLiteConnection("Data Source='DataBase.db'");
+        private static SQLiteConnection connection = new SQLiteConnection(@"Data Source='DataBase.db'; Password='Admin'");
+
         // Поле класса для доступа к соединению:
         public static SQLiteConnection Connection   
         {
@@ -42,8 +54,10 @@ namespace Server.Helpers
             mutex.ReleaseMutex();   // Даём мьютексу знать, что можно пропускать следующий поток
         }
 
-        #region Select
+        // Начало региона Select. В этом регионе содержатся функции, обеспечивающие выборку информации из базы данных
+        #region Select 
 
+        //Начало региона SelectSubject. Здесь содержатся все функции для выбора предметов избазы данных
         #region SelectSubject
         // Функция выбирает из таблицы "subjects" базы данных все записи. Возвращает список предметов.
         public static List<Subject> GetSubjects()
@@ -72,14 +86,16 @@ namespace Server.Helpers
             // Возвращаем список Предметов
             return subjects;
         }
-
+        // Функция Выбирает из базы данных предмет с определённым id. 
+        // Принцип работы совпадает с предыдущей функцией
+        // Возвращает один объект предмета
         public static Subject GetSubjectById(int id)
         {
             Subject subject = new Subject();
 
             SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, subject FROM subjects WHERE id=@Id", Connection);
 
-            SQLiteCommand.Parameters.AddWithValue("@Id", id);
+            SQLiteCommand.Parameters.AddWithValue("@Id", id); // Экранирование специальных символов и добавление в запрос
 
             OpenConnection();
 
@@ -96,14 +112,16 @@ namespace Server.Helpers
 
             return subject;
         }
-
+        // Функция Выбирает из базы данных предмет с определённым именем. 
+        // Принцип работы совпадает с предыдущей функцией
+        // Возвращает один объект предмета
         public static Subject GetSubjectByName(string name)
         {
             Subject subject = new Subject();
 
             SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, subject FROM subjects WHERE subject=@Name", Connection);
 
-            SQLiteCommand.Parameters.AddWithValue("@Name", name);
+            SQLiteCommand.Parameters.AddWithValue("@Name", name); // Экранирование специальных символов и добавление в запрос
 
             OpenConnection();
 
@@ -121,39 +139,44 @@ namespace Server.Helpers
             return subject;
         }
 
+        // конец региона SelectSubject
         #endregion
 
+        // Начало региона SelectTheme. Содержит функции, выбирающие из базы данных темы тестирования
         #region SelectTheme
-
+        // Функция выбирает из таблицы "themes" все темы, связанные с определенным предметом. Возвращает массив тем
         public static List<Theme> GetThemes(int id_subject)
         {
             List<Theme> themes = new List<Theme>();
-
+            // Запрос:
             SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, id_subject, theme FROM themes WHERE id_subject=@Id_subject", Connection);
-
+            // Экранирование символов:
             SQLiteCommand.Parameters.AddWithValue("@Id_subject", id_subject);
-
+            // Открытие соединения к базе данных
             OpenConnection();
-
+            // Читаем из базы данных записи
             using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
             {
                 while (dataReader.Read())
                 {
+                    // Создание элемента тема
                     Theme theme = new Theme
                     {
                         Id = Convert.ToInt32(dataReader[0].ToString()),
                         SubjectId = Convert.ToInt32(dataReader[1].ToString()),
                         Name = dataReader[2].ToString()
                     };
+                    // Сохранение темы в массив
                     themes.Add(theme);
                 }
             }
-
+            // Закрытие соединения
             CloseConnection();
-
+            // возврат значения
             return themes;
         }
-
+        // Функция выбирает Тему тестирования с определенным id темы
+        // Принцип работы аналогичен предыдущей функции
         public static Theme GetThemeById(int id)
         {
             Theme theme = new Theme();
@@ -178,7 +201,8 @@ namespace Server.Helpers
 
             return theme;
         }
-
+        // Функция выбирает Тему тестирования с определенным названием темы
+        // Принцип работы аналогичен предыдущей функции
         public static Theme GetThemeByName(string name)
         {
             Theme theme = new Theme();
@@ -203,26 +227,28 @@ namespace Server.Helpers
 
             return theme;
         }
-
+        // конец региона SelectTheme
         #endregion
-
+        // начало региона SelectQuestion
         #region SelectQuestion
-
+        // Функция выбирает все вопросы, связанные с определенными предметом и темой.
+        // Возвращает список вопросов
         public static List<Question> GetQuestionsByTestAndSubjectId(int SubjectId, int ThemeId)
         {
             List<Question> questions = new List<Question>();
-
+            // Запрос:
             SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, id_subject, id_theme, question, type FROM questions WHERE id_subject=@Id_subject AND id_theme=@Id_theme", Connection);
-
+            // Экранирование символов:
             SQLiteCommand.Parameters.AddWithValue("@Id_subject", SubjectId);
             SQLiteCommand.Parameters.AddWithValue("@Id_theme", ThemeId);
-
+            // Открытие соединения к базе данных
             OpenConnection();
-
+            // Чтение записей
             using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
             {
                 while (dataReader.Read())
                 {
+                    // Создание объекта вопрос
                     Question question = new Question
                     {
                         Id = Convert.ToInt32(dataReader[0].ToString()),
@@ -231,20 +257,22 @@ namespace Server.Helpers
                         Name = dataReader[3].ToString(),
                         Type = (Models.Type)Convert.ToInt32(dataReader[4].ToString())
                     };
+                    // и сохранение его в список
                     questions.Add(question);
                 }
             }
-
+            // Закрытие соединения
             CloseConnection();
-
+            // Перебор всех выбранных вопросов
             foreach (Question question in questions)
             {
+                // Заполнение у каждого списка вариантов ответа
                 question.Options = GetOptionsByQuestionId(question.Id);
             }
-
+            // возврат списка
             return questions;
         }
-
+        // TODO: 
         public static List<Question> GetQuestions()
         {
             List<Question> questions = new List<Question>();
@@ -278,7 +306,7 @@ namespace Server.Helpers
 
             return questions;
         }
-
+        // TODO: 
         public static Question GetQuestionById(int id)
         {
             Question question = new Question();
@@ -497,8 +525,6 @@ namespace Server.Helpers
 
             return journals;
         }
-
-        
 
         #endregion
 
@@ -829,18 +855,5 @@ namespace Server.Helpers
 
             return dataTable;
         }
-
     }
-
-    [Serializable]
-    public class SelectQueryException: Exception
-    {
-        public SelectQueryException() { }
-        public SelectQueryException(string message) : base(message) { }
-        public SelectQueryException(string message, Exception inner) : base(message, inner) { }
-        protected SelectQueryException(
-          System.Runtime.Serialization.SerializationInfo info,
-          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
-    }
-
 }

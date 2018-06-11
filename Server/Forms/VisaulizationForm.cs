@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Threading;
+using System.Collections.Generic;
 
 using Server.Models;
 using Server.Helpers;
@@ -10,8 +11,8 @@ namespace Server.Forms
 {
     public partial class VisaulizationForm : Form
     {
-        private CustomList<Testing> testings;
-        private CustomList<Testing> Testings
+        private List<Testing> testings;
+        private List<Testing> Testings
         {
             set
             {
@@ -36,7 +37,7 @@ namespace Server.Forms
                 }
                 catch (InvalidOperationException)
                 {
-                    // TODO: не оставлять пустым
+                    
                 }
             }
             get => testings;

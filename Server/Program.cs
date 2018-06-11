@@ -17,21 +17,28 @@ namespace Server
         [STAThread]
         static void Main()
         {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            // Получаем guid приложения
             string guid = Marshal.GetTypeLibGuidForAssembly(Assembly.GetExecutingAssembly()).ToString();
-
+            // Создаём мьютекс и узнаём у него, запущен ли хоть один процесс с таким guid
             Mutex mutexObj = new Mutex(true, guid, out bool existed);
-
+            // Если запущен, этот экземпляр программы необходимо закрыть
             if (!existed)
             {
                 MessageBox.Show("Программа уже запущена");
                 mutexObj.Dispose();
                 return;
             }
-            
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+            // Настраиваем пароль на базу данных
+            DatabaseHelper.ConfigureConnection();
+            // Настраиваем сервер
+            SocketHelper.ConfigureListener();
+            // Запускаем пргограмму
             Application.Run(new MainForm());
-
+            
+            // При выходе из программы нужно отключить всех клиентов
             if (SocketHelper.Status)
             {
                 SocketHelper.ChangeStatus();

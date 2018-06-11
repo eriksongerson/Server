@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Server.Models
 {
+    // класс Testing содержит текущую информацию о тестирующемся
     public class Testing
     {
-
-        private Client client;
-        private List<Answer> answers;
-        private Subject subject;
-        private Theme theme;
-        private int countOfQuestions;
-
+        private Client client; // Информация о клиенте
+        private List<Answer> answers; // Все ответы на вопросы, которые прошёл студент
+        private Subject subject; // Предмет тестирования
+        private Theme theme; // Тема тестирования
+        private int countOfQuestions; // Количество вопросов в тесте
+        // Свойства полей:
         public Client Client
         {
             set => client = value;
@@ -40,6 +36,5 @@ namespace Server.Models
             set => countOfQuestions = value;
             get => countOfQuestions;
         }
-
     }
 }

@@ -1,17 +1,17 @@
 ﻿namespace Server.Models
 {
+    // Класс темы
     public class Theme
     {
-        int id;
-        int id_subject;
-        string name;
-
+        int id; // id темы
+        int id_subject; // id предмета, к которому привязана тема
+        string name; // Название темы
+        // Свойства полей:
         public int Id
         {
             set { this.id = value; }
             get { return this.id; }
         }
-
         public int SubjectId
         {
             set { this.id_subject = value; }
@@ -22,14 +22,7 @@
             set { this.name = value; }
             get { return this.name; }
         }
-
+        // Конструктор:
         public Theme() { }
-        public Theme(int id, int id_subject, string name)
-        {
-            this.id = id;
-            this.id_subject = id_subject;
-            this.name = name;
-        }
-
     }
 }

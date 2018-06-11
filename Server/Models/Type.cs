@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Server.Models
+﻿namespace Server.Models
 {
+    // перечисление типа вопроса
     public enum Type : int
     {
-        single = 1,
-        multiple = 2,
-        filling = 3,
+        single = 1,     // с одиночным выбором
+        multiple = 2,   // со множественным выбором
+        filling = 3,    // на заполнение
     }
 }
