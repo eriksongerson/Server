@@ -615,7 +615,7 @@
             this.groupBox6.Size = new System.Drawing.Size(802, 436);
             this.groupBox6.TabIndex = 2;
             this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Вопрос";
+            this.groupBox6.Text = "Изменить вопрос";
             // 
             // editQuestionTextBox
             // 
@@ -626,6 +626,7 @@
             this.editQuestionTextBox.Name = "editQuestionTextBox";
             this.editQuestionTextBox.Size = new System.Drawing.Size(790, 33);
             this.editQuestionTextBox.TabIndex = 45;
+            this.editQuestionTextBox.Visible = false;
             // 
             // editFillingGroupBox
             // 
@@ -665,13 +666,13 @@
             this.editSingleGroupBox.Controls.Add(this.editSingleChoiceSecondOptionTextBox);
             this.editSingleGroupBox.Controls.Add(this.editSingleChoiceThirdOptionTextBox);
             this.editSingleGroupBox.Controls.Add(this.editSingleChoiceFourthOptionTextBox);
+            this.editSingleGroupBox.Enabled = false;
             this.editSingleGroupBox.Location = new System.Drawing.Point(6, 182);
             this.editSingleGroupBox.Name = "editSingleGroupBox";
             this.editSingleGroupBox.Size = new System.Drawing.Size(790, 180);
             this.editSingleGroupBox.TabIndex = 43;
             this.editSingleGroupBox.TabStop = false;
             this.editSingleGroupBox.Text = "Одиночный выбор";
-            this.editSingleGroupBox.Visible = false;
             // 
             // editSingleChoiceFourthOptionRadioButton
             // 
@@ -953,7 +954,7 @@
             this.groupBox5.Size = new System.Drawing.Size(802, 116);
             this.groupBox5.TabIndex = 1;
             this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Тема";
+            this.groupBox5.Text = "Изменить тему";
             // 
             // editThemeClearButton
             // 
@@ -1013,7 +1014,7 @@
             this.groupBox4.Size = new System.Drawing.Size(802, 66);
             this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Предмет";
+            this.groupBox4.Text = "Изменить предмет";
             // 
             // editSubjectClearButton
             // 

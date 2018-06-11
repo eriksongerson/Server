@@ -15,7 +15,6 @@ namespace Server.Helpers
     public static class SocketHelper
     {
         private const int port = 32768; // порт
-        // TODO: Здесь
         private static TcpListener tcpListener = null; // Прослушиватель. Получаем для него IP адрес и указываем порт
 
         private static volatile bool _status = false; // Переменная статуса
@@ -43,7 +42,7 @@ namespace Server.Helpers
         // Функция получения IP сервера
         public static void ConfigureListener()
         {
-            tcpListener = new TcpListener(IPAddress.Parse(/*---------------*/GetLocalIpAddress()/*---------------*/), port); // Прослушиватель. Получаем для него IP адрес и указываем порт
+            tcpListener = new TcpListener(IPAddress.Parse(GetLocalIpAddress()), port); // Прослушиватель. Получаем для него IP адрес и указываем порт
         }
         public static string GetListenerIP()
         {
@@ -155,8 +154,6 @@ namespace Server.Helpers
                     Properties.Settings.Default.address = address.ToString(); 
                     Properties.Settings.Default.Save(); // и сохранить выбранный адрес в настройки
                 });
-                Application.EnableVisualStyles(); // Иначе будет ошибка
-                Application.SetCompatibleTextRenderingDefault(true);
                 // открываем форму и ожидаем её закрытия
                 while (addressChoosingForm.ShowDialog() != DialogResult.OK)
                     return address.ToString(); // по закрытии формы возвращаем выбранный адрес
