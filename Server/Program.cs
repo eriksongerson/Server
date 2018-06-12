@@ -31,8 +31,6 @@ namespace Server
                 mutexObj.Dispose();
                 return;
             }
-            // Настраиваем пароль на базу данных
-            DatabaseHelper.ConfigureConnection();
             // Настраиваем сервер
             SocketHelper.ConfigureListener();
             // Запускаем пргограмму

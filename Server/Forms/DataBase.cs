@@ -25,6 +25,16 @@ namespace Server
         private void tabControl1_Selected(object sender, TabControlEventArgs e)
         {
             UpdateViews();
+            if(TabControl.SelectedTab.Name == "deleteTab")
+            {
+                this.Height = 455;
+                TabControl.Height = 397;
+            }
+            else
+            {
+                this.Height = 730;
+                TabControl.Height = 675;
+            }
         }
 
         private void UpdateViews()
@@ -205,8 +215,6 @@ namespace Server
             editThemeComboBox.Enabled = false;
             editQuestionThemeComboBox.Items.Clear();
             editQuestionThemeComboBox.Enabled = false;
-            editQuestionThemeComboBox.Items.Clear();
-            editQuestionThemeComboBox.Enabled = false;
             editQuestionComboBox.Items.Clear();
             editQuestionComboBox.Enabled = false;
 
@@ -218,46 +226,46 @@ namespace Server
             editQuestionThemeComboBox.Enabled = false;
             
             editFillingTextBox.Text = "";
-            editFillingTextBox.Enabled = false;
+            //editFillingTextBox.Enabled = false;
             
             editSingleChoiceFirstOptionTextBox.Text = "";
-            editSingleChoiceFirstOptionTextBox.Enabled = false;
+            //editSingleChoiceFirstOptionTextBox.Enabled = false;
             editSingleChoiceSecondOptionTextBox.Text = "";
-            editSingleChoiceSecondOptionTextBox.Enabled = false;
+            //editSingleChoiceSecondOptionTextBox.Enabled = false;
             editSingleChoiceThirdOptionTextBox.Text = "";
-            editSingleChoiceThirdOptionTextBox.Enabled = false;
+            //editSingleChoiceThirdOptionTextBox.Enabled = false;
             editSingleChoiceFourthOptionTextBox.Text = "";
-            editSingleChoiceFourthOptionTextBox.Enabled = false;
+            //editSingleChoiceFourthOptionTextBox.Enabled = false;
             
             editMultipleChoiceFirstOptionTextBox.Text = "";
-            editMultipleChoiceFirstOptionTextBox.Enabled = false;
+            //editMultipleChoiceFirstOptionTextBox.Enabled = false;
             editMultipleChoiceSecondOptionTextBox.Text = "";
-            editMultipleChoiceSecondOptionTextBox.Enabled = false;
+            //editMultipleChoiceSecondOptionTextBox.Enabled = false;
             editMultipleChoiceThirdOptionTextBox.Text = "";
-            editMultipleChoiceThirdOptionTextBox.Enabled = false;
+            //editMultipleChoiceThirdOptionTextBox.Enabled = false;
             editMultipleChoiceFourthOptionTextBox.Text = "";
-            editMultipleChoiceFourthOptionTextBox.Enabled = false;
+            //editMultipleChoiceFourthOptionTextBox.Enabled = false;
             
             editSingleChoiceFirstOptionRadioButton.Checked = false;
-            editSingleChoiceFirstOptionRadioButton.Enabled = false;
+            //editSingleChoiceFirstOptionRadioButton.Enabled = false;
             editSingleChoiceSecondOptionRadioButton.Checked = false;
-            editSingleChoiceSecondOptionRadioButton.Enabled = false;
+            //editSingleChoiceSecondOptionRadioButton.Enabled = false;
             editSingleChoiceThirdOptionRadioButton.Checked = false;
-            editSingleChoiceThirdOptionRadioButton.Enabled = false;
+            //editSingleChoiceThirdOptionRadioButton.Enabled = false;
             editSingleChoiceFourthOptionRadioButton.Checked = false;
-            editSingleChoiceFourthOptionRadioButton.Enabled = false;
+            //editSingleChoiceFourthOptionRadioButton.Enabled = false;
             
             editMultipleChoiceFirstOptionCheckBox.Checked = false;
-            editMultipleChoiceFirstOptionCheckBox.Enabled = false;
+            //editMultipleChoiceFirstOptionCheckBox.Enabled = false;
             editMultipleChoiceSecondOptionCheckBox.Checked = false;
-            editMultipleChoiceSecondOptionCheckBox.Enabled = false;
+            //editMultipleChoiceSecondOptionCheckBox.Enabled = false;
             editMultipleChoiceThirdOptionCheckBox.Checked = false;
-            editMultipleChoiceThirdOptionCheckBox.Enabled = false;
+            //editMultipleChoiceThirdOptionCheckBox.Enabled = false;
             editMultipleChoiceFourthOptionCheckBox.Checked = false;
-            editMultipleChoiceFourthOptionCheckBox.Enabled = false;
+            //editMultipleChoiceFourthOptionCheckBox.Enabled = false;
             
             editTypeComboBox.SelectedIndex = -1;
-            editTypeComboBox.Enabled = false;
+            //editTypeComboBox.Enabled = false;
 
             UpdateSubjects();
         }
@@ -299,27 +307,53 @@ namespace Server
 
         private void ClearEditTheme()
         {
-
+            editThemeTextBox.Text = "";
+            editThemeComboBox.SelectedText = "";
         }
 
         private void ClearEditQuestion()
         {
+            editTypeComboBox.SelectedIndex = 0;
+            editTypeComboBox.Enabled = false;
 
-        }
-        
-        private void ClearDeleteSubject()
-        {
-            UpdateSubjects();
-        }
+            editFillingTextBox.Text = "";
+            editFillingTextBox.Enabled = false;
 
-        private void ClearDeleteTheme()
-        {
-            
-        }
+            editSingleChoiceFirstOptionTextBox.Text = "";
+            editSingleChoiceFirstOptionTextBox.Enabled = false;
+            editSingleChoiceSecondOptionTextBox.Text = "";
+            editSingleChoiceSecondOptionTextBox.Enabled = false;
+            editSingleChoiceThirdOptionTextBox.Text = "";
+            editSingleChoiceThirdOptionTextBox.Enabled = false;
+            editSingleChoiceFourthOptionTextBox.Text = "";
+            editSingleChoiceFourthOptionTextBox.Enabled = false;
 
-        private void ClearDeleteQuestion()
-        {
+            editMultipleChoiceFirstOptionTextBox.Text = "";
+            editMultipleChoiceFirstOptionTextBox.Enabled = false;
+            editMultipleChoiceSecondOptionTextBox.Text = "";
+            editMultipleChoiceSecondOptionTextBox.Enabled = false;
+            editMultipleChoiceThirdOptionTextBox.Text = "";
+            editMultipleChoiceThirdOptionTextBox.Enabled = false;
+            editMultipleChoiceFourthOptionTextBox.Text = "";
+            editMultipleChoiceFourthOptionTextBox.Enabled = false;
 
+            editSingleChoiceFirstOptionRadioButton.Checked = false;
+            editSingleChoiceFirstOptionRadioButton.Enabled = false;
+            editSingleChoiceSecondOptionRadioButton.Checked = false;
+            editSingleChoiceSecondOptionRadioButton.Enabled = false;
+            editSingleChoiceThirdOptionRadioButton.Checked = false;
+            editSingleChoiceThirdOptionRadioButton.Enabled = false;
+            editSingleChoiceFourthOptionRadioButton.Checked = false;
+            editSingleChoiceFourthOptionRadioButton.Enabled = false;
+
+            editMultipleChoiceFirstOptionCheckBox.Checked = false;
+            editMultipleChoiceFirstOptionCheckBox.Enabled = false;
+            editMultipleChoiceSecondOptionCheckBox.Checked = false;
+            editMultipleChoiceSecondOptionCheckBox.Enabled = false;
+            editMultipleChoiceThirdOptionCheckBox.Checked = false;
+            editMultipleChoiceThirdOptionCheckBox.Enabled = false;
+            editMultipleChoiceFourthOptionCheckBox.Checked = false;
+            editMultipleChoiceFourthOptionCheckBox.Enabled = false;
         }
 
         private void addThemeSubjectComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -569,6 +603,8 @@ namespace Server
             DatabaseHelper.DeleteSubjectById(subject.Id);
             deleteSubjectComboBox.Text = "";
             UpdateViews();
+
+            deleteSubjectButton.Enabled = false;
         }
 
         private void deleteThemeSubjectComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -584,25 +620,33 @@ namespace Server
             DatabaseHelper.DeleteThemeById(theme.Id);
             UpdateThemes(deleteThemeSubjectComboBox.SelectedItem as Subject, deleteThemeComboBox);
             deleteThemeComboBox.Text = "";
+
+            UpdateViews();
+
+            deleteThemeButton.Enabled = false;
         }
 
         private void deleteQuestionSubjectComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            deleteQuestionComboBox.Items.Clear();
+            deleteQuestionComboBox.Enabled = false;
             UpdateThemes(deleteQuestionSubjectComboBox.SelectedItem as Subject, deleteQuestionThemeComboBox);
         }
 
         private void deleteQuestionThemeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateQuestions(deleteQuestionThemeComboBox.SelectedItem as Theme, deleteQuestionComboBox);
+            if(deleteQuestionThemeComboBox.SelectedItem != null)
+                UpdateQuestions(deleteQuestionThemeComboBox.SelectedItem as Theme, deleteQuestionComboBox);
         }
 
         private void deleteQuestionButton_Click(object sender, EventArgs e)
         {
-
             Question question = deleteQuestionComboBox.SelectedItem as Question;
             DatabaseHelper.DeleteQuestionById(question.Id);
 
-            UpdateQuestions(deleteQuestionThemeComboBox.SelectedItem as Theme, deleteQuestionComboBox);
+            UpdateViews();
+
+            deleteQuestionButton.Enabled = false;
         }
 
         private void editSubjectComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -619,20 +663,28 @@ namespace Server
 
         private void editSubjectButton_Click(object sender, EventArgs e)
         {
-            Subject subject = editSubjectComboBox.SelectedItem as Subject;
-            subject.Name = editSubjectTextBox.Text;
-            DatabaseHelper.UpdateSubject(subject);
+            if(editSubjectTextBox.Text != "")
+            {
+                Subject subject = editSubjectComboBox.SelectedItem as Subject;
+                subject.Name = editSubjectTextBox.Text;
+                DatabaseHelper.UpdateSubject(subject);
 
-            editSubjectTextBox.Text = "";
-            editSubjectComboBox.Visible = true;
-            editSubjectComboBox.Text = "";
-            editSubjectComboBox.SelectedText = "";
-            groupBox4.Controls.Remove(editSubjectTextBox);
-            editSubjectTextBox.Visible = false;
-            editSubjectButton.Enabled = false;
-            editSubjectClearButton.Enabled = false;
+                editSubjectTextBox.Text = "";
+                editSubjectComboBox.Visible = true;
+                editSubjectComboBox.Text = "";
+                editSubjectComboBox.SelectedText = "";
+                groupBox4.Controls.Remove(editSubjectTextBox);
+                editSubjectTextBox.Visible = false;
+                editSubjectButton.Enabled = false;
+                editSubjectClearButton.Enabled = false;
 
-            ClearEditSubject();
+                ClearEditSubject();
+            }
+            else
+            {
+                MessageBox.Show("Заполните поле!");
+            }
+            
         }
 
         private void editSubjectClearButton_Click(object sender, EventArgs e)
@@ -664,22 +716,29 @@ namespace Server
 
         private void button10_Click(object sender, EventArgs e)
         {
-            Theme theme = editThemeComboBox.SelectedItem as Theme;
-            theme.Name = editThemeTextBox.Text;
-            DatabaseHelper.UpdateTheme(theme);
-            editThemeTextBox.Text = "";
-            editThemeComboBox.Visible = true;
-            editThemeComboBox.Text = "";
-            editThemeComboBox.SelectedText = "";
-            groupBox5.Controls.Remove(editThemeTextBox);
-            editThemeTextBox.Visible = false;
-            editThemeButton.Enabled = false;
-            editThemeClearButton.Enabled = false;
-            UpdateThemes(editThemeSubjectComboBox.SelectedItem as Subject, editThemeComboBox);
+            if(editThemeTextBox.Text != "")
+            {
+                Theme theme = editThemeComboBox.SelectedItem as Theme;
+                theme.Name = editThemeTextBox.Text;
+                DatabaseHelper.UpdateTheme(theme);
+                UpdateThemes(editThemeSubjectComboBox.SelectedItem as Subject, editThemeComboBox);
+                editThemeTextBox.Text = "";
+                editThemeComboBox.Visible = true;
+                editThemeComboBox.SelectedText = "";
+                groupBox5.Controls.Remove(editThemeTextBox);
+                editThemeTextBox.Visible = false;
+                editThemeButton.Enabled = false;
+                editThemeClearButton.Enabled = false;
+            }
+            else
+            {
+                MessageBox.Show("Заполните поле!");
+            }
         }
 
         private void button11_Click(object sender, EventArgs e)
         {
+            UpdateThemes(editThemeSubjectComboBox.SelectedItem as Subject, editThemeComboBox);
             editThemeTextBox.Text = "";
             editThemeComboBox.Visible = true;
             editThemeComboBox.SelectedText = "";
@@ -687,7 +746,6 @@ namespace Server
             editThemeTextBox.Visible = false;
             editThemeButton.Enabled = false;
             editThemeClearButton.Enabled = false;
-            UpdateThemes(editThemeSubjectComboBox.SelectedItem as Subject, editThemeComboBox);
         }
 
         private void comboBox7_SelectedIndexChanged(object sender, EventArgs e)
@@ -706,6 +764,8 @@ namespace Server
             editMultipleGroupBox.Visible = false;
             editFillingGroupBox.Visible = false;
 
+            DisableAllEditFields();
+
             switch (type)
             {
                 case Models.Type.single:
@@ -720,6 +780,15 @@ namespace Server
                         editSingleChoiceThirdOptionRadioButton.Checked = options[2].isRight;
                         editSingleChoiceFourthOptionTextBox.Text = options[3];
                         editSingleChoiceFourthOptionRadioButton.Checked = options[3].isRight;
+
+                        editSingleChoiceFirstOptionTextBox.Enabled =
+                        editSingleChoiceFirstOptionRadioButton.Enabled =
+                        editSingleChoiceSecondOptionTextBox.Enabled =
+                        editSingleChoiceSecondOptionRadioButton.Enabled =
+                        editSingleChoiceThirdOptionTextBox.Enabled =
+                        editSingleChoiceThirdOptionRadioButton.Enabled =
+                        editSingleChoiceFourthOptionTextBox.Enabled =
+                        editSingleChoiceFourthOptionRadioButton.Enabled = true;
 
                         return;
                     }
@@ -736,6 +805,15 @@ namespace Server
                         editMultipleChoiceFourthOptionTextBox.Text = options[3];
                         editMultipleChoiceFourthOptionCheckBox.Checked = options[3].isRight;
 
+                        editMultipleChoiceFirstOptionTextBox.Enabled =
+                        editMultipleChoiceFirstOptionCheckBox.Enabled =
+                        editMultipleChoiceSecondOptionTextBox.Enabled =
+                        editMultipleChoiceSecondOptionCheckBox.Enabled =
+                        editMultipleChoiceThirdOptionTextBox.Enabled =
+                        editMultipleChoiceThirdOptionCheckBox.Enabled =
+                        editMultipleChoiceFourthOptionTextBox.Enabled =
+                        editMultipleChoiceFourthOptionCheckBox.Enabled = true;
+
                         return;
                     }
                 case Models.Type.filling:
@@ -743,6 +821,7 @@ namespace Server
                         editFillingGroupBox.Visible = true;
                         
                         editFillingTextBox.Text = options[0];
+                        editFillingTextBox.Enabled = true;
 
                         return;
                     }
@@ -829,23 +908,49 @@ namespace Server
 
         private void button12_Click(object sender, EventArgs e)
         {
-            CurrentQuestion.Name = editQuestionTextBox.Text;
-            CurrentQuestion.Options = GettingEditOptions(CurrentQuestion.Type);
+            if(editQuestionTextBox.Text != "" && CheckEditFieldsFill(CurrentQuestion.Type))
+            {
+                CurrentQuestion.Name = editQuestionTextBox.Text;
+                CurrentQuestion.Options = GettingEditOptions(CurrentQuestion.Type);
 
-            DatabaseHelper.UpdateQuestion(CurrentQuestion);
-           
-            editQuestionTextBox.Text = "";
-            editQuestionComboBox.Visible = true;
-            editQuestionComboBox.Text = "";
-            editQuestionComboBox.SelectedText = "";
-            groupBox6.Controls.Remove(editQuestionTextBox);
-            editQuestionTextBox.Visible = false;
-            editQuestionButton.Enabled = false;
-            editQuestionClearButton.Enabled = false;
-            UpdateQuestions(editQuestionThemeComboBox.SelectedItem as Theme, editQuestionComboBox);
+                DatabaseHelper.UpdateQuestion(CurrentQuestion);
 
-            editQuestionButton.Visible = false;
-            editQuestionClearButton.Visible = false;
+                editQuestionTextBox.Text = "";
+                editQuestionComboBox.Visible = true;
+                editQuestionComboBox.Text = "";
+                editQuestionComboBox.SelectedText = "";
+                groupBox6.Controls.Remove(editQuestionTextBox);
+                editQuestionTextBox.Visible = false;
+                editQuestionButton.Enabled = false;
+                editQuestionClearButton.Enabled = false;
+                UpdateQuestions(editQuestionThemeComboBox.SelectedItem as Theme, editQuestionComboBox);
+
+                ClearEditQuestion();
+            }
+            else
+            {
+                MessageBox.Show("Заполните все поля!");
+            }   
+        }
+
+        private bool CheckEditFieldsFill(Models.Type type)
+        {
+            switch (type)
+            {
+                case Models.Type.single:
+                    return (editSingleChoiceFirstOptionTextBox.Text != "" && editSingleChoiceSecondOptionTextBox.Text != "" 
+                        && editSingleChoiceThirdOptionTextBox.Text != "" && editSingleChoiceFourthOptionTextBox.Text != "" &&
+                        (editSingleChoiceFirstOptionRadioButton.Checked || editSingleChoiceSecondOptionRadioButton.Checked || 
+                        editSingleChoiceThirdOptionRadioButton.Checked || editSingleChoiceFourthOptionRadioButton.Checked));
+                case Models.Type.multiple:
+                    return (editMultipleChoiceFirstOptionTextBox.Text != "" && editMultipleChoiceSecondOptionTextBox.Text != ""
+                        && editMultipleChoiceThirdOptionTextBox.Text != "" && editMultipleChoiceFourthOptionTextBox.Text != "" &&
+                        (editMultipleChoiceFirstOptionCheckBox.Checked || editMultipleChoiceSecondOptionCheckBox.Checked ||
+                        editMultipleChoiceThirdOptionCheckBox.Checked || editMultipleChoiceFourthOptionCheckBox.Checked));
+                case Models.Type.filling:
+                    return editFillingTextBox.Text != "";
+            }
+            return false;
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -860,8 +965,7 @@ namespace Server
             editQuestionClearButton.Enabled = false;
             UpdateQuestions(editQuestionThemeComboBox.SelectedItem as Theme, editQuestionComboBox);
 
-            editQuestionButton.Visible = false;
-            editQuestionClearButton.Visible = false;
+            ClearEditQuestion();
         }
 
         private void comboBox1_KeyPress(object sender, KeyPressEventArgs e)
@@ -886,6 +990,29 @@ namespace Server
             fillingGroupBox.Visible = addTypeComboBox.SelectedIndex == 2;        // Заполнение
         }
 
+        private void DisableAllEditFields()
+        {
+            editSingleChoiceFirstOptionTextBox.Enabled = 
+            editSingleChoiceFirstOptionRadioButton.Enabled = 
+            editSingleChoiceSecondOptionTextBox.Enabled = 
+            editSingleChoiceSecondOptionRadioButton.Enabled = 
+            editSingleChoiceThirdOptionTextBox.Enabled = 
+            editSingleChoiceThirdOptionRadioButton.Enabled = 
+            editSingleChoiceFourthOptionTextBox.Enabled = 
+            editSingleChoiceFourthOptionRadioButton.Enabled = false;
+
+            editMultipleChoiceFirstOptionTextBox.Enabled = 
+            editMultipleChoiceFirstOptionCheckBox.Enabled = 
+            editMultipleChoiceSecondOptionTextBox.Enabled = 
+            editMultipleChoiceSecondOptionCheckBox.Enabled = 
+            editMultipleChoiceThirdOptionTextBox.Enabled = 
+            editMultipleChoiceThirdOptionCheckBox.Enabled = 
+            editMultipleChoiceFourthOptionTextBox.Enabled = 
+            editMultipleChoiceFourthOptionCheckBox.Enabled = false;
+
+            editFillingTextBox.Enabled = false;
+        }
+
         private void editTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             editSingleGroupBox.Visible = false;
@@ -897,6 +1024,8 @@ namespace Server
             CurrentQuestion.Type = type;
 
             var options = CurrentQuestion.Options;
+
+            DisableAllEditFields();
 
             switch (type)
             {
@@ -913,12 +1042,21 @@ namespace Server
                         editSingleChoiceFourthOptionTextBox.Text = options[3];
                         editSingleChoiceFourthOptionRadioButton.Checked = options[3].isRight;
 
+                        editSingleChoiceFirstOptionTextBox.Enabled =
+                        editSingleChoiceFirstOptionRadioButton.Enabled =
+                        editSingleChoiceSecondOptionTextBox.Enabled =
+                        editSingleChoiceSecondOptionRadioButton.Enabled =
+                        editSingleChoiceThirdOptionTextBox.Enabled =
+                        editSingleChoiceThirdOptionRadioButton.Enabled =
+                        editSingleChoiceFourthOptionTextBox.Enabled =
+                        editSingleChoiceFourthOptionRadioButton.Enabled = true;
+
                         return;
                     }
                 case Models.Type.multiple:
                     {
                         editMultipleGroupBox.Visible = true;
-                     
+
                         editMultipleChoiceFirstOptionTextBox.Text = options[0];
                         editMultipleChoiceFirstOptionCheckBox.Checked = options[0].isRight;
                         editMultipleChoiceSecondOptionTextBox.Text = options[1];
@@ -928,6 +1066,15 @@ namespace Server
                         editMultipleChoiceFourthOptionTextBox.Text = options[3];
                         editMultipleChoiceFourthOptionCheckBox.Checked = options[3].isRight;
 
+                        editMultipleChoiceFirstOptionTextBox.Enabled =
+                        editMultipleChoiceFirstOptionCheckBox.Enabled =
+                        editMultipleChoiceSecondOptionTextBox.Enabled =
+                        editMultipleChoiceSecondOptionCheckBox.Enabled =
+                        editMultipleChoiceThirdOptionTextBox.Enabled =
+                        editMultipleChoiceThirdOptionCheckBox.Enabled =
+                        editMultipleChoiceFourthOptionTextBox.Enabled =
+                        editMultipleChoiceFourthOptionCheckBox.Enabled = true;
+
                         return;
                     }
                 case Models.Type.filling:
@@ -935,6 +1082,7 @@ namespace Server
                         editFillingGroupBox.Visible = true;
 
                         editFillingTextBox.Text = options[0];
+                        editFillingTextBox.Enabled = true;
 
                         return;
                     }
@@ -943,7 +1091,7 @@ namespace Server
 
         private void deleteSubjectComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            deleteSubjectButton.Enabled = deleteSubjectComboBox.SelectedIndex != -1;
+            deleteSubjectButton.Enabled = deleteSubjectComboBox.SelectedItem != null;
         }
 
         private void clearAddQuestionButton_Click(object sender, EventArgs e)
@@ -980,6 +1128,16 @@ namespace Server
         private void CheckFilling(object sender, EventArgs e)
         {
             isAddClearButtonVisible();
+        }
+
+        private void deleteThemeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            deleteThemeButton.Enabled = deleteThemeComboBox.SelectedIndex != -1;
+        }
+
+        private void deleteQuestionComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            deleteQuestionButton.Enabled = deleteQuestionComboBox.SelectedIndex != -1;
         }
     }
 }

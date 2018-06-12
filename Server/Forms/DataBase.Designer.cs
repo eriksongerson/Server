@@ -589,7 +589,7 @@
             this.editTab.Location = new System.Drawing.Point(4, 29);
             this.editTab.Name = "editTab";
             this.editTab.Padding = new System.Windows.Forms.Padding(3);
-            this.editTab.Size = new System.Drawing.Size(814, 642);
+            this.editTab.Size = new System.Drawing.Size(814, 364);
             this.editTab.TabIndex = 1;
             this.editTab.Text = "Редактирование";
             this.editTab.UseVisualStyleBackColor = true;
@@ -666,7 +666,6 @@
             this.editSingleGroupBox.Controls.Add(this.editSingleChoiceSecondOptionTextBox);
             this.editSingleGroupBox.Controls.Add(this.editSingleChoiceThirdOptionTextBox);
             this.editSingleGroupBox.Controls.Add(this.editSingleChoiceFourthOptionTextBox);
-            this.editSingleGroupBox.Enabled = false;
             this.editSingleGroupBox.Location = new System.Drawing.Point(6, 182);
             this.editSingleGroupBox.Name = "editSingleGroupBox";
             this.editSingleGroupBox.Size = new System.Drawing.Size(790, 180);
@@ -1075,10 +1074,11 @@
             this.groupBox9.Size = new System.Drawing.Size(802, 154);
             this.groupBox9.TabIndex = 2;
             this.groupBox9.TabStop = false;
-            this.groupBox9.Text = "Вопрос";
+            this.groupBox9.Text = "Удалить вопрос";
             // 
             // deleteQuestionButton
             // 
+            this.deleteQuestionButton.Enabled = false;
             this.deleteQuestionButton.Location = new System.Drawing.Point(645, 100);
             this.deleteQuestionButton.Name = "deleteQuestionButton";
             this.deleteQuestionButton.Size = new System.Drawing.Size(151, 33);
@@ -1098,6 +1098,7 @@
             this.deleteQuestionComboBox.Size = new System.Drawing.Size(633, 32);
             this.deleteQuestionComboBox.TabIndex = 2;
             this.deleteQuestionComboBox.ValueMember = "id";
+            this.deleteQuestionComboBox.SelectedIndexChanged += new System.EventHandler(this.deleteQuestionComboBox_SelectedIndexChanged);
             // 
             // deleteQuestionThemeComboBox
             // 
@@ -1135,10 +1136,11 @@
             this.groupBox8.Size = new System.Drawing.Size(802, 116);
             this.groupBox8.TabIndex = 1;
             this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "Тема";
+            this.groupBox8.Text = "Удалить тему";
             // 
             // deleteThemeButton
             // 
+            this.deleteThemeButton.Enabled = false;
             this.deleteThemeButton.Location = new System.Drawing.Point(645, 62);
             this.deleteThemeButton.Name = "deleteThemeButton";
             this.deleteThemeButton.Size = new System.Drawing.Size(151, 33);
@@ -1158,6 +1160,7 @@
             this.deleteThemeComboBox.Size = new System.Drawing.Size(633, 32);
             this.deleteThemeComboBox.TabIndex = 1;
             this.deleteThemeComboBox.ValueMember = "id";
+            this.deleteThemeComboBox.SelectedIndexChanged += new System.EventHandler(this.deleteThemeComboBox_SelectedIndexChanged);
             // 
             // deleteThemeSubjectComboBox
             // 
@@ -1181,10 +1184,11 @@
             this.groupBox7.Size = new System.Drawing.Size(802, 66);
             this.groupBox7.TabIndex = 0;
             this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Предмет";
+            this.groupBox7.Text = "Удалить предмет";
             // 
             // deleteSubjectButton
             // 
+            this.deleteSubjectButton.Enabled = false;
             this.deleteSubjectButton.Location = new System.Drawing.Point(645, 24);
             this.deleteSubjectButton.Name = "deleteSubjectButton";
             this.deleteSubjectButton.Size = new System.Drawing.Size(151, 33);

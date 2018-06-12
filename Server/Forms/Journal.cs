@@ -17,6 +17,11 @@ namespace Server.Forms
         {
             dataGridView1.DataSource = DatabaseHelper.SelectJournalsAdapter();
             dataGridView1.Columns[0].Visible = false;
+            dataGridView1.Columns[1].Width = 150;
+            dataGridView1.Columns[2].Width = 100;
+            dataGridView1.Columns[3].Width = 150;
+            dataGridView1.Columns[5].Width = 100;
+            dataGridView1.Columns[6].Width = 100; 
             //dataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font(FontFamily.GenericSansSerif, 14, FontStyle.Regular);
         }
 

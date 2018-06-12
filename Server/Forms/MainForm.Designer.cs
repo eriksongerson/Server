@@ -36,6 +36,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.groupsButton = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -43,7 +44,7 @@
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.button1.Location = new System.Drawing.Point(12, 12);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(197, 36);
+            this.button1.Size = new System.Drawing.Size(216, 36);
             this.button1.TabIndex = 2;
             this.button1.Text = "Запустить сервер";
             this.button1.UseVisualStyleBackColor = true;
@@ -54,7 +55,7 @@
             this.databaseButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.databaseButton.Location = new System.Drawing.Point(12, 54);
             this.databaseButton.Name = "databaseButton";
-            this.databaseButton.Size = new System.Drawing.Size(197, 36);
+            this.databaseButton.Size = new System.Drawing.Size(216, 36);
             this.databaseButton.TabIndex = 3;
             this.databaseButton.Text = "Тесты";
             this.databaseButton.UseVisualStyleBackColor = true;
@@ -65,7 +66,7 @@
             this.journalButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.journalButton.Location = new System.Drawing.Point(12, 96);
             this.journalButton.Name = "journalButton";
-            this.journalButton.Size = new System.Drawing.Size(197, 36);
+            this.journalButton.Size = new System.Drawing.Size(216, 36);
             this.journalButton.TabIndex = 4;
             this.journalButton.Text = "Журнал/Отчёты";
             this.journalButton.UseVisualStyleBackColor = true;
@@ -76,7 +77,7 @@
             this.statusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.statusLabel.Location = new System.Drawing.Point(12, 177);
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(197, 39);
+            this.statusLabel.Size = new System.Drawing.Size(216, 39);
             this.statusLabel.TabIndex = 5;
             this.statusLabel.Text = "Сервер отключен";
             this.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -86,17 +87,16 @@
             this.connectedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.connectedLabel.Location = new System.Drawing.Point(12, 216);
             this.connectedLabel.Name = "connectedLabel";
-            this.connectedLabel.Size = new System.Drawing.Size(197, 39);
+            this.connectedLabel.Size = new System.Drawing.Size(216, 28);
             this.connectedLabel.TabIndex = 6;
             this.connectedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.connectedLabel.Click += new System.EventHandler(this.connectedLabel_Click);
             // 
             // label3
             // 
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.label3.Location = new System.Drawing.Point(12, 368);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(197, 39);
+            this.label3.Size = new System.Drawing.Size(216, 39);
             this.label3.TabIndex = 7;
             this.label3.Text = "IP-адрес сервера:";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -106,7 +106,7 @@
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.label4.Location = new System.Drawing.Point(12, 407);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(197, 32);
+            this.label4.Size = new System.Drawing.Size(216, 32);
             this.label4.TabIndex = 8;
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -115,18 +115,31 @@
             this.groupsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.groupsButton.Location = new System.Drawing.Point(12, 138);
             this.groupsButton.Name = "groupsButton";
-            this.groupsButton.Size = new System.Drawing.Size(197, 36);
+            this.groupsButton.Size = new System.Drawing.Size(216, 36);
             this.groupsButton.TabIndex = 9;
             this.groupsButton.Text = "Группы";
             this.groupsButton.UseVisualStyleBackColor = true;
             this.groupsButton.Click += new System.EventHandler(this.groupsButton_Click);
+            // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.button2.Location = new System.Drawing.Point(12, 247);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(216, 36);
+            this.button2.TabIndex = 10;
+            this.button2.Text = "Просмотр подключенных";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Visible = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(223, 451);
+            this.ClientSize = new System.Drawing.Size(240, 451);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.groupsButton);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -155,6 +168,7 @@
         public System.Windows.Forms.Label connectedLabel;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button groupsButton;
+        private System.Windows.Forms.Button button2;
     }
 }
 

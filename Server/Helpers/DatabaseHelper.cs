@@ -12,17 +12,6 @@ namespace Server.Helpers
      */
     public static class DatabaseHelper
     {
-        // Функция, настраивающая пароль на базу данных
-        public static void ConfigureConnection()
-        {
-            using (SQLiteConnection conn = new SQLiteConnection(@"Data Source='DataBase.db';"))
-            {
-                conn.Open();
-                conn.ChangePassword("Admin");
-                conn.Close();
-                connection = new SQLiteConnection(@"Data Source='DataBase.db'; Password='Admin';");
-            }
-        }
         // Соединение:
         private static SQLiteConnection connection = new SQLiteConnection(@"Data Source='DataBase.db'; Password='Admin'");
 
