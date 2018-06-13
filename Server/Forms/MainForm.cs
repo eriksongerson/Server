@@ -14,9 +14,9 @@ namespace Server.Forms {
             ChangeStatus();
         }
         // Функция изменения состояния сервера
-        private void ChangeStatus(){
+        private void ChangeStatus() {
             SocketHelper.ChangeStatus(); // Изменяет состояние
-            if (SocketHelper.Status){ // Узнаёт, запущен ли сервер
+            if (SocketHelper.Status) { // Узнаёт, запущен ли сервер
                 // Если запущен, меняет форму
                 statusLabel.Text = "Сервер запущен";
                 button1.Text = "Остановить сервер";
@@ -24,7 +24,7 @@ namespace Server.Forms {
                 // И запускает новый поток
                 new Thread(() => {
                     Thread.CurrentThread.IsBackground = true;
-                    while (SocketHelper.Status){
+                    while (SocketHelper.Status) {
                         // Который отображает количество подключенных клиентов
                         connectedLabel.BeginInvoke((MethodInvoker)(() => {
                             connectedLabel.Text = $"Подключено {ClientHandler.testings.Count} студентов";
@@ -42,12 +42,12 @@ namespace Server.Forms {
             }
         }
         // Функция перехода на форму работы с тестами
-        private void databaseButton_Click(object sender, EventArgs e){
+        private void databaseButton_Click(object sender, EventArgs e) {
             DataBase dataBaseForm = new DataBase();
             dataBaseForm.Show();
         }
         // Событие выхода с формы
-        private void Main_Leave(object sender, EventArgs e){
+        private void Main_Leave(object sender, EventArgs e) {
             SocketHelper.StopListener(); // Останавливает сервер
             Application.Exit(); 
         }
@@ -56,18 +56,17 @@ namespace Server.Forms {
             label4.Text = SocketHelper.GetListenerIP(); // Показываем IP-адрес сервера
         }    
         // Кнопка перехода на форму журналов
-        private void button3_Click(object sender, EventArgs e){
+        private void button3_Click(object sender, EventArgs e) {
             Journal journal = new Journal();
             journal.Show();
         }
         // Событие перехода на форму отображения состояния тестирования
-        private void button2_Click(object sender, EventArgs e)
-        {
+        private void button2_Click(object sender, EventArgs e) {
             if (SocketHelper.Status)
                 new VisaulizationForm().ShowDialog();
         }
         // Кнопка перехода на форму работы с группами
-        private void groupsButton_Click(object sender, EventArgs e){
+        private void groupsButton_Click(object sender, EventArgs e) {
             new GroupsForm().ShowDialog();
         }   
     }

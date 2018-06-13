@@ -182,7 +182,6 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Формирование отчётов";
-            this.Load += new System.EventHandler(this.ReportForm_Load);
             this.byGroupReportGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
 

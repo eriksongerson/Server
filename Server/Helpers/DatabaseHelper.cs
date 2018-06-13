@@ -13,7 +13,7 @@ namespace Server.Helpers
     public static class DatabaseHelper
     {
         // Соединение:
-        private static SQLiteConnection connection = new SQLiteConnection(@"Data Source='DataBase.db'; Password='Admin'");
+        private static SQLiteConnection connection = new SQLiteConnection(@"Data Source='DataBase.db'; Password='^06%#0#u43vT6^B%7k725&3%90&ot#!w'");
 
         // Поле класса для доступа к соединению:
         public static SQLiteConnection Connection   
@@ -75,59 +75,6 @@ namespace Server.Helpers
             // Возвращаем список Предметов
             return subjects;
         }
-        // Функция Выбирает из базы данных предмет с определённым id. 
-        // Принцип работы совпадает с предыдущей функцией
-        // Возвращает один объект предмета
-        public static Subject GetSubjectById(int id)
-        {
-            Subject subject = new Subject();
-
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, subject FROM subjects WHERE id=@Id", Connection);
-
-            SQLiteCommand.Parameters.AddWithValue("@Id", id); // Экранирование специальных символов и добавление в запрос
-
-            OpenConnection();
-
-            using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
-            {
-                while (dataReader.Read())
-                {
-                    subject.Id = Convert.ToInt32(dataReader[0].ToString());
-                    subject.Name = dataReader[1].ToString();
-                }
-            }
-
-            CloseConnection();
-
-            return subject;
-        }
-        // Функция Выбирает из базы данных предмет с определённым именем. 
-        // Принцип работы совпадает с предыдущей функцией
-        // Возвращает один объект предмета
-        public static Subject GetSubjectByName(string name)
-        {
-            Subject subject = new Subject();
-
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, subject FROM subjects WHERE subject=@Name", Connection);
-
-            SQLiteCommand.Parameters.AddWithValue("@Name", name); // Экранирование специальных символов и добавление в запрос
-
-            OpenConnection();
-
-            using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
-            {
-                while (dataReader.Read())
-                {
-                    subject.Id = Convert.ToInt32(dataReader[0].ToString());
-                    subject.Name = dataReader[1].ToString();
-                }
-            }
-
-            CloseConnection();
-
-            return subject;
-        }
-
         // конец региона SelectSubject
         #endregion
 
@@ -163,58 +110,6 @@ namespace Server.Helpers
             CloseConnection();
             // возврат значения
             return themes;
-        }
-        // Функция выбирает Тему тестирования с определенным id темы
-        // Принцип работы аналогичен предыдущей функции
-        public static Theme GetThemeById(int id)
-        {
-            Theme theme = new Theme();
-
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, id_subject, theme FROM themes WHERE id=@Id", Connection);
-
-            SQLiteCommand.Parameters.AddWithValue("@Id", id);
-
-            OpenConnection();
-
-            using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
-            {
-                while (dataReader.Read())
-                {
-                    theme.Id = Convert.ToInt32(dataReader[0].ToString());
-                    theme.SubjectId = Convert.ToInt32(dataReader[1].ToString());
-                    theme.Name = dataReader[2].ToString();
-                }
-            }
-
-            CloseConnection();
-
-            return theme;
-        }
-        // Функция выбирает Тему тестирования с определенным названием темы
-        // Принцип работы аналогичен предыдущей функции
-        public static Theme GetThemeByName(string name)
-        {
-            Theme theme = new Theme();
-
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, id_subject, theme FROM themes WHERE theme=@Name", Connection);
-
-            SQLiteCommand.Parameters.AddWithValue("@Name", name);
-
-            OpenConnection();
-
-            using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
-            {
-                while (dataReader.Read())
-                {
-                    theme.Id = Convert.ToInt32(dataReader[0].ToString());
-                    theme.SubjectId = Convert.ToInt32(dataReader[1].ToString());
-                    theme.Name = dataReader[2].ToString();
-                }
-            }
-
-            CloseConnection();
-
-            return theme;
         }
         // конец региона SelectTheme
         #endregion
@@ -261,108 +156,17 @@ namespace Server.Helpers
             // возврат списка
             return questions;
         }
-        // TODO: 
-        public static List<Question> GetQuestions()
-        {
-            List<Question> questions = new List<Question>();
-
-            SQLiteCommand SQLiteCommand = new SQLiteCommand("SELECT id, id_subject, id_theme, question, type FROM questions", Connection);
-
-            OpenConnection();
-
-            using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
-            {
-                while (dataReader.Read())
-                {
-                    Question question = new Question
-                    {
-                        Id = Convert.ToInt32(dataReader[0].ToString()),
-                        Id_subject = Convert.ToInt32(dataReader[1].ToString()),
-                        Id_theme = Convert.ToInt32(dataReader[2].ToString()),
-                        Name = dataReader[3].ToString(),
-                        Type = (Models.Type)Convert.ToInt32(dataReader[4].ToString())
-                    };
-                    questions.Add(question);
-                }
-            }
-
-            CloseConnection();
-
-            foreach (Question question in questions)
-            {
-                question.Options = GetOptionsByQuestionId(question.Id);
-            }
-
-            return questions;
-        }
-        // TODO: 
-        public static Question GetQuestionById(int id)
-        {
-            Question question = new Question();
-
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, id_subject, id_theme, question, type FROM questions WHERE id=@Id", Connection);
-
-            SQLiteCommand.Parameters.AddWithValue("@Id", id);
-
-            OpenConnection();
-
-            using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
-            {
-                while (dataReader.Read())
-                {
-                    question.Id = Convert.ToInt32(dataReader[0].ToString());
-                    question.Id_subject = Convert.ToInt32(dataReader[1].ToString());
-                    question.Id_theme = Convert.ToInt32(dataReader[2].ToString());
-                    question.Name = dataReader[3].ToString();
-                    question.Type = (Models.Type) Convert.ToInt32(dataReader[4].ToString());
-                }
-            }
-
-            CloseConnection();
-
-            question.Options = GetOptionsByQuestionId(question.Id);
-
-            return question;
-        }
-
-        public static Question GetQuestionByName(string name)
-        {
-            Question question = new Question();
-
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, id_subject, id_theme, question, type FROM questions WHERE question=@Name", Connection);
-
-            SQLiteCommand.Parameters.AddWithValue("@Name", name);
-
-            OpenConnection();
-
-            using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
-            {
-                while (dataReader.Read())
-                {
-                    question.Id = Convert.ToInt32(dataReader[0].ToString());
-                    question.Id_subject = Convert.ToInt32(dataReader[1].ToString());
-                    question.Id_theme = Convert.ToInt32(dataReader[2].ToString());
-                    question.Name = dataReader[3].ToString();
-                    question.Type = (Models.Type) Convert.ToInt32(dataReader[4].ToString());
-                }
-            }
-
-            CloseConnection();
-
-            question.Options = GetOptionsByQuestionId(question.Id);
-
-            return question;
-        }
-
+        // Функция выбирает все варианты ответа, связанные с вопросом 
         public static List<Option> GetOptionsByQuestionId(int id)
         {
             List<Option> options = new List<Option>();
-
+            // Запрос
             SQLiteCommand SQLiteCommand = new SQLiteCommand($"SELECT id, id_question, option, isRight FROM options WHERE id_question = @Id", Connection);
-
+            // Экранизация символов
             SQLiteCommand.Parameters.AddWithValue("@Id", id);
-
+            // Открываем соединение с БД
             OpenConnection();
+            // Выбираем значения в массив
             using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
             {
                 while (dataReader.Read())
@@ -377,9 +181,9 @@ namespace Server.Helpers
                     options.Add(option);
                 }
             }
-
+            // Закрываем соединение
             CloseConnection();
-
+            // Возвращаем массив
             return options;
         }
 

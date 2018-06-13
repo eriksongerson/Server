@@ -4,9 +4,9 @@ using System.Windows.Forms;
 using Server.Helpers;
 using Server.Models;
 
-namespace Server.Forms{
+namespace Server.Forms {
     // Форма, позволяющая добавлять, редктировать или удалять группы
-    public partial class GroupsForm : Form{
+    public partial class GroupsForm : Form {
         // Конструктор:
         public GroupsForm(){
             InitializeComponent();
