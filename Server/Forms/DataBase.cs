@@ -43,6 +43,10 @@ namespace Server
             ClearEditTab();
             ClearDeleteTab();
 
+            
+
+            ClearEditQuestion();
+            
             UpdateSubjects();
         }
 
@@ -97,7 +101,6 @@ namespace Server
         {
             List<Theme> themes = DatabaseHelper.GetThemes(subject.Id);
 
-            comboBox.SelectedIndex = -1;
             comboBox.Items.Clear();
 
             if (themes.Count != 0)
@@ -215,6 +218,7 @@ namespace Server
             editThemeComboBox.Enabled = false;
             editQuestionThemeComboBox.Items.Clear();
             editQuestionThemeComboBox.Enabled = false;
+            editQuestionComboBox.SelectedIndex = -1;
             editQuestionComboBox.Items.Clear();
             editQuestionComboBox.Enabled = false;
 
@@ -750,11 +754,14 @@ namespace Server
 
         private void comboBox7_SelectedIndexChanged(object sender, EventArgs e)
         {
+            editQuestionComboBox.SelectedIndex = -1;
+            editQuestionComboBox.Enabled = false;
             UpdateThemes(editQuestionSubjectComboBox.SelectedItem as Subject, editQuestionThemeComboBox);
         }
 
         private void comboBox8_SelectedIndexChanged(object sender, EventArgs e)
         {
+            editQuestionComboBox.SelectedIndex = -1;
             UpdateQuestions(editQuestionThemeComboBox.SelectedItem as Theme, editQuestionComboBox);
         }
 
@@ -832,38 +839,55 @@ namespace Server
 
         private void comboBox9_SelectedIndexChanged(object sender, EventArgs e)
         {
-            editQuestionButton.Visible = true;
-            editQuestionClearButton.Visible = true;
-
-            editQuestionComboBox.Visible = false;
-            groupBox6.Controls.Add(editQuestionTextBox);
-            editQuestionTextBox.Visible = true;
-            editQuestionTextBox.Text = (editQuestionComboBox.SelectedItem as Question).Name;
-            editQuestionTextBox.Location = editQuestionComboBox.Location;
-            editQuestionButton.Enabled = true;
-            editQuestionClearButton.Enabled = true;
-            editTypeComboBox.Enabled = true;
-
-            CurrentQuestion = editQuestionComboBox.SelectedItem as Question;
-
-            editQuestionTextBox.Text = CurrentQuestion.Name;
-
-            switch (CurrentQuestion.Type)
+            if(editQuestionComboBox.SelectedIndex != -1)
             {
-                case Models.Type.single:
-                    editTypeComboBox.SelectedIndex = 0;
-                    break;
-                case Models.Type.multiple:
-                    editTypeComboBox.SelectedIndex = 1;
-                    break;
-                case Models.Type.filling:
-                    editTypeComboBox.SelectedIndex = 2;
-                    break;
-                default:
-                    break;
-            }
+                editQuestionComboBox.Visible = false;
+                groupBox6.Controls.Add(editQuestionTextBox);
+                editQuestionTextBox.Visible = true;
+                editQuestionTextBox.Text = (editQuestionComboBox.SelectedItem as Question).Name;
+                editQuestionTextBox.Location = editQuestionComboBox.Location;
+                editQuestionButton.Enabled = true;
+                editQuestionClearButton.Enabled = true;
+                editTypeComboBox.Enabled = true;
 
-            ConfigureEditOptions(CurrentQuestion.Type, CurrentQuestion.Options);
+                CurrentQuestion = editQuestionComboBox.SelectedItem as Question;
+
+                editQuestionTextBox.Text = CurrentQuestion.Name;
+
+                switch (CurrentQuestion.Type)
+                {
+                    case Models.Type.single:
+                        editTypeComboBox.SelectedIndex = 0;
+                        break;
+                    case Models.Type.multiple:
+                        editTypeComboBox.SelectedIndex = 1;
+                        break;
+                    case Models.Type.filling:
+                        editTypeComboBox.SelectedIndex = 2;
+                        break;
+                    default:
+                        break;
+                }
+
+                ConfigureEditOptions(CurrentQuestion.Type, CurrentQuestion.Options);
+            }
+            else
+            {
+                editQuestionTextBox.Text = "";
+                editQuestionComboBox.Visible = true;
+                editQuestionComboBox.Text = "";
+                editQuestionComboBox.SelectedText = "";
+                groupBox6.Controls.Remove(editQuestionTextBox);
+                editQuestionTextBox.Visible = false;
+                editQuestionButton.Enabled = false;
+                editQuestionClearButton.Enabled = false;
+
+                CurrentQuestion = null;
+
+                ClearEditQuestion();
+
+                editTypeComboBox.SelectedIndex = 0;
+            }
         }
 
         private List<Option> GettingEditOptions(Models.Type type)
@@ -912,20 +936,15 @@ namespace Server
             {
                 CurrentQuestion.Name = editQuestionTextBox.Text;
                 CurrentQuestion.Options = GettingEditOptions(CurrentQuestion.Type);
+                CurrentQuestion.Type = (Models.Type) editTypeComboBox.SelectedIndex + 1;
 
                 DatabaseHelper.UpdateQuestion(CurrentQuestion);
 
-                editQuestionTextBox.Text = "";
-                editQuestionComboBox.Visible = true;
-                editQuestionComboBox.Text = "";
-                editQuestionComboBox.SelectedText = "";
-                groupBox6.Controls.Remove(editQuestionTextBox);
-                editQuestionTextBox.Visible = false;
-                editQuestionButton.Enabled = false;
-                editQuestionClearButton.Enabled = false;
-                UpdateQuestions(editQuestionThemeComboBox.SelectedItem as Theme, editQuestionComboBox);
+                CurrentQuestion = null;
 
-                ClearEditQuestion();
+                editQuestionComboBox.SelectedIndex = -1;
+
+                UpdateQuestions(editQuestionThemeComboBox.SelectedItem as Theme, editQuestionComboBox);
             }
             else
             {
@@ -955,17 +974,8 @@ namespace Server
 
         private void button4_Click(object sender, EventArgs e)
         {
-            editQuestionTextBox.Text = "";
-            editQuestionComboBox.Visible = true;
-            editQuestionComboBox.Text = "";
-            editQuestionComboBox.SelectedText = "";
-            groupBox6.Controls.Remove(editQuestionTextBox);
-            editQuestionTextBox.Visible = false;
-            editQuestionButton.Enabled = false;
-            editQuestionClearButton.Enabled = false;
-            UpdateQuestions(editQuestionThemeComboBox.SelectedItem as Theme, editQuestionComboBox);
-
-            ClearEditQuestion();
+            editQuestionComboBox.SelectedIndex = -1;
+            CurrentQuestion = null;
         }
 
         private void comboBox1_KeyPress(object sender, KeyPressEventArgs e)
@@ -1015,77 +1025,90 @@ namespace Server
 
         private void editTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            editSingleGroupBox.Visible = false;
-            editMultipleGroupBox.Visible = false;
-            editFillingGroupBox.Visible = false;
+                editSingleGroupBox.Visible = false;
+                editMultipleGroupBox.Visible = false;
+                editFillingGroupBox.Visible = false;
 
-            Models.Type type = (Models.Type)editTypeComboBox.SelectedIndex + 1;
-
-            CurrentQuestion.Type = type;
-
-            var options = CurrentQuestion.Options;
-
-            DisableAllEditFields();
-
-            switch (type)
+            if(CurrentQuestion != null)
             {
-                case Models.Type.single:
-                    {
-                        editSingleGroupBox.Visible = true;
+                Models.Type type = (Models.Type)editTypeComboBox.SelectedIndex + 1;
 
-                        editSingleChoiceFirstOptionTextBox.Text = options[0];
-                        editSingleChoiceFirstOptionRadioButton.Checked = options[0].isRight;
-                        editSingleChoiceSecondOptionTextBox.Text = options[1];
-                        editSingleChoiceSecondOptionRadioButton.Checked = options[1].isRight;
-                        editSingleChoiceThirdOptionTextBox.Text = options[2];
-                        editSingleChoiceThirdOptionRadioButton.Checked = options[2].isRight;
-                        editSingleChoiceFourthOptionTextBox.Text = options[3];
-                        editSingleChoiceFourthOptionRadioButton.Checked = options[3].isRight;
+                CurrentQuestion.Type = type;
 
-                        editSingleChoiceFirstOptionTextBox.Enabled =
-                        editSingleChoiceFirstOptionRadioButton.Enabled =
-                        editSingleChoiceSecondOptionTextBox.Enabled =
-                        editSingleChoiceSecondOptionRadioButton.Enabled =
-                        editSingleChoiceThirdOptionTextBox.Enabled =
-                        editSingleChoiceThirdOptionRadioButton.Enabled =
-                        editSingleChoiceFourthOptionTextBox.Enabled =
-                        editSingleChoiceFourthOptionRadioButton.Enabled = true;
+                var options = CurrentQuestion.Options;
 
-                        return;
-                    }
-                case Models.Type.multiple:
-                    {
-                        editMultipleGroupBox.Visible = true;
+                DisableAllEditFields();
 
-                        editMultipleChoiceFirstOptionTextBox.Text = options[0];
-                        editMultipleChoiceFirstOptionCheckBox.Checked = options[0].isRight;
-                        editMultipleChoiceSecondOptionTextBox.Text = options[1];
-                        editMultipleChoiceSecondOptionCheckBox.Checked = options[1].isRight;
-                        editMultipleChoiceThirdOptionTextBox.Text = options[2];
-                        editMultipleChoiceThirdOptionCheckBox.Checked = options[2].isRight;
-                        editMultipleChoiceFourthOptionTextBox.Text = options[3];
-                        editMultipleChoiceFourthOptionCheckBox.Checked = options[3].isRight;
+                switch (type)
+                {
+                    case Models.Type.single:
+                        {
+                            editSingleGroupBox.Visible = true;
 
-                        editMultipleChoiceFirstOptionTextBox.Enabled =
-                        editMultipleChoiceFirstOptionCheckBox.Enabled =
-                        editMultipleChoiceSecondOptionTextBox.Enabled =
-                        editMultipleChoiceSecondOptionCheckBox.Enabled =
-                        editMultipleChoiceThirdOptionTextBox.Enabled =
-                        editMultipleChoiceThirdOptionCheckBox.Enabled =
-                        editMultipleChoiceFourthOptionTextBox.Enabled =
-                        editMultipleChoiceFourthOptionCheckBox.Enabled = true;
+                            try
+                            {
+                                editSingleChoiceFirstOptionTextBox.Text = options[0];
+                                editSingleChoiceFirstOptionRadioButton.Checked = options[0].isRight;
+                                editSingleChoiceSecondOptionTextBox.Text = options[1];
+                                editSingleChoiceSecondOptionRadioButton.Checked = options[1].isRight;
+                                editSingleChoiceThirdOptionTextBox.Text = options[2];
+                                editSingleChoiceThirdOptionRadioButton.Checked = options[2].isRight;
+                                editSingleChoiceFourthOptionTextBox.Text = options[3];
+                                editSingleChoiceFourthOptionRadioButton.Checked = options[3].isRight;
+                            }
+                            catch (IndexOutOfRangeException) { }
 
-                        return;
-                    }
-                case Models.Type.filling:
-                    {
-                        editFillingGroupBox.Visible = true;
+                            editSingleChoiceFirstOptionTextBox.Enabled =
+                            editSingleChoiceFirstOptionRadioButton.Enabled =
+                            editSingleChoiceSecondOptionTextBox.Enabled =
+                            editSingleChoiceSecondOptionRadioButton.Enabled =
+                            editSingleChoiceThirdOptionTextBox.Enabled =
+                            editSingleChoiceThirdOptionRadioButton.Enabled =
+                            editSingleChoiceFourthOptionTextBox.Enabled =
+                            editSingleChoiceFourthOptionRadioButton.Enabled = true;
 
-                        editFillingTextBox.Text = options[0];
-                        editFillingTextBox.Enabled = true;
+                            return;
+                        }
+                    case Models.Type.multiple:
+                        {
+                            editMultipleGroupBox.Visible = true;
+                            try
+                            {
+                                editMultipleChoiceFirstOptionTextBox.Text = options[0];
+                                editMultipleChoiceFirstOptionCheckBox.Checked = options[0].isRight;
+                                editMultipleChoiceSecondOptionTextBox.Text = options[1];
+                                editMultipleChoiceSecondOptionCheckBox.Checked = options[1].isRight;
+                                editMultipleChoiceThirdOptionTextBox.Text = options[2];
+                                editMultipleChoiceThirdOptionCheckBox.Checked = options[2].isRight;
+                                editMultipleChoiceFourthOptionTextBox.Text = options[3];
+                                editMultipleChoiceFourthOptionCheckBox.Checked = options[3].isRight;
+                            }
+                            catch (IndexOutOfRangeException) { }
+                            editMultipleChoiceFirstOptionTextBox.Enabled =
+                            editMultipleChoiceFirstOptionCheckBox.Enabled =
+                            editMultipleChoiceSecondOptionTextBox.Enabled =
+                            editMultipleChoiceSecondOptionCheckBox.Enabled =
+                            editMultipleChoiceThirdOptionTextBox.Enabled =
+                            editMultipleChoiceThirdOptionCheckBox.Enabled =
+                            editMultipleChoiceFourthOptionTextBox.Enabled =
+                            editMultipleChoiceFourthOptionCheckBox.Enabled = true;
 
-                        return;
-                    }
+                            return;
+                        }
+                    case Models.Type.filling:
+                        {
+                            editFillingGroupBox.Visible = true;
+
+                            editFillingTextBox.Text = options[0];
+                            editFillingTextBox.Enabled = true;
+
+                            return;
+                        }
+                }
+            }
+            else
+            {
+                editSingleGroupBox.Visible = true;
             }
         }
 
