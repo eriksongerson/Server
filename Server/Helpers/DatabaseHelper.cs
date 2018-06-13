@@ -45,9 +45,6 @@ namespace Server.Helpers
 
         // Начало региона Select. В этом регионе содержатся функции, обеспечивающие выборку информации из базы данных
         #region Select 
-
-        //Начало региона SelectSubject. Здесь содержатся все функции для выбора предметов избазы данных
-        #region SelectSubject
         // Функция выбирает из таблицы "subjects" базы данных все записи. Возвращает список предметов.
         public static List<Subject> GetSubjects()
         {
@@ -75,11 +72,6 @@ namespace Server.Helpers
             // Возвращаем список Предметов
             return subjects;
         }
-        // конец региона SelectSubject
-        #endregion
-
-        // Начало региона SelectTheme. Содержит функции, выбирающие из базы данных темы тестирования
-        #region SelectTheme
         // Функция выбирает из таблицы "themes" все темы, связанные с определенным предметом. Возвращает массив тем
         public static List<Theme> GetThemes(int id_subject)
         {
@@ -111,10 +103,6 @@ namespace Server.Helpers
             // возврат значения
             return themes;
         }
-        // конец региона SelectTheme
-        #endregion
-        // начало региона SelectQuestion
-        #region SelectQuestion
         // Функция выбирает все вопросы, связанные с определенными предметом и темой.
         // Возвращает список вопросов
         public static List<Question> GetQuestionsByTestAndSubjectId(int SubjectId, int ThemeId)
@@ -186,11 +174,7 @@ namespace Server.Helpers
             // Возвращаем массив
             return options;
         }
-
-        #endregion
-
-        #region SelectGroups
-
+        // Функция выборки всех групп. Работает аналогично предыдущим функциям
         public static List<Group> GetGroups()
         {
             List<Group> groups = new List<Group>();
@@ -216,72 +200,7 @@ namespace Server.Helpers
 
             return groups;
         }
-
-        public static Group GetGroupById(int id)
-        {
-            Group group = new Group();
-
-            SQLiteCommand SQLiteCommand = new SQLiteCommand("SELECT id, name FROM groups WHERE id=@Id", Connection);
-
-            SQLiteCommand.Parameters.AddWithValue("@Id", id);
-
-            OpenConnection();
-
-            using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
-            {
-                while (dataReader.Read())
-                {
-                    group = new Group()
-                    {
-                        Id = Convert.ToInt32(dataReader[0].ToString()),
-                        Name = dataReader[1].ToString(),
-                    };
-                }
-            }
-
-            CloseConnection();
-
-            return group;
-        }
-
-        #endregion
-
-        #region SelectJournals
-
-        public static List<Journal> GetJournals()
-        {
-            List<Journal> journals = new List<Journal>();
-
-            SQLiteCommand SQLiteCommand = new SQLiteCommand("SELECT " +                                                                         
-                    "surname, " +                                                            
-                    "name, " +                                                                   
-                    "mark " +                                                               
-                "FROM journals;", Connection);
-
-            OpenConnection();
-
-            using (SQLiteDataReader dataReader = SQLiteCommand.ExecuteReader())
-            {
-                while (dataReader.Read())
-                {
-                    Journal journal = new Journal()
-                    {
-                        client = new Client()
-                        {
-                            surname = dataReader[0].ToString(),
-                            name = dataReader[1].ToString(),
-                        },
-                        mark = Convert.ToInt32(dataReader[2].ToString()),
-                    };
-                    journals.Add(journal);
-                }
-            }
-
-            CloseConnection();
-
-            return journals;
-        }
-
+        // Функци выборки журнала по ID. Работает аналогично предыдущим функциям
         public static List<Journal> GetJournalsByGroupId(Theme theme, Group group)
         {
             List<Journal> journals = new List<Journal>();
@@ -318,24 +237,24 @@ namespace Server.Helpers
 
             return journals;
         }
-
+        // Конец региона Select
         #endregion
-
-        #endregion
-
+        // Начало региона Insert. Здесь содержатся все функции для добавления информации
         #region Insert
-
+        // Функция добавления предмета
         public static void InsertSubject(Subject subject)
         {
+            // Запрос
             SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO subjects (subject) VALUES (@Name)", Connection);
-
+            // Экранизация символов
             SQLiteCommand.Parameters.AddWithValue("@Name", subject.Name);
-
+            // Открытие соединения
             OpenConnection();
-            SQLiteCommand.ExecuteNonQuery();
+            SQLiteCommand.ExecuteNonQuery(); // Выполнение запроса
+            // Закрытие соединения
             CloseConnection();
         }
-
+        // Функция добавления темы. Работает аналогично предыдущей функции
         public static void InsertTheme(Theme theme)
         {
             SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO themes (id_subject, theme) VALUES (@Id_subject, @Name)", Connection);
@@ -347,7 +266,7 @@ namespace Server.Helpers
             SQLiteCommand.ExecuteNonQuery();
             CloseConnection();
         }
-
+        // Функция добавления вопроса. Работает аналогично предыдущей функции
         public static void InsertQuestion(Question question)
         {
             SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO questions (id_subject, id_theme, question, type) VALUES (@Id_subject, @Id_theme, @Name, @Type)", Connection);
@@ -386,7 +305,7 @@ namespace Server.Helpers
             }
             InsertOptions(question.Options);
         }
-
+        // Функция добавления варианта ответа. Работает аналогично предыдущей функции
         public static void InsertOptions(List<Option> options)
         {
             foreach (Option option in options)
@@ -402,7 +321,7 @@ namespace Server.Helpers
                 CloseConnection();
             }
         }
-
+        // Функция добавления журнала. Работает аналогично предыдущей функции
         public static void InsertJournal(Models.Journal journal)
         {
             SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO journals (surname, name, id_subject, id_theme, mark, id_group) VALUES (@Surname, @Name, @Id_subject, @Id_theme, @Mark, @Group)", Connection);
@@ -418,7 +337,7 @@ namespace Server.Helpers
             SQLiteCommand.ExecuteNonQuery();
             CloseConnection();
         }
-
+        // Функция добавления группы. Работает аналогично предыдущей функции
         public static void InsertGroup(Group group)
         {
             SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO groups (name) VALUES (@Name)", Connection);
@@ -429,13 +348,14 @@ namespace Server.Helpers
             SQLiteCommand.ExecuteNonQuery();
             CloseConnection();
         }
-
+        // Конец региона Insert
         #endregion
-
+        // Начало региона Delete. Здесь содержатся функции удаления данных
         #region Delete
-
+        // Функция удаления предмета по id
         public static void DeleteSubjectById(int id)
         {
+            // Запрос
             SQLiteCommand SQLiteCommand = new SQLiteCommand()
             {
                 CommandText = $"DELETE FROM subjects WHERE id = @Id;" +
@@ -443,14 +363,14 @@ namespace Server.Helpers
                 $"DELETE FROM questions WHERE id_subject = @Id;",
                 Connection = Connection,
             };
-
+            // Экранирование символов
             SQLiteCommand.Parameters.AddWithValue("@Id", id);
 
-            OpenConnection();
-            SQLiteCommand.ExecuteNonQuery();
-            CloseConnection();
+            OpenConnection(); // открытие соединения с БД
+            SQLiteCommand.ExecuteNonQuery(); // Выполнение запроса
+            CloseConnection(); // закрытие соединения с БД
         }
-
+        // Функция удаления темы по id. Работает аналогично предыдущей функции
         public static void DeleteThemeById(int id)
         {
             SQLiteCommand SQLiteCommand = new SQLiteCommand()
@@ -466,7 +386,7 @@ namespace Server.Helpers
             SQLiteCommand.ExecuteNonQuery();
             CloseConnection();
         }
-
+        // Функция удаления вопроса по id. Работает аналогично предыдущей функции
         public static void DeleteQuestionById(int id)
         {
             SQLiteCommand SQLiteCommand = new SQLiteCommand()
@@ -481,7 +401,7 @@ namespace Server.Helpers
             SQLiteCommand.ExecuteNonQuery();
             CloseConnection();
         }
-
+        // Функция удаления группы. Работает аналогично предыдущей функции
         public static void DeleteGroup(Group group)
         {
             SQLiteCommand SQLiteCommand = new SQLiteCommand()
@@ -496,7 +416,7 @@ namespace Server.Helpers
             SQLiteCommand.ExecuteNonQuery();
             CloseConnection();
         }
-
+        // Функция удаления журнала по id. Работает аналогично предыдущей функции
         public static void DeleteJournalByID(int id)
         {
             SQLiteCommand SQLiteCommand = new SQLiteCommand()
@@ -511,23 +431,24 @@ namespace Server.Helpers
             SQLiteCommand.ExecuteNonQuery();
             CloseConnection();
         }
-
+        // конец региона Delete
         #endregion
-
+        // Начало региона Update
         #region Update
-
+        // Функция обновления предмета
         public static void UpdateSubject(Subject subject)
         {
+            // Запрос
             SQLiteCommand SQLiteCommand = new SQLiteCommand($"UPDATE subjects SET subject = @Name WHERE id = @Id_subject", Connection);
-
+            // Экранирование символов
             SQLiteCommand.Parameters.AddWithValue("@Name", subject.Name);
             SQLiteCommand.Parameters.AddWithValue("@Id_subject", subject.Id);
 
-            OpenConnection();
-            SQLiteCommand.ExecuteNonQuery();
-            CloseConnection();
+            OpenConnection(); // Открытие соединения с БД
+            SQLiteCommand.ExecuteNonQuery(); // Выполнение запроса
+            CloseConnection(); // Закрытие соединения с БД
         }
-
+        // Функция обновления темы. Работает аналогично предыдущей функции
         public static void UpdateTheme(Theme theme)
         {
             SQLiteCommand SQLiteCommand = new SQLiteCommand($"UPDATE themes SET id_subject = @Id_subject, theme = @Name WHERE id = @Id", Connection);
@@ -540,7 +461,7 @@ namespace Server.Helpers
             SQLiteCommand.ExecuteNonQuery();
             CloseConnection();
         }
-
+        // Функция обновления вопроса. Работает аналогично предыдущей функции
         public static void UpdateQuestion(Question question)
         {
             SQLiteCommand SQLiteCommand =
@@ -560,7 +481,7 @@ namespace Server.Helpers
 
             UpdateOptions(question.Options);
         }
-
+        // Функция обновления варианта ответа. Работает аналогично предыдущей функции
         public static void UpdateOptions(List<Option> options)
         {
             foreach (Option option in options)
@@ -578,7 +499,7 @@ namespace Server.Helpers
                 CloseConnection();
             }
         }
-
+        // Функция обновления группы. Работает аналогично предыдущей функции
         public static void UpdateGroup(Group group)
         {
             
@@ -594,13 +515,14 @@ namespace Server.Helpers
             CloseConnection();
             
         }
-
+        // конец региона Update
         #endregion
-
+        // Функция выборки журналов в виде виртуальной таблицы
         public static DataTable SelectJournalsAdapter()
         {
+            // виртуальная таблица
             DataTable DTable = new DataTable();
-
+            // Запрос
             SQLiteCommand com = new SQLiteCommand()
             {
                 CommandText = "SELECT " +
@@ -614,38 +536,39 @@ namespace Server.Helpers
                 "FROM journals;",
                 Connection = Connection,
             };
-
+            // адаптер для выгрузки значений в таблицу
             SQLiteDataAdapter DAdapter = new SQLiteDataAdapter(com);
-
+            // Открытие соединения с БД
             OpenConnection();
-
+            // Выполнение запроса
             com.ExecuteNonQuery();
-            DAdapter.Fill(DTable);
-
+            DAdapter.Fill(DTable); // Заполнение таблицы
+            // Закрытие соединения с БД
             CloseConnection();
-
+            // Возврат виртуальной таблицы
             return DTable;
         }
-
+        // Функция выборки групп в виде виртуальной таблицы
         public static DataTable SelectGroupsAdapter()
         {
+            // виртуальная таблица
             DataTable dataTable = new DataTable();
-
+            // Запрос
             SQLiteCommand command = new SQLiteCommand()
             {
                 CommandText = "SELECT id, name as Группа FROM groups",
                 Connection = Connection,
             };
-
+            // Адаптер для заполнения таблицы
             SQLiteDataAdapter dataAdapter = new SQLiteDataAdapter(command);
-
+            // Открытие соединения
             OpenConnection();
-
+            // выполнение запроса
             command.ExecuteNonQuery();
-            dataAdapter.Fill(dataTable);
-
+            dataAdapter.Fill(dataTable); // Заполнение таблицы
+            // закрытие соединения
             CloseConnection();
-
+            // возврат таблицы
             return dataTable;
         }
     }
