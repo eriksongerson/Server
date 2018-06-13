@@ -18,10 +18,7 @@ namespace Server.Helpers
         // Поле класса для доступа к соединению:
         public static SQLiteConnection Connection   
         {
-            get
-            {
-                return connection;
-            }
+            get => connection;
         }
 
         static Mutex mutex = new Mutex(); // Мьютекс - объект для синхронизации потоков
