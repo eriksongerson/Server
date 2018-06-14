@@ -3,9 +3,12 @@ using System.Windows.Forms;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Security.AccessControl;
 
 using Server.Forms;
 using Server.Helpers;
+using System.IO;
+using System.Security.Permissions;
 
 namespace Server
 {
