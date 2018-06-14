@@ -602,13 +602,16 @@ namespace Server
 
         private void deleteSubjectButton_Click(object sender, EventArgs e)
         {
-            Subject subject = deleteSubjectComboBox.SelectedItem as Subject;
+            if (MessageBox.Show("Вы действительно хотите удалить этот предмет?", "Подтверждение удаления", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                Subject subject = deleteSubjectComboBox.SelectedItem as Subject;
             
-            DatabaseHelper.DeleteSubjectById(subject.Id);
-            deleteSubjectComboBox.Text = "";
-            UpdateViews();
+                DatabaseHelper.DeleteSubjectById(subject.Id);
+                deleteSubjectComboBox.Text = "";
+                UpdateViews();
 
-            deleteSubjectButton.Enabled = false;
+                deleteSubjectButton.Enabled = false;
+            }
         }
 
         private void deleteThemeSubjectComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -619,15 +622,18 @@ namespace Server
 
         private void deleteThemeButton_Click(object sender, EventArgs e)
         {
-            Theme theme = deleteThemeComboBox.SelectedItem as Theme;
+            if (MessageBox.Show("Вы действительно хотите удалить этe тему?", "Подтверждение удаления", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                Theme theme = deleteThemeComboBox.SelectedItem as Theme;
 
-            DatabaseHelper.DeleteThemeById(theme.Id);
-            UpdateThemes(deleteThemeSubjectComboBox.SelectedItem as Subject, deleteThemeComboBox);
-            deleteThemeComboBox.Text = "";
+                DatabaseHelper.DeleteThemeById(theme.Id);
+                UpdateThemes(deleteThemeSubjectComboBox.SelectedItem as Subject, deleteThemeComboBox);
+                deleteThemeComboBox.Text = "";
 
-            UpdateViews();
+                UpdateViews();
 
-            deleteThemeButton.Enabled = false;
+                deleteThemeButton.Enabled = false;
+            }
         }
 
         private void deleteQuestionSubjectComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -645,12 +651,15 @@ namespace Server
 
         private void deleteQuestionButton_Click(object sender, EventArgs e)
         {
-            Question question = deleteQuestionComboBox.SelectedItem as Question;
-            DatabaseHelper.DeleteQuestionById(question.Id);
+            if (MessageBox.Show("Вы действительно хотите удалить этот вопрос?", "Подтверждение удаления", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                Question question = deleteQuestionComboBox.SelectedItem as Question;
+                DatabaseHelper.DeleteQuestionById(question.Id);
 
-            UpdateViews();
+                UpdateViews();
 
-            deleteQuestionButton.Enabled = false;
+                deleteQuestionButton.Enabled = false;
+            }
         }
 
         private void editSubjectComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -890,40 +899,40 @@ namespace Server
             }
         }
 
-        private List<Option> GettingEditOptions(Models.Type type)
+        private List<Option> GettingEditOptions(Models.Type type, List<Option> LastOptions)
         {
-            List<Option> options = new List<Option>();
+            List<Option> options = LastOptions;
 
             switch (type)
             {
                 case Models.Type.single:
                     {
-                        Option option = new Option(editSingleChoiceFirstOptionTextBox.Text, editSingleChoiceFirstOptionRadioButton.Checked);
-                        options.Add(option);
-                        option = new Option(editSingleChoiceSecondOptionTextBox.Text, editSingleChoiceSecondOptionRadioButton.Checked);
-                        options.Add(option);
-                        option = new Option(editSingleChoiceThirdOptionTextBox.Text, editSingleChoiceThirdOptionRadioButton.Checked);
-                        options.Add(option);
-                        option = new Option(editSingleChoiceFourthOptionTextBox.Text, editSingleChoiceFourthOptionRadioButton.Checked);
-                        options.Add(option);
+                        options[0].option = editSingleChoiceFirstOptionTextBox.Text;
+                        options[0].isRight = editSingleChoiceFirstOptionRadioButton.Checked;
+                        options[1].option = editSingleChoiceSecondOptionTextBox.Text;
+                        options[1].isRight = editSingleChoiceSecondOptionRadioButton.Checked;
+                        options[2].option = editSingleChoiceThirdOptionTextBox.Text;
+                        options[2].isRight = editSingleChoiceThirdOptionRadioButton.Checked;
+                        options[3].option = editSingleChoiceFourthOptionTextBox.Text;
+                        options[3].isRight = editSingleChoiceFourthOptionRadioButton.Checked;
                         break;
                     }
                 case Models.Type.multiple:
                     {
-                        Option option = new Option(editMultipleChoiceFirstOptionTextBox.Text, editMultipleChoiceFirstOptionCheckBox.Checked);
-                        options.Add(option);
-                        option = new Option(editMultipleChoiceSecondOptionTextBox.Text, editMultipleChoiceSecondOptionCheckBox.Checked);
-                        options.Add(option);
-                        option = new Option(editMultipleChoiceThirdOptionTextBox.Text, editMultipleChoiceThirdOptionCheckBox.Checked);
-                        options.Add(option);
-                        option = new Option(editMultipleChoiceFourthOptionTextBox.Text, editMultipleChoiceFourthOptionCheckBox.Checked);
-                        options.Add(option);
+                        options[0].option = editMultipleChoiceFirstOptionTextBox.Text;
+                        options[0].isRight = editMultipleChoiceFirstOptionCheckBox.Checked;
+                        options[1].option = editMultipleChoiceSecondOptionTextBox.Text;
+                        options[1].isRight = editMultipleChoiceSecondOptionCheckBox.Checked;
+                        options[2].option = editMultipleChoiceThirdOptionTextBox.Text;
+                        options[2].isRight = editMultipleChoiceThirdOptionCheckBox.Checked;
+                        options[3].option = editMultipleChoiceFourthOptionTextBox.Text;
+                        options[3].isRight = editMultipleChoiceFourthOptionCheckBox.Checked;
                         break;
                     }
                 case Models.Type.filling:
                     {
-                        Option option = new Option(editFillingTextBox.Text, true);
-                        options.Add(option);
+                        options[0].option = editFillingTextBox.Text;
+                        options[1].isRight = true;
                         break;
                     }
             }
@@ -935,7 +944,7 @@ namespace Server
             if(editQuestionTextBox.Text != "" && CheckEditFieldsFill(CurrentQuestion.Type))
             {
                 CurrentQuestion.Name = editQuestionTextBox.Text;
-                CurrentQuestion.Options = GettingEditOptions(CurrentQuestion.Type);
+                CurrentQuestion.Options = GettingEditOptions(CurrentQuestion.Type, CurrentQuestion.Options);
                 CurrentQuestion.Type = (Models.Type) editTypeComboBox.SelectedIndex + 1;
 
                 DatabaseHelper.UpdateQuestion(CurrentQuestion);
