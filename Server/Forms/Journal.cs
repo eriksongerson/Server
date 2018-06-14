@@ -18,7 +18,8 @@ namespace Server.Forms
             dataGridView1.Columns[2].Width = 100;
             dataGridView1.Columns[3].Width = 150;
             dataGridView1.Columns[5].Width = 100;
-            dataGridView1.Columns[6].Width = 100; 
+            dataGridView1.Columns[6].Width = 100;
+            deleteButton.Enabled = dataGridView1.SelectedRows.Count != 0;
             //dataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font(FontFamily.GenericSansSerif, 14, FontStyle.Regular);
         }
         // Событие при загрузке формы
@@ -27,9 +28,12 @@ namespace Server.Forms
         private void backButton_Click(object sender, EventArgs e) => this.Hide();
         // Кнопка удаления записи
         private void deleteButton_Click(object sender, EventArgs e) {
-            int id = Convert.ToInt32(dataGridView1.SelectedCells[0].Value.ToString());
-            DatabaseHelper.DeleteJournalByID(id);
-            updateData();
+            if(dataGridView1.SelectedCells.Count != 0)
+            {
+                int id = Convert.ToInt32(dataGridView1.SelectedCells[0].Value.ToString());
+                DatabaseHelper.DeleteJournalByID(id);
+                updateData();
+            }
         }
         // кнопка перехода на форму формирования отчётов
         private void createReportButton_Click(object sender, EventArgs e) => new ReportForm().ShowDialog();

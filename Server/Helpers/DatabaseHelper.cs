@@ -321,7 +321,7 @@ namespace Server.Helpers
         // Функция добавления журнала. Работает аналогично предыдущей функции
         public static void InsertJournal(Models.Journal journal)
         {
-            SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO journals (surname, name, id_subject, id_theme, mark, id_group) VALUES (@Surname, @Name, @Id_subject, @Id_theme, @Mark, @Group)", Connection);
+            SQLiteCommand SQLiteCommand = new SQLiteCommand($"INSERT INTO journals (surname, name, id_subject, id_theme, mark, id_group, datetime) VALUES (@Surname, @Name, @Id_subject, @Id_theme, @Mark, @Group, @Datetime)", Connection);
 
             SQLiteCommand.Parameters.AddWithValue("@Surname", journal.client.surname);
             SQLiteCommand.Parameters.AddWithValue("@Name", journal.client.name);
@@ -329,6 +329,7 @@ namespace Server.Helpers
             SQLiteCommand.Parameters.AddWithValue("@Id_theme", journal.theme.Id);
             SQLiteCommand.Parameters.AddWithValue("@Mark", journal.mark);
             SQLiteCommand.Parameters.AddWithValue("@Group", journal.client.group.Id);
+            SQLiteCommand.Parameters.AddWithValue("@Datetime", DateTime.Now);
 
             OpenConnection();
             SQLiteCommand.ExecuteNonQuery();
@@ -529,7 +530,8 @@ namespace Server.Helpers
                     "(SELECT subject FROM subjects WHERE subjects.id = id_subject) As Предмет, " +
                     "(SELECT theme FROM themes WHERE themes.id = id_theme) As Тема, " +
                     "mark As Оценка, " +
-                    "(SELECT name FROM groups WHERE groups.id = id_group) As Группа " +
+                    "(SELECT name FROM groups WHERE groups.id = id_group) As Группа, " +
+                    "datetime as Дата " +
                 "FROM journals;",
                 Connection = Connection,
             };

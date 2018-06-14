@@ -59,16 +59,22 @@ namespace Server.Helpers
             {
                 if(ex is NullReferenceException || ex is IOException)
                 {
-                    // Указываем клиенту о наличии проблемы
-                    Response response = new Response()
-                        {
-                            response = "problem",
-                            body = JsonConvert.SerializeObject(null, Formatting.Indented),
-                        };
-                    string message = JsonConvert.SerializeObject(response, Formatting.Indented);
-                    // отправляем сообщение
-                    buffer = Encoding.Unicode.GetBytes(message);
-                    networkStream.Write(buffer, 0, buffer.Length);
+                    try
+                    {
+                        // Указываем клиенту о наличии проблемы
+                        Response response = new Response()
+                            {
+                                response = "problem",
+                                body = JsonConvert.SerializeObject(null, Formatting.Indented),
+                            };
+                        string message = JsonConvert.SerializeObject(response, Formatting.Indented);
+                        // отправляем сообщение
+                        buffer = Encoding.Unicode.GetBytes(message);
+                        networkStream.Write(buffer, 0, buffer.Length);
+                    }catch (IOException)
+                    {
+
+                    }
                 }
             }
             finally

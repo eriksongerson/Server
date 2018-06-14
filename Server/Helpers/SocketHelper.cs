@@ -79,7 +79,6 @@ namespace Server.Helpers
                 }
             }
         });
-
         // Функция начала прослушивания соединений
         public static void StartListener()
         {
