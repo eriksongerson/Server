@@ -1,18 +1,14 @@
-﻿namespace Server.Models
-{
+﻿namespace Server.Models {
     // Класс предмета
-    public class Subject
-    {
+    public class Subject {
         int id; // id предмета
         string name; // название предмета
         // Свойства для полей предмета:
-        public int Id
-        {
+        public int Id {
             set { id = value; }
             get { return id; }
         }
-        public string Name
-        {
+        public string Name {
             set { name = value; }
             get { return name; }
         }

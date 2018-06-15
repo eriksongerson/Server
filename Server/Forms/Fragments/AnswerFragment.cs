@@ -2,32 +2,25 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Linq;
-
 using Server.Models;
 using System;
-
-namespace Server.Forms.Fragments
-{
+namespace Server.Forms.Fragments {
     // Элемент управления AnswerFragment призван отобразить правильность/неправильность ответа, который выбрал студент
-    class AnswerFragment : Panel
-    {
+    class AnswerFragment : Panel {
         // Перечисление для лучшего восприятия кода
-        private enum AnswerStatus
-        {
+        private enum AnswerStatus {
             right,
             wrong,
             wait,
         }
         private AnswerStatus status; // элемент перечисления
-        AnswerStatus Status // Поле
-        {
+        // Поле
+        AnswerStatus Status {
             // Которое выполняет метод set когда поле получает новое значение 
-            set 
-            {  
+            set {  
                 status = value; // устанавливает элемент перечисления
                 // И проверяет его
-                switch (status)
-                {
+                switch (status) {
                     case AnswerStatus.right: // Если ответ правильный 
                         this.statusLabel.BackColor = Color.Green; // Закрашивает элемент зеленым
                         break;
@@ -47,24 +40,20 @@ namespace Server.Forms.Fragments
         int number = 0;
         Label statusLabel;
         // Два конструктора элемента:
-        public AnswerFragment(int number): base()
-        {
+        public AnswerFragment(int number): base() {
             this.number = number;
             this.answer = null;
             Init();
         }
-        public AnswerFragment(Answer answer, int number): base()
-        {
+        public AnswerFragment(Answer answer, int number): base() {
             this.number = number;
             this.answer = answer;
             Init();
         }
         // Функция конфигурации элемента управления
-        private void Init()
-        {
+        private void Init() {
             // Конфигурация фрагмента:
             statusLabel = new Label();
-
             this.Controls.Add(statusLabel);
             this.statusLabel.Size = new Size(28, 28); // Размер надписи
             this.statusLabel.Location = new Point(4, 11); // Место надписи на родительском элементе
@@ -73,14 +62,12 @@ namespace Server.Forms.Fragments
             this.Size = new Size(40, 50); // Размер самого элемента
             this.Margin = new Padding(0); // поля
             // Если во фрагменте нет элемента ответа, он должен быть серым
-            if (answer == null)
-            {
+            if (answer == null) {
                 Status = AnswerStatus.wait; // Устанавливается состояние
                 return;
             }
             // Проверка правильности отвеченного вопроса
-            switch (answer.question.Type)
-            {
+            switch (answer.question.Type) {
                 // Если вопрос с одиночным или множественным выбором
                 case Models.Type.single:
                 case Models.Type.multiple:
@@ -95,27 +82,21 @@ namespace Server.Forms.Fragments
                 case Models.Type.filling:
                     // Правильный вариант ответа и ответ студента приводятся к одному виду.
                     // Если они не равны
-                    if(answer.choosen[0].option.TrimEnd().TrimStart().ToLower() == answer.question.Options[0].option.TrimEnd().TrimStart().ToLower())
-                    {
+                    if(answer.choosen[0].option.TrimEnd().TrimStart().ToLower() == answer.question.Options[0].option.TrimEnd().TrimStart().ToLower()) {
                         Status = AnswerStatus.right; // Закрашивается зеленым
-                    }
-                    else
-                    {
+                    } else {
                         Status = AnswerStatus.wrong; // или красным
                     }
-
                     break;
             }
         }
         // Метод возвращает все верные варианты ответа на вопрос
-        private List<Option> GetRightOptions(List<Option> options)
-        {
+        private List<Option> GetRightOptions(List<Option> options) {
             List<Option> rightOptions = new List<Option>();
             // Перебираются все варианты ответа
-            foreach (var item in options)
-            {
-                if (item.isRight) // Если вариант ответа верный
-                {
+            foreach (var item in options) {
+                // Если вариант ответа верный
+                if (item.isRight) {
                     rightOptions.Add(item); // Сохраняется в список
                 }
             }
@@ -123,11 +104,9 @@ namespace Server.Forms.Fragments
         }
     }
     // Этот класс необходим для проверки идентичности двух списков List<Option>
-    class OptionComparer : IEqualityComparer<Option>
-    {
+    class OptionComparer : IEqualityComparer<Option> {
         // Метод Equals перегружен и теперь проверяет все поля объекта Option на идентичность
-        public bool Equals(Option x, Option y)
-        {
+        public bool Equals(Option x, Option y) {
             // Возвращает true, если два сравниваемых элемента идентичны по типу
             if (Object.ReferenceEquals(x, y)) return true;
             // Возвращает false, если хоть один из сравниваемых элементов не существует
@@ -137,8 +116,7 @@ namespace Server.Forms.Fragments
             return x.id == y.id && x.id_question == y.id_question && x.isRight == y.isRight && x.option == y.option;
         }
         // Метод возвращает цифровой хэш объекта
-        public int GetHashCode(Option option)
-        {
+        public int GetHashCode(Option option) {
             // Если объект не существует, его хэш будет равен нулю
             if (Object.ReferenceEquals(option, null)) return 0;
             // Создаётся хэш поля id объекта Option

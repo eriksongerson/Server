@@ -2,11 +2,9 @@
 using System.Windows.Forms;
 using System.Threading;
 using System.Collections.Generic;
-
 using Server.Models;
 using Server.Helpers;
 using Server.Forms.Fragments;
-
 namespace Server.Forms {
     // Форма отображения состояния тестирования
     public partial class VisaulizationForm : Form {

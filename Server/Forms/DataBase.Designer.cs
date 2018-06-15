@@ -485,7 +485,6 @@
             this.addQuestionThemeComboBox.TabIndex = 1;
             this.addQuestionThemeComboBox.ValueMember = "id";
             this.addQuestionThemeComboBox.SelectedIndexChanged += new System.EventHandler(this.comboBox3_SelectedIndexChanged);
-            this.addQuestionThemeComboBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBox3_KeyPress);
             // 
             // addQuestionSubjectComboBox
             // 
@@ -499,7 +498,6 @@
             this.addQuestionSubjectComboBox.TabIndex = 0;
             this.addQuestionSubjectComboBox.ValueMember = "id";
             this.addQuestionSubjectComboBox.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
-            this.addQuestionSubjectComboBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBox2_KeyPress);
             // 
             // groupBox2
             // 
@@ -548,7 +546,6 @@
             this.addThemeSubjectComboBox.Tag = "";
             this.addThemeSubjectComboBox.ValueMember = "id";
             this.addThemeSubjectComboBox.SelectedIndexChanged += new System.EventHandler(this.addThemeSubjectComboBox_SelectedIndexChanged);
-            this.addThemeSubjectComboBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBox1_KeyPress);
             // 
             // groupBox1
             // 

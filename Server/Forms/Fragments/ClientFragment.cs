@@ -1,28 +1,23 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 using Server.Models;
-
-namespace Server.Forms.Fragments
-{
+namespace Server.Forms.Fragments {
     // Фрагмент отображения текущего состояния тестирования студента
-    public class ClientFragment : Panel
-    {
+    public class ClientFragment : Panel {
         Testing testing; // Объект тестирование для конкретного студента
         // Элементы управления:
         Label surnameLabel;
         Label nameLabel;
         FlowLayoutPanel thingsFlowLayoutPanel;
         // Конструктор элемента
-        public ClientFragment(Testing testing)
-        {
+        public ClientFragment(Testing testing) {
             // сохраняется объект тестирования
             this.testing = testing;
             // И проводится конфигурирование элемента
             InitializeComponent();
         }
         // Функция конфигурирования элемента
-        private void InitializeComponent()
-        {
+        private void InitializeComponent() {
             // Внутренние элементы управления
             surnameLabel = new Label();
             nameLabel = new Label();
@@ -53,48 +48,39 @@ namespace Server.Forms.Fragments
             this.thingsFlowLayoutPanel.Margin = new Padding(0); // Поля
             this.thingsFlowLayoutPanel.Size = new Size(666, 50); // Размер
             this.thingsFlowLayoutPanel.TabIndex = 2;
-            
             double additionHeight = (double)this.testing.CountOfQuestions / 14; // Переменная, добавляющая высоту к элементу управления
             // Если вопросов больше чем 14, нужно увеличить высоту элемента
-            for (int i = 0; i < additionHeight; i++) 
-            {
+            for (int i = 0; i < additionHeight; i++) {
                 // на 50
                 this.Height += 50; 
                 this.thingsFlowLayoutPanel.Height += 50;
             }
-            if(additionHeight % 10 != 0)
-            {
+            if(additionHeight % 10 != 0) {
                 this.Height += 50;
                 this.thingsFlowLayoutPanel.Height += 50;
             }
             // Если тестирование не пустое, нужно сконфигурировать элемент
-            if (testing != null)
-            {
+            if (testing != null) {
                 // Если имя и фамилия указаны
-                if (this.testing.Client.name != null && this.testing.Client.surname != null)
-                {
+                if (this.testing.Client.name != null && this.testing.Client.surname != null) {
                     // Пишем их в элемент управления
                     surnameLabel.Text = this.testing.Client.surname;
                     nameLabel.Text = this.testing.Client.name;
-                }
-                else
-                { 
+                } else { 
                     // иначе указываем имя ПК
                     surnameLabel.Text = this.testing.Client.pc;
                     nameLabel.Text = "";
                 }
                 int currentQuestionNumber = 1; // переменная для нумерации ответов на вопрос
                 thingsFlowLayoutPanel.Controls.Clear(); // Очистка панели ответов на вопрос
-                foreach (var item in testing.Answers)
-                {
+                foreach (var item in testing.Answers) {
                     // Создание элементов ответа на вопрос и их отображение
                     AnswerFragment answerFragment = new AnswerFragment(item, currentQuestionNumber);
                     thingsFlowLayoutPanel.Controls.Add(answerFragment);
                     currentQuestionNumber++;
                 }
                 // Также рисуем вопросы, которые студенту только придётся решить
-                for (int i = 0; i < testing.CountOfQuestions - testing.Answers.Count; i++)
-                {
+                for (int i = 0; i < testing.CountOfQuestions - testing.Answers.Count; i++) {
                     AnswerFragment answerFragment = new AnswerFragment(currentQuestionNumber);
                     thingsFlowLayoutPanel.Controls.Add(answerFragment);
                     currentQuestionNumber++;

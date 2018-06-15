@@ -3,17 +3,12 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-
 using Server.Helpers;
 using Server.Models;
-
 using Excel = Microsoft.Office.Interop.Excel;
-
-namespace Server.Forms
-{
+namespace Server.Forms {
     // Форма формирования отчётов
-    public partial class ReportForm : Form
-    {
+    public partial class ReportForm : Form {
         // Конструктор
         public ReportForm() => InitializeComponent();
         // Событие, о выборе типа отчёта
@@ -83,7 +78,7 @@ namespace Server.Forms
             var selectedTheme = themesComboBox.SelectedItem as Theme;
             var selectedGroup = groupsComboBox.SelectedItem as Group;
             List<Models.Journal> journals = DatabaseHelper.GetJournalsByGroupId(selectedTheme, selectedGroup);
-
+            // Начинаем заполнять информацией
             int row = 10;
             double Average = 0;
             // Заполняем ячейки таблицы и выполняем их форматирование
@@ -91,19 +86,15 @@ namespace Server.Forms
                 worksheet.Cells[row, "A"].Value = i + 1;
                 worksheet.Cells[row, "A"].Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
                 worksheet.Cells[row, "A"].Borders.Weight = 2d;
-
                 worksheet.Cells[row, "B"].Value = journals[i].client.surname;
                 worksheet.Cells[row, "B"].Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
                 worksheet.Cells[row, "B"].Borders.Weight = 2d;
-
                 worksheet.Cells[row, "C"].Value = journals[i].client.name;
                 worksheet.Cells[row, "C"].Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
                 worksheet.Cells[row, "C"].Borders.Weight = 2d;
-
                 worksheet.Cells[row, "D"].Value = journals[i].mark;
                 worksheet.Cells[row, "D"].Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
                 worksheet.Cells[row, "D"].Borders.Weight = 2d;
-
                 Average += journals[i].mark;
             }
             var startCell = worksheet.Cells[10, "A"];

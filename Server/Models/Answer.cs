@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-
-namespace Server.Models
-{
+namespace Server.Models {
     //Объект ответа
-    public class Answer
-    {   
-        public Question question; // содержит сам вопрос
-        public List<Option> choosen; // и выбранные варианты ответа студентом
+    public class Answer {
+        // содержит сам вопрос
+        public Question question;
+        // и выбранные варианты ответа студентом
+        public List<Option> choosen; 
     }
 }

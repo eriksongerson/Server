@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Forms;
-
 using Server.Helpers;
-
 namespace Server.Forms { 
     // Главная форма. Управляет состоянием сервера и взаимодействует со всеми остальными формами
     public partial class MainForm : Form {
         // Конструктор формы
         public MainForm(){ InitializeComponent(); }
         // Кнопка изменения статуса системы
-        private void button1_Click(object sender, EventArgs e){
-            ChangeStatus();
-        }
+        private void button1_Click(object sender, EventArgs e) => ChangeStatus();
         // Функция изменения состояния сервера
         private void ChangeStatus() {
             SocketHelper.ChangeStatus(); // Изменяет состояние
@@ -33,7 +29,7 @@ namespace Server.Forms {
                         Thread.Sleep(1000);
                     }
                 }).Start();
-            } else{
+            } else {
                 // Если сервер не запущен, меняет форму
                 statusLabel.Text = "Сервер отключен";
                 button1.Text = "Запустить сервер";

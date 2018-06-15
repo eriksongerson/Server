@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
-
 using Server.Helpers;
-
-namespace Server.Forms
-{
+namespace Server.Forms {
     // Форма Журналов. Позволяет просматривать результаты прошлых тестирований и удалять их
     public partial class Journal : Form {
         // Конструктор
@@ -28,8 +25,7 @@ namespace Server.Forms
         private void backButton_Click(object sender, EventArgs e) => this.Hide();
         // Кнопка удаления записи
         private void deleteButton_Click(object sender, EventArgs e) {
-            if(dataGridView1.SelectedCells.Count != 0)
-            {
+            if(dataGridView1.SelectedCells.Count != 0) {
                 int id = Convert.ToInt32(dataGridView1.SelectedCells[0].Value.ToString());
                 DatabaseHelper.DeleteJournalByID(id);
                 updateData();
